@@ -4,7 +4,7 @@ import { rateLimit, generateSessionId } from "@/lib/rate-limit"
 import { logError, logRequest } from "@/lib/logging"
 
 // Configuration
-const MAX_PROMPT_LENGTH = 2000 // Limit prompt size
+const MAX_PROMPT_LENGTH = 1000 // Limit prompt size
 const SESSION_COOKIE_NAME = "llm_session"
 const SESSION_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 

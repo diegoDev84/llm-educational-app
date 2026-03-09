@@ -1,4 +1,5 @@
 const OPENROUTER_MODEL = "mistralai/mistral-nemo"
+const MAX_OUTPUT_TOKENS = 1000
 
 export interface GenerateTextResult {
   text: string
@@ -30,6 +31,7 @@ export async function generateText(prompt: string): Promise<GenerateTextResult> 
       },
       body: JSON.stringify({
         model: OPENROUTER_MODEL,
+        max_tokens: MAX_OUTPUT_TOKENS,
         messages: [
           {
             role: "user",
