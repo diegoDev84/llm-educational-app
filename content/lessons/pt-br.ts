@@ -1037,7 +1037,7 @@ O processo:
       starterPrompts: [
         {
           label: "Similaridade semântica",
-          prompt: "Avalie a similaridade semântica (0–10) entre estes pares:\n\n1. 'carro' e 'automóvel'\n2. 'carro' e 'banana'\n3. 'feliz' e 'alegre'\n4. 'banco' (financeiro) e 'banco' (rio)\n\nExplique por que embeddings capturariam essas similaridades de forma diferente.",
+          prompt: "Avalie a similaridade semântica (0–10) entre estes pares:\n\n1. 'carro' e 'automóvel'\n2. 'carro' e 'banana'\n3. 'feliz' e 'alegre'\n4. 'banco' (financeiro) e 'banco' (assento)\n\nExplique por que embeddings capturariam essas similaridades de forma diferente.",
           explanation: "Embeddings capturam significado, então sinônimos têm vetores próximos e palavras não relacionadas ficam distantes."
         },
         {
