@@ -2,13 +2,14 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { getModules, getLessonNumber } from "@/lib/lessons"
 import { getTranslations } from "@/lib/translations"
 import { useLocale } from "@/components/locale-provider"
 import { LanguageSwitcher } from "@/components/language-switcher"
-import { ChevronDown, ChevronRight, BookOpen, Menu, X } from "lucide-react"
+import { ChevronDown, ChevronRight, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface SidebarNavigationProps {
@@ -41,8 +42,15 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
       {/* Logo/Header */}
       <div className="p-6 border-b border-border">
         <Link href={`/${locale}`} className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <BookOpen className="w-4 h-4 text-primary-foreground" />
+          <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
+            <Image
+              src="/icon.svg"
+              alt={t.nav.appName}
+              width={32}
+              height={32}
+              priority
+              className="w-8 h-8"
+            />
           </div>
           <div>
             <h1 className="font-semibold text-foreground">{t.nav.appName}</h1>

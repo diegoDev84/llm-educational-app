@@ -20,7 +20,7 @@ function getClientIP(request: NextRequest): string {
     return realIP
   }
 
-  // Fallback - Vercel provides this
+  // Fallback header provided by some hosting platforms
   const vercelIP = request.headers.get("x-vercel-forwarded-for")
   if (vercelIP) {
     return vercelIP.split(",")[0].trim()

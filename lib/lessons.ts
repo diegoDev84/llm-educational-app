@@ -89,22 +89,28 @@ The model can generate code because it has learned the statistical patterns of h
       }
     ],
     playground: {
-      description: "Try these prompts to see how LLMs predict and generate text based on patterns learned during training.",
+      description: "Try these prompts to see how LLMs complete realistic texts and synthesize knowledge based on patterns learned during training.",
       starterPrompts: [
         {
-          label: "Pattern Completion",
-          prompt: "Complete this sentence: The quick brown fox",
-          explanation: "Watch how the model completes a well-known phrase. It's not retrieving this from memory—it's predicting the most statistically likely continuation based on training patterns."
+          label: "Complete a Support Email",
+          prompt:
+            "Complete this internal support email in a clear, professional way:\n\n\"Hi team,\nWe're investigating the incident in the payments service. The first things we checked were the error logs and the last deployment. Our current hypothesis is that\"",
+          explanation:
+            "This shows next-token prediction on a realistic work scenario (an incident email). The model isn't recalling a specific email—it is continuing the text using patterns it has seen in similar technical communications."
         },
         {
-          label: "Creative Generation",
-          prompt: "Write the opening line of a story about a robot who discovers emotions",
-          explanation: "This demonstrates generative capability. The model combines learned patterns about story openings, robots, and emotions to create something new."
+          label: "Continue a Code Comment",
+          prompt:
+            "Complete this code comment so it matches common patterns you have seen in production codebases:\n\n// This function validates the incoming API payload and ...",
+          explanation:
+            "Here the model predicts how a typical code comment would continue, based on patterns from many repositories. Notice how it tends to produce conventional phrasing used by developers."
         },
         {
-          label: "Knowledge Extraction",
-          prompt: "Explain quantum entanglement in one paragraph",
-          explanation: "The model synthesizes information from its training to explain concepts. Note: it can confidently state incorrect information if the patterns in training data were wrong."
+          label: "Summarize a Technical Concept",
+          prompt:
+            "Explain what a feature flag is to a product manager in 3 sentences. Focus on why teams use them and the trade-offs they introduce.",
+          explanation:
+            "This demonstrates how the model synthesizes knowledge from training data about a real software engineering concept. Pay attention to how confident the answer sounds, even though it is still statistical pattern matching and can be incomplete or slightly inaccurate."
         }
       ]
     },
@@ -167,22 +173,28 @@ The same text may have different token counts across models. The word "indescrib
       }
     ],
     playground: {
-      description: "Experiment with prompts to see how token efficiency affects cost and output quality.",
+      description: "Experiment with realistic prompts to see how token efficiency affects cost, context usage, and output quality.",
       starterPrompts: [
         {
-          label: "Token-Efficient Prompt",
-          prompt: "List 5 programming languages",
-          explanation: "Short, direct prompts use fewer tokens. This entire prompt is only about 5 tokens, leaving more room for the response."
+          label: "Concise Incident Summary",
+          prompt:
+            "Summarize the following incident report in one sentence (max 30 words):\n\n\"On 2024-07-12, users started seeing 500 errors on the checkout page between 14:03 and 14:27 UTC. Error rates spiked to 35% of all requests. The issue was mitigated by rolling back a deployment to the payments service. Root cause is still under investigation.\"",
+          explanation:
+            "This short, precise instruction uses relatively few input tokens and encourages a compact output. In a real incident-management tool, this keeps costs and context usage low."
         },
         {
-          label: "Token-Heavy Prompt",
-          prompt: "I would really appreciate it if you could kindly provide me with a comprehensive list of approximately five different programming languages that are commonly used in the software development industry today",
-          explanation: "This asks the same thing but uses ~40 tokens. The extra words add cost without improving output quality."
+          label: "Verbose Incident Summary Prompt",
+          prompt:
+            "I would really appreciate it if you could kindly provide me with a very detailed and nicely written summary in natural language of the following incident report, capturing all the nuances and context that might be relevant for any stakeholder who might read it in the future, while also maintaining a professional tone and avoiding overly technical jargon:\n\n\"On 2024-07-12, users started seeing 500 errors on the checkout page between 14:03 and 14:27 UTC. Error rates spiked to 35% of all requests. The issue was mitigated by rolling back a deployment to the payments service. Root cause is still under investigation.\"",
+          explanation:
+            "This asks for essentially the same thing but spends many more tokens on redundant phrasing. Compare token counts and output quality to see how verbose prompts increase cost without clear benefit."
         },
         {
-          label: "Code Tokenization",
-          prompt: "Write a JavaScript arrow function that adds two numbers",
-          explanation: "Notice how code generation affects output tokens. Symbols like =>, {}, and () each consume tokens."
+          label: "Code Tokenization in Practice",
+          prompt:
+            "Write a TypeScript function `buildUserFullName` that receives `{ firstName: string; lastName: string; }` and returns a formatted full name string. Keep the implementation on 3–5 lines.",
+          explanation:
+            "Code has a high token density because of symbols and identifiers. Generate this function and notice how a few lines of code already translate into a meaningful number of output tokens."
         }
       ]
     },
@@ -252,27 +264,35 @@ Encourages the model to introduce new topics. Higher values = more diverse conte
       }
     ],
     playground: {
-      description: "Experiment with different parameter settings to see how they affect output.",
+      description: "Experiment with different parameter settings on realistic tasks to see how they affect determinism, creativity, and length.",
       starterPrompts: [
         {
-          label: "Low Temperature (Factual)",
-          prompt: "What is the capital of Japan? Answer in one word.",
-          explanation: "With low temperature, the model gives the most probable answer: 'Tokyo'. Responses are consistent across runs."
+          label: "Low Temperature (Deterministic Answer)",
+          prompt:
+            "You are assisting with a technical FAQ.\n\nQuestion: What HTTP status code represents a successful GET request?\n\nAnswer in one token.",
+          explanation:
+            "At low temperature, the model should consistently return `200`. This mirrors production use cases where you want stable, deterministic answers for factual questions."
         },
         {
-          label: "High Temperature (Creative)",
-          prompt: "Invent a name for a new color that doesn't exist yet and describe it",
-          explanation: "Higher temperature enables creative, unexpected outputs. Run this multiple times to see varied responses."
+          label: "High Temperature (Brainstorming)",
+          prompt:
+            "You are helping a product team brainstorm names.\n\nTask: Propose 5 alternative product names for a developer tool that speeds up CI/CD pipelines.\n\nConstraints:\n- Each name must be at most 2 words\n- Avoid using the words \"CI\", \"CD\", or \"pipeline\"",
+          explanation:
+            "With a higher temperature, the model explores more diverse options. Try different temperatures to see how variation changes for a realistic product-naming task."
         },
         {
-          label: "Constrained Output",
-          prompt: "Describe the ocean in exactly 10 words",
-          explanation: "Combining a specific instruction with max_tokens helps control output length precisely."
+          label: "Constrained-Length Summary",
+          prompt:
+            "Summarize the following log snippet in **exactly 12 words** so it can be shown in a compact monitoring dashboard card:\n\n\"2024-07-12 14:03:12Z ERROR payments-service Timeout calling Stripe API after 30s for charge request #48291\"",
+          explanation:
+            "Combining a strict instruction with an appropriate `max_tokens` lets you tightly control the length of summaries in real UI components."
         },
         {
-          label: "Structured Generation",
-          prompt: "List three fruits, one per line",
-          explanation: "Stop sequences can end generation after a specific format is achieved. Clear formatting instructions help structure output."
+          label: "Structured Bullet Output",
+          prompt:
+            "You are helping a tech lead prepare a status update.\n\nFrom this description:\n\"We refactored the authentication service, reduced login latency by 25%, and closed three high-priority security issues. Rollout completed with no incidents.\"\n\nReturn 3 bullet points, one per line, starting with a verb (e.g. \"Reduced\", \"Fixed\").",
+          explanation:
+            "Clear format instructions plus appropriate stop sequences help you generate structured, easy-to-scan status updates for stakeholders."
         }
       ]
     },
@@ -348,22 +368,27 @@ If you want a list, say "as a numbered list." If you want JSON, specify the sche
       }
     ],
     playground: {
-      description: "Compare vague and structured prompts to see the difference in output quality.",
+      description: "Compare vague and well-structured prompts on realistic software and product scenarios.",
       starterPrompts: [
         {
           label: "Vague Prompt",
-          prompt: "Tell me about machine learning",
-          explanation: "This vague prompt will produce a generic, unfocused response. The model doesn't know your background, interests, or desired depth."
+          prompt: "Help me with my API",
+          explanation:
+            "This prompt is far too vague for a production assistant. The model has no idea whether you care about design, performance, security, or specific error messages, so the response will be generic."
         },
         {
           label: "Structured Prompt",
-          prompt: "You are a computer science professor. Explain machine learning to a first-year CS student in 3 sentences. Focus on the core concept, avoid jargon, and use an analogy.",
-          explanation: "This prompt specifies role, audience, length, focus, style, and technique. The output will be much more targeted."
+          prompt:
+            "You are a senior backend engineer.\n\nContext:\n- We have a REST API used by our mobile app\n- Users sometimes get HTTP 429 errors from the `/search` endpoint during traffic spikes\n\nTask:\nExplain to a junior developer, in 3–4 short paragraphs, what HTTP 429 means, why it happens, and 2 concrete mitigation strategies we could implement.\n\nStyle:\n- Use simple language\n- Include at least one concrete example per mitigation",
+          explanation:
+            "This prompt applies the CRISPE ideas: it gives context, role, audience, clear task, and style constraints. Compare how focused and actionable the answer becomes versus the vague version."
         },
         {
           label: "Format-Specific Prompt",
-          prompt: "List 3 benefits of regular exercise.\n\nFormat your response as:\n- Benefit: [name]\n  Why: [one sentence explanation]",
-          explanation: "Explicit formatting instructions ensure consistent, parseable output that matches your needs."
+          prompt:
+            "You are assisting a product manager preparing a risk register.\n\nFrom the description below, extract 3 risks and propose mitigations.\n\n\"We are migrating from a monolith to microservices over the next six months. Multiple teams will be changing the same shared database. We also need to keep performance acceptable for existing users during the migration.\"\n\nReturn the result in this exact format:\n- Risk: <short title>\n  Impact: <one short sentence>\n  Mitigation: <one short sentence>",
+          explanation:
+            "This example shows how explicit formatting instructions make the output easy to paste into tools (e.g. Jira, Notion) and parse programmatically if needed."
         }
       ]
     },
@@ -818,22 +843,28 @@ Explore multiple reasoning branches and evaluate each.`
       }
     ],
     playground: {
-      description: "Compare direct answers vs chain of thought reasoning.",
+      description: "Compare direct answers vs chain of thought reasoning on realistic analytical tasks.",
       starterPrompts: [
         {
-          label: "Without CoT",
-          prompt: "A farmer has 15 apples. He gives 1/3 to his neighbor, then buys 10 more, then eats 2. How many apples does he have?",
-          explanation: "Direct answers to multi-step problems often contain errors."
+          label: "Without CoT (Budget Calculation)",
+          prompt:
+            "A team has a quarterly cloud budget of $12,000. In the first month they spend $3,200. In the second month they spend $4,100. In the third month they expect to spend $3,800.\n\nHow much budget will remain (or be exceeded) at the end of the quarter?",
+          explanation:
+            "Asked directly, the model may still make arithmetic mistakes on multi-step calculations—similar to real cost dashboards or reports."
         },
         {
-          label: "With CoT",
-          prompt: "A farmer has 15 apples. He gives 1/3 to his neighbor, then buys 10 more, then eats 2. How many apples does he have?\n\nThink through this step by step, showing your work for each operation.",
-          explanation: "Step-by-step reasoning catches errors: 15 - 5 = 10, 10 + 10 = 20, 20 - 2 = 18 apples."
+          label: "With CoT (Budget Calculation)",
+          prompt:
+            "A team has a quarterly cloud budget of $12,000. In the first month they spend $3,200. In the second month they spend $4,100. In the third month they expect to spend $3,800.\n\nThink through this step by step, showing each intermediate calculation and then the final remaining (or exceeded) budget.",
+          explanation:
+            "Chain-of-thought makes each arithmetic step explicit, which usually improves accuracy and makes it easier for humans to verify the reasoning."
         },
         {
-          label: "Logic Problem",
-          prompt: "All roses are flowers. Some flowers fade quickly. Can we conclude that some roses fade quickly?\n\nAnalyze this logical statement step by step before giving your answer.",
-          explanation: "CoT helps with logical reasoning by making each inference explicit."
+          label: "Prioritizing Support Tickets",
+          prompt:
+            "You are an engineering manager deciding which support ticket to prioritize.\n\nTickets:\n1) \"Payment form fails for 5–10% of users on Safari during checkout.\"\n2) \"Dark mode toggle does not persist after page refresh.\"\n3) \"Internal admin dashboard loads slowly (5–7 seconds) for a few users in APAC.\"\n\nThink step by step about impact, frequency, and business risk, then recommend a priority order (P1, P2, P3) with a short justification.",
+          explanation:
+            "This shows CoT applied to qualitative reasoning. The intermediate steps make the trade-offs behind the final prioritization transparent."
         }
       ]
     },

@@ -2,8 +2,9 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { BookOpen, Menu, X } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Locale } from "@/lib/i18n"
 import { getTranslations } from "@/lib/translations"
@@ -79,8 +80,15 @@ export function SiteHeader({ locale, courseHref }: SiteHeaderProps) {
         {/* Logo / Brand */}
         <div className="flex items-center gap-2 min-w-0">
           <Link href={`/${locale}`} className="flex items-center gap-2 min-w-0">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
-              <BookOpen className="w-4 h-4 text-primary-foreground" />
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center shrink-0">
+              <Image
+                src="/icon.svg"
+                alt={t.nav.appName}
+                width={32}
+                height={32}
+                priority
+                className="w-8 h-8"
+              />
             </div>
             <div className="hidden sm:block min-w-0">
               <p className="text-sm font-semibold leading-tight text-foreground truncate">
