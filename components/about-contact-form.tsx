@@ -28,11 +28,11 @@ export function AboutContactForm({
   }
 
   return (
-    <Card className="p-6 sm:p-7 bg-card/70 border-border">
-      <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
+    <Card className="p-5 sm:p-6 bg-card/70 border-border">
+      <h2 className="text-base sm:text-sm font-semibold text-foreground mb-1">
         {title}
       </h2>
-      <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+      <p className="text-xs sm:text-sm text-muted-foreground mb-4 leading-relaxed">
         {description}
       </p>
       <form className="space-y-4" onSubmit={handleSubmit}>

@@ -30,6 +30,9 @@ export interface AboutPageCopy {
   }
   aboutCreatorSectionTitle: string
   networkingSectionTitle: string
+  networkingSectionDescription: string
+  networkingLinkedinDescription: string
+  networkingGithubDescription: string
   whatsappSectionTitle: string
   whatsappSectionDescription: string
   contactForm: {
@@ -73,12 +76,12 @@ export const aboutConfig: AboutConfig = {
     avatarUrl: "/diego.png",
   },
   links: {
-    linkedin: "https://www.linkedin.com/in/diegofedrizzipetry",
-    github: "https://github.com/diegofedrizzipetry",
+    linkedin: "https://www.linkedin.com/in/diego-becker-21668720b/",
+    github: "https://github.com/diegoDev84",
     website: undefined,
   },
   whatsapp: {
-    phoneNumberInternational: "5548999999999",
+    phoneNumberInternational: "5551982188221",
     defaultMessage: {
       en: "Hi Diego! I found your LLM course and would love to connect to talk about AI, products, or the project.",
       "pt-br":
@@ -87,26 +90,31 @@ export const aboutConfig: AboutConfig = {
   },
   content: {
     en: {
-      pageTitle: "About the project & who it's for",
+      pageTitle: "About the project & how to reach me",
       pageSubtitle:
-        "A focused, practical learning environment for developers and technology professionals who are building real AI-powered products with large language models — plus a direct line if you want to talk.",
+        "A focused learning experience for developers and technology professionals who want to understand how real LLM systems behave — and a direct line if you want to talk.",
       aboutProject: {
         title: "About this platform",
         paragraphs: [
-          "This platform is designed as a serious, modern learning environment for people who build with AI day to day — developers, product managers, data professionals, and technical founders who want to understand how large language models actually work in real systems.",
-          "Instead of being an introductory AI course for the general public or a loose collection of tips, the curriculum is structured as a coherent path: from transformers and tokens, to prompting, structured outputs, RAG, and production patterns used in real-world LLM products.",
-          "Every lesson is built to be practical: you read the concepts, then immediately experiment in an integrated playground with curated prompts and scenarios that mirror real application and system design work.",
+          "This platform was created as a learning environment for people who build with AI every day — developers, technical PMs, data professionals, and founders who want to understand how LLMs actually behave inside real systems.",
+          "Instead of being an introductory course for a general audience or just a collection of prompting tips, the content follows a structured path: from fundamentals like transformers and tokens to practices used in real products, such as advanced prompting, structured outputs, RAG, and production patterns.",
+          "Every lesson is designed to be practical: you understand the concepts and then immediately experiment in an integrated playground, with prompts and scenarios inspired by real application and system design problems.",
+          "The goal is to build practical intuition — not just learn concepts, but see how these tools behave once they become real systems.",
         ],
       },
       aboutCreatorSectionTitle: "About the creator",
-      networkingSectionTitle: "Professional links",
-      whatsappSectionTitle: "Quick contact on WhatsApp",
+      networkingSectionTitle: "Let’s connect",
+      networkingSectionDescription:
+        "These are usually the best places to connect and continue the conversation.",
+      networkingLinkedinDescription: "Professional connection and networking.",
+      networkingGithubDescription: "Code, projects, and open source work.",
+      whatsappSectionTitle: "Quick contact",
       whatsappSectionDescription:
-        "If you prefer a fast, informal channel to talk about AI, LLM products, or this project, you can send me a message on WhatsApp. It’s ideal for quick questions, networking, or exploring potential collaborations.",
+        "If you’d like to talk about applied AI, system architecture, or this project, WhatsApp is the fastest way to reach me.",
       contactForm: {
-        title: "Contact form",
+        title: "Structured message",
         description:
-          "If you’d rather write a more structured message, you can use this form. Share a bit about your context and what you’d like to discuss.",
+          "If you prefer to send a more detailed message, you can use this form.",
         nameLabel: "Name",
         emailLabel: "Email",
         messageLabel: "Message",
@@ -114,26 +122,31 @@ export const aboutConfig: AboutConfig = {
       },
     },
     "pt-br": {
-      pageTitle: "Sobre o projeto e para quem ele foi feito",
+      pageTitle: "Sobre o projeto e como falar comigo",
       pageSubtitle:
-        "Um ambiente de aprendizagem focado e prático para desenvolvedores e profissionais de tecnologia que estão construindo produtos reais com modelos de linguagem — e um canal direto caso você queira conversar.",
+        "Uma experiência de aprendizagem focada para desenvolvedores e profissionais de tecnologia que querem entender como sistemas com LLMs se comportam na prática — e um canal direto caso você queira conversar.",
       aboutProject: {
         title: "Sobre esta plataforma",
         paragraphs: [
-          "Esta plataforma foi desenhada como um ambiente moderno e sério de aprendizagem para quem constrói com IA no dia a dia — desenvolvedores, PMs, pessoas de dados e fundadores técnicos que querem entender como LLMs funcionam de verdade em sistemas reais.",
-          "Em vez de ser um curso introdutório de IA para o público geral ou uma coleção solta de dicas, o currículo é estruturado como um caminho coerente: de Transformer e tokens, passando por prompting, saídas estruturadas, RAG e padrões de produção usados em produtos com LLMs.",
-          "Cada lição foi pensada para ser prática: você lê os conceitos e imediatamente experimenta em um playground integrado, com prompts e cenários curados que se parecem com trabalho real de aplicação e design de sistemas.",
+          "Esta plataforma foi criada como um ambiente de aprendizado para quem constrói com IA no dia a dia — desenvolvedores, PMs técnicos, profissionais de dados e fundadores que querem entender como LLMs realmente se comportam em sistemas reais.",
+          "Em vez de ser um curso introdutório para o público geral ou apenas uma coleção de dicas de prompting, o conteúdo segue um caminho estruturado: dos fundamentos, como Transformer e tokens, até práticas usadas em produtos reais, como prompting avançado, saídas estruturadas, RAG e padrões de produção.",
+          "Cada lição foi pensada para ser prática: você entende os conceitos e imediatamente experimenta em um playground integrado, com prompts e cenários inspirados em problemas reais de aplicação e de design de sistemas.",
+          "A ideia é desenvolver intuição prática — não só aprender conceitos, mas enxergar como essas ferramentas se comportam quando viram sistemas de verdade.",
         ],
       },
       aboutCreatorSectionTitle: "Sobre o criador",
-      networkingSectionTitle: "Links profissionais",
-      whatsappSectionTitle: "Contato rápido por WhatsApp",
+      networkingSectionTitle: "Vamos nos conectar",
+      networkingSectionDescription:
+        "Estes são, em geral, os melhores lugares para se conectar e continuar a conversa.",
+      networkingLinkedinDescription: "Conexão profissional e networking.",
+      networkingGithubDescription: "Código, projetos e trabalho open source.",
+      whatsappSectionTitle: "Contato rápido",
       whatsappSectionDescription:
-        "Se você prefere um canal rápido e informal para falar sobre IA, produtos com LLMs ou sobre este projeto, pode me enviar uma mensagem no WhatsApp. É ideal para dúvidas pontuais, networking ou explorar possíveis colaborações.",
+        "Se quiser conversar sobre IA aplicada, arquitetura de sistemas ou este projeto, o WhatsApp é a forma mais rápida de falar comigo.",
       contactForm: {
-        title: "Formulário de contato",
+        title: "Mensagem estruturada",
         description:
-          "Se você preferir escrever uma mensagem mais estruturada, pode usar este formulário. Conte um pouco do seu contexto e sobre o que você gostaria de conversar.",
+          "Se preferir enviar uma mensagem mais detalhada, você pode usar este formulário.",
         nameLabel: "Nome",
         emailLabel: "E-mail",
         messageLabel: "Mensagem",

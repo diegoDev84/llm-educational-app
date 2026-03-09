@@ -5,9 +5,8 @@ import { SiteHeader } from "@/components/site-header"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Linkedin, Github, Globe, MessageCircle } from "lucide-react"
+import { Linkedin, Github, MessageCircle } from "lucide-react"
 import { getLessonSlugs } from "@/lib/lessons"
-import { AboutContactForm } from "@/components/about-contact-form"
 
 interface AboutPageProps {
   params: Promise<{ locale: Locale }>
@@ -114,79 +113,76 @@ export default async function AboutPage({ params }: AboutPageProps) {
           </Card>
         </section>
 
-        {/* Networking + WhatsApp + Form */}
-        <section className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1.6fr)]">
-          <div className="space-y-6">
-            <Card className="p-6 sm:p-7 bg-card/70 border-border space-y-4">
+        {/* Connect / Networking & Quick contact */}
+        <section className="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1.7fr)]">
+          {/* Left: professional links */}
+          <Card className="p-6 sm:p-7 bg-card/70 border-border space-y-4">
+            <div>
               <h2 className="text-lg sm:text-xl font-semibold text-foreground">
                 {copy.networkingSectionTitle}
               </h2>
-              <ul className="space-y-3 text-sm text-muted-foreground">
+              <p className="mt-1 text-sm text-muted-foreground">
+                {copy.networkingSectionDescription}
+              </p>
+            </div>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li>
+                <a
+                  href={links.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background/40 px-3 py-2.5 text-foreground hover:border-primary hover:bg-background/70 hover:text-primary transition-colors"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Linkedin className="w-4 h-4" />
+                    <div>
+                      <p className="text-sm font-medium">LinkedIn</p>
+                      <p className="text-xs text-muted-foreground">
+                        {copy.networkingLinkedinDescription}
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              {links.github && (
                 <li>
                   <a
-                    href={links.linkedin}
+                    href={links.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
+                    className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background/40 px-3 py-2.5 text-foreground hover:border-primary hover:bg-background/70 hover:text-primary transition-colors"
                   >
-                    <Linkedin className="w-4 h-4" />
-                    <span>LinkedIn</span>
+                    <div className="flex items-center gap-2.5">
+                      <Github className="w-4 h-4" />
+                      <div>
+                        <p className="text-sm font-medium">GitHub</p>
+                        <p className="text-xs text-muted-foreground">
+                          {copy.networkingGithubDescription}
+                        </p>
+                      </div>
+                    </div>
                   </a>
                 </li>
-                {links.github && (
-                  <li>
-                    <a
-                      href={links.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>GitHub</span>
-                    </a>
-                  </li>
-                )}
-                {links.website && (
-                  <li>
-                    <a
-                      href={links.website}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
-                    >
-                      <Globe className="w-4 h-4" />
-                      <span>Website</span>
-                    </a>
-                  </li>
-                )}
-              </ul>
-            </Card>
+              )}
+            </ul>
+          </Card>
 
-            <Card className="p-6 sm:p-7 bg-card/70 border-border space-y-4">
-              <h2 className="text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
-                <MessageCircle className="w-4 h-4 text-primary" />
-                <span>{copy.whatsappSectionTitle}</span>
-              </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {copy.whatsappSectionDescription}
-              </p>
-              <Button asChild className="w-full sm:w-auto gap-2">
-                <a href={waLink} target="_blank" rel="noreferrer">
-                  <MessageCircle className="w-4 h-4" />
-                  <span>WhatsApp</span>
-                </a>
-              </Button>
-            </Card>
-          </div>
-
-          <AboutContactForm
-            title={copy.contactForm.title}
-            description={copy.contactForm.description}
-            nameLabel={copy.contactForm.nameLabel}
-            emailLabel={copy.contactForm.emailLabel}
-            messageLabel={copy.contactForm.messageLabel}
-            submitLabel={copy.contactForm.submitLabel}
-          />
+          {/* Right: quick contact */}
+          <Card className="p-6 sm:p-7 bg-card/70 border-border space-y-3">
+            <h2 className="text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
+              <MessageCircle className="w-4 h-4 text-primary" />
+              <span>{copy.whatsappSectionTitle}</span>
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {copy.whatsappSectionDescription}
+            </p>
+            <Button asChild className="w-full sm:w-auto gap-2">
+              <a href={waLink} target="_blank" rel="noreferrer">
+                <MessageCircle className="w-4 h-4" />
+                <span>WhatsApp</span>
+              </a>
+            </Button>
+          </Card>
         </section>
       </main>
     </div>
