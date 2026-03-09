@@ -67,7 +67,13 @@
     "retry": "Retry",
     "emptyTitle": "No response yet",
     "emptyDescription": "Choose an experiment above or type your own prompt, then click Run to see the model's response here.",
-    "whyExperiment": "Why This Experiment?"
+    "whyExperiment": "Why This Experiment?",
+    "rateLimited": "You are sending requests too quickly. Please wait a few seconds and try again.",
+    "serverError": "Temporary error while talking to the model. Please try again in a few seconds.",
+    "badRequestError": "The request was rejected by the server. Please check your prompt and try again.",
+    "genericError": "Failed to generate a response from the model.",
+    "unexpectedError": "An unexpected error occurred while talking to the model. Please try again.",
+    "retryAfterLabel": "Try again in {seconds}s"
   },
   "notFound": {
     "title": "Page not found",

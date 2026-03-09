@@ -67,7 +67,13 @@
     "retry": "Tentar novamente",
     "emptyTitle": "Nenhuma resposta ainda",
     "emptyDescription": "Escolha um experimento acima ou digite seu prompt e clique em Executar para ver a resposta do modelo aqui.",
-    "whyExperiment": "Por que este experimento?"
+    "whyExperiment": "Por que este experimento?",
+    "rateLimited": "Você está enviando requisições muito rápido. Por favor, espere alguns segundos e tente novamente.",
+    "serverError": "Erro temporário ao falar com o modelo. Tente novamente em alguns segundos.",
+    "badRequestError": "A requisição foi rejeitada pelo servidor. Verifique seu prompt e tente novamente.",
+    "genericError": "Falha ao gerar uma resposta do modelo.",
+    "unexpectedError": "Ocorreu um erro inesperado ao falar com o modelo. Tente novamente.",
+    "retryAfterLabel": "Tente novamente em {seconds}s"
   },
   "notFound": {
     "title": "Página não encontrada",
