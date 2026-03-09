@@ -89,28 +89,29 @@ The model can generate code because it has learned the statistical patterns of h
       }
     ],
     playground: {
-      description: "Try these prompts to see how LLMs complete realistic texts and synthesize knowledge based on patterns learned during training.",
+      description:
+        "Use these tiny experiments to feel how the model completes patterns, finishes thoughts, and answers simple questions.",
       starterPrompts: [
         {
-          label: "Complete a Support Email",
+          label: "Pattern completion: animals",
           prompt:
-            "Complete this internal support email in a clear, professional way:\n\n\"Hi team,\nWe're investigating the incident in the payments service. The first things we checked were the error logs and the last deployment. Our current hypothesis is that\"",
+            "Complete the pattern with another animal:\n\n1) Bird\n2) Butterfly\n3) Dog\n4) Weasel\n5)",
           explanation:
-            "This shows next-token prediction on a realistic work scenario (an incident email). The model isn't recalling a specific email—it is continuing the text using patterns it has seen in similar technical communications."
+            "A short list completion that makes next-token prediction very tangible—you can quickly see if the continuation \"fits\" the pattern."
         },
         {
-          label: "Continue a Code Comment",
+          label: "Finish the sentence",
           prompt:
-            "Complete this code comment so it matches common patterns you have seen in production codebases:\n\n// This function validates the incoming API payload and ...",
+            "Complete this sentence in a natural way:\n\n\"On weekends I like to\"",
           explanation:
-            "Here the model predicts how a typical code comment would continue, based on patterns from many repositories. Notice how it tends to produce conventional phrasing used by developers."
+            "Shows how the model continues everyday text based on common patterns it has seen during training."
         },
         {
-          label: "Summarize a Technical Concept",
+          label: "Answer from a tiny fact list",
           prompt:
-            "Explain what a feature flag is to a product manager in 3 sentences. Focus on why teams use them and the trade-offs they introduce.",
+            "Facts:\n- The Sun is a star.\n- Earth orbits the Sun.\n- The Moon orbits Earth.\n\nQuestion: What does the Moon orbit?",
           explanation:
-            "This demonstrates how the model synthesizes knowledge from training data about a real software engineering concept. Pay attention to how confident the answer sounds, even though it is still statistical pattern matching and can be incomplete or slightly inaccurate."
+            "A minimal question-answer example that highlights how the model uses short context rather than any hidden database of facts."
         }
       ]
     },
@@ -173,28 +174,29 @@ The same text may have different token counts across models. The word "indescrib
       }
     ],
     playground: {
-      description: "Experiment with realistic prompts to see how token efficiency affects cost, context usage, and output quality.",
+      description:
+        "Compare short vs wordy prompts and see how they change token usage and output.",
       starterPrompts: [
         {
-          label: "Concise Incident Summary",
+          label: "Short summary (few tokens)",
           prompt:
-            "Summarize the following incident report in one sentence (max 30 words):\n\n\"On 2024-07-12, users started seeing 500 errors on the checkout page between 14:03 and 14:27 UTC. Error rates spiked to 35% of all requests. The issue was mitigated by rolling back a deployment to the payments service. Root cause is still under investigation.\"",
+            "Summarize in one short sentence (max 15 words):\n\n\"Users saw 500 errors on checkout for 20 minutes until we rolled back a deploy.\"",
           explanation:
-            "This short, precise instruction uses relatively few input tokens and encourages a compact output. In a real incident-management tool, this keeps costs and context usage low."
+            "A compact instruction that uses few input tokens and encourages a tiny, cheap output."
         },
         {
-          label: "Verbose Incident Summary Prompt",
+          label: "Overly polite summary (many tokens)",
           prompt:
-            "I would really appreciate it if you could kindly provide me with a very detailed and nicely written summary in natural language of the following incident report, capturing all the nuances and context that might be relevant for any stakeholder who might read it in the future, while also maintaining a professional tone and avoiding overly technical jargon:\n\n\"On 2024-07-12, users started seeing 500 errors on the checkout page between 14:03 and 14:27 UTC. Error rates spiked to 35% of all requests. The issue was mitigated by rolling back a deployment to the payments service. Root cause is still under investigation.\"",
+            "Could you please write a very nice and detailed summary in natural language of the following short incident description, making sure to sound professional and considerate to every possible stakeholder who might ever read it in the future?\n\n\"Users saw 500 errors on checkout for 20 minutes until we rolled back a deploy.\"",
           explanation:
-            "This asks for essentially the same thing but spends many more tokens on redundant phrasing. Compare token counts and output quality to see how verbose prompts increase cost without clear benefit."
+            "Almost the same task as above, but the extra polite sentence burns many more input tokens."
         },
         {
-          label: "Code Tokenization in Practice",
+          label: "Tiny code example",
           prompt:
-            "Write a TypeScript function `buildUserFullName` that receives `{ firstName: string; lastName: string; }` and returns a formatted full name string. Keep the implementation on 3–5 lines.",
+            "Write a TypeScript function `fullName` that receives `{ firstName: string; lastName: string }` and returns a single string like \"Ada Lovelace\". Keep everything within 3–4 lines.",
           explanation:
-            "Code has a high token density because of symbols and identifiers. Generate this function and notice how a few lines of code already translate into a meaningful number of output tokens."
+            "Even a small snippet of code turns into a noticeable number of tokens because of symbols and identifiers."
         }
       ]
     },
@@ -368,27 +370,28 @@ If you want a list, say "as a numbered list." If you want JSON, specify the sche
       }
     ],
     playground: {
-      description: "Compare vague and well-structured prompts on realistic software and product scenarios.",
+      description:
+        "Glance at these tiny prompts to feel the difference between vague and well-structured instructions.",
       starterPrompts: [
         {
-          label: "Vague Prompt",
-          prompt: "Help me with my API",
+          label: "Vague request",
+          prompt: "Help me with my API.",
           explanation:
-            "This prompt is far too vague for a production assistant. The model has no idea whether you care about design, performance, security, or specific error messages, so the response will be generic."
+            "So short that the model has no idea what you care about—design, errors, performance, security—so the answer will be generic."
         },
         {
-          label: "Structured Prompt",
+          label: "Structured request (CRISPE)",
           prompt:
-            "You are a senior backend engineer.\n\nContext:\n- We have a REST API used by our mobile app\n- Users sometimes get HTTP 429 errors from the `/search` endpoint during traffic spikes\n\nTask:\nExplain to a junior developer, in 3–4 short paragraphs, what HTTP 429 means, why it happens, and 2 concrete mitigation strategies we could implement.\n\nStyle:\n- Use simple language\n- Include at least one concrete example per mitigation",
+            "You are a backend engineer.\n\nContext:\n- REST API used by a mobile app\n- Users sometimes get HTTP 429 on `/search`\n\nTask:\nExplain to a junior dev what HTTP 429 means and give 2 mitigation ideas.\n\nStyle:\n- Simple language\n- Bullet list, not long paragraphs",
           explanation:
-            "This prompt applies the CRISPE ideas: it gives context, role, audience, clear task, and style constraints. Compare how focused and actionable the answer becomes versus the vague version."
+            "Same topic, but now you add role, context, task, and style so the model knows exactly what to do."
         },
         {
-          label: "Format-Specific Prompt",
+          label: "Format-specific extraction",
           prompt:
-            "You are assisting a product manager preparing a risk register.\n\nFrom the description below, extract 3 risks and propose mitigations.\n\n\"We are migrating from a monolith to microservices over the next six months. Multiple teams will be changing the same shared database. We also need to keep performance acceptable for existing users during the migration.\"\n\nReturn the result in this exact format:\n- Risk: <short title>\n  Impact: <one short sentence>\n  Mitigation: <one short sentence>",
+            "From the text below, pull out 3 risks in this exact format:\n- Risk: <short title>\n  Impact: <short sentence>\n  Mitigation: <short sentence>\n\n\"We are migrating from a monolith to microservices. Multiple teams will touch the same database. We must keep performance acceptable for existing users.\"",
           explanation:
-            "This example shows how explicit formatting instructions make the output easy to paste into tools (e.g. Jira, Notion) and parse programmatically if needed."
+            "Shows how explicit format instructions turn a paragraph into structured, easy-to-scan bullets."
         }
       ]
     },
@@ -558,22 +561,29 @@ Output:
       }
     ],
     playground: {
-      description: "Compare zero-shot and few-shot approaches to see how examples improve results.",
+      description:
+        "See how adding 2–3 short examples quickly teaches the model a pattern.",
       starterPrompts: [
         {
-          label: "Zero-Shot Classification",
-          prompt: "Classify this customer feedback as positive, negative, or neutral: 'The product arrived late but works great'",
-          explanation: "Without examples, the model uses its general understanding. Results may vary."
+          label: "Zero-shot sentiment",
+          prompt:
+            "Classify the sentiment as positive, negative, or neutral:\n\n\"Shipping was slow, but the product is great.\"",
+          explanation:
+            "With no examples, the model leans on its general sense of sentiment words."
         },
         {
-          label: "Few-Shot Classification",
-          prompt: "Classify customer feedback:\n\nFeedback: 'Absolutely love it!'\nCategory: positive\n\nFeedback: 'Completely broken on arrival'\nCategory: negative\n\nFeedback: 'It's okay, nothing special'\nCategory: neutral\n\nFeedback: 'The product arrived late but works great'\nCategory:",
-          explanation: "With examples, the model understands your specific classification criteria and format."
+          label: "Few-shot sentiment",
+          prompt:
+            "Classify the sentiment:\n\n\"Fast delivery!\" → positive\n\"Product arrived broken.\" → negative\n\"Still waiting for my order.\" → negative\n\nNow classify:\n\"Shipping was slow, but the product is great.\" →",
+          explanation:
+            "A tiny set of labeled examples makes the expected categories and style crystal clear."
         },
         {
-          label: "Format Learning",
-          prompt: "Convert to slug format:\n\nTitle: 'How to Build Better APIs'\nSlug: how-to-build-better-apis\n\nTitle: 'The Ultimate Guide to React Hooks'\nSlug: the-ultimate-guide-to-react-hooks\n\nTitle: '10 Tips for Clean Code'\nSlug:",
-          explanation: "Few-shot learning is excellent for teaching specific formatting patterns."
+          label: "Learning a format",
+          prompt:
+            "Turn titles into URL slugs:\n\n\"How LLMs work\" → how-llms-work\n\"Few-shot learning basics\" → few-shot-learning-basics\n\"JSON output examples\" →",
+          explanation:
+            "The model copies the pattern from a couple of examples to a new input."
         }
       ]
     },
@@ -649,22 +659,28 @@ Providing a schema template significantly improves reliability.`
       }
     ],
     playground: {
-      description: "Practice extracting structured data from natural language.",
+      description: "Practice turning tiny pieces of text into clean JSON objects and arrays.",
       starterPrompts: [
         {
-          label: "Basic JSON Extraction",
-          prompt: "Extract the key information from this text and return as JSON:\n\n'John Smith is a 32-year-old software engineer from Seattle who enjoys hiking.'\n\nReturn: {name, age, occupation, location, hobby}",
-          explanation: "The model extracts structured data from unstructured text. Specifying the keys helps ensure complete output."
+          label: "Simple field extraction",
+          prompt:
+            "Extract the fields from this text and return JSON:\n\n\"Name: John Smith\nEmail: john@email.com\nOrder: #4932\"\n\nReturn an object with: name, email, orderId",
+          explanation:
+            "A direct mapping from a mini form into JSON—easy to read and easy to validate."
         },
         {
-          label: "Schema-Guided Output",
-          prompt: "List 2 books with this exact JSON structure:\n{\n  \"books\": [\n    {\"title\": \"\", \"author\": \"\", \"year\": 0, \"genre\": \"\"}\n  ]\n}",
-          explanation: "Providing the exact schema template ensures consistent output structure."
+          label: "Books with a fixed schema",
+          prompt:
+            "Return 2 books using exactly this JSON shape:\n{\n  \"books\": [\n    {\"title\": \"\", \"author\": \"\", \"year\": 0}\n  ]\n}",
+          explanation:
+            "Repeating a short template pushes the model to keep the same structure for every item."
         },
         {
-          label: "Nested JSON",
-          prompt: "Create a JSON representation of a recipe for chocolate chip cookies with: name, prepTime (minutes), ingredients (array of {item, amount}), and steps (array of strings). Limit to 3 ingredients and 3 steps.",
-          explanation: "Complex nested structures require clear descriptions of each level."
+          label: "Tiny nested JSON",
+          prompt:
+            "Create JSON for a recipe with:\n- name\n- prepMinutes\n- ingredients: array of { item, amount }\n- steps: array of strings\n\nKeep it very short: 2 ingredients and 2 steps.",
+          explanation:
+            "Shows how to describe a small nested shape without a lot of surrounding story text."
         }
       ]
     },
@@ -843,28 +859,29 @@ Explore multiple reasoning branches and evaluate each.`
       }
     ],
     playground: {
-      description: "Compare direct answers vs chain of thought reasoning on realistic analytical tasks.",
+      description:
+        "Run the same tiny problems with and without “think step by step” and compare the reasoning.",
       starterPrompts: [
         {
-          label: "Without CoT (Budget Calculation)",
+          label: "No CoT: quick math",
           prompt:
-            "A team has a quarterly cloud budget of $12,000. In the first month they spend $3,200. In the second month they spend $4,100. In the third month they expect to spend $3,800.\n\nHow much budget will remain (or be exceeded) at the end of the quarter?",
+            "I have $50.\nI buy a book for $18 and a snack for $4.\n\nHow much money is left?",
           explanation:
-            "Asked directly, the model may still make arithmetic mistakes on multi-step calculations—similar to real cost dashboards or reports."
+            "A very small multi-step calculation that the model might still fumble when answering directly."
         },
         {
-          label: "With CoT (Budget Calculation)",
+          label: "With CoT: show the steps",
           prompt:
-            "A team has a quarterly cloud budget of $12,000. In the first month they spend $3,200. In the second month they spend $4,100. In the third month they expect to spend $3,800.\n\nThink through this step by step, showing each intermediate calculation and then the final remaining (or exceeded) budget.",
+            "I have $50.\nI buy a book for $18 and a snack for $4.\n\nThink step by step. Show each intermediate calculation, then give the final amount of money left.",
           explanation:
-            "Chain-of-thought makes each arithmetic step explicit, which usually improves accuracy and makes it easier for humans to verify the reasoning."
+            "The numbers are the same, but now you explicitly ask for the reasoning chain before the final answer."
         },
         {
-          label: "Prioritizing Support Tickets",
+          label: "Prioritizing tiny support tickets",
           prompt:
-            "You are an engineering manager deciding which support ticket to prioritize.\n\nTickets:\n1) \"Payment form fails for 5–10% of users on Safari during checkout.\"\n2) \"Dark mode toggle does not persist after page refresh.\"\n3) \"Internal admin dashboard loads slowly (5–7 seconds) for a few users in APAC.\"\n\nThink step by step about impact, frequency, and business risk, then recommend a priority order (P1, P2, P3) with a short justification.",
+            "Tickets:\n1) \"Checkout button sometimes does nothing when clicked.\"\n2) \"Dark mode toggle does not remember my choice.\"\n3) \"Avatar image is slightly blurry on profile page.\"\n\nThink step by step about impact and frequency, then label each ticket P1, P2, or P3 with one short reason.",
           explanation:
-            "This shows CoT applied to qualitative reasoning. The intermediate steps make the trade-offs behind the final prioritization transparent."
+            "A short qualitative example where you can see the model write out its reasoning before deciding priorities."
         }
       ]
     },

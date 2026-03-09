@@ -42,28 +42,28 @@ O modelo pode gerar código porque aprendeu os padrões estatísticos de como o 
     ],
     playground: {
       description:
-        "Experimente estes prompts para ver como os LLMs completam textos realistas e sintetizam conhecimento com base em padrões aprendidos no treinamento.",
+        "Use estes mini experimentos para sentir como o modelo completa padrões, termina frases e responde perguntas simples.",
       starterPrompts: [
         {
-          label: "Completar e-mail de incidente",
+          label: "Completar padrão de animais",
           prompt:
-            "Complete este e-mail interno de suporte de forma clara e profissional:\n\n\"Pessoal,\nEstamos investigando o incidente no serviço de pagamentos. As primeiras coisas que verificamos foram os logs de erro e o último deploy. Nossa hipótese atual é que\"",
+            "Complete o padrão com outro animal:\n\n1) Ave\n2) Borboleta\n3) Cachorro\n4) Doninha\n5)",
           explanation:
-            "Este exemplo mostra predição de próximo token em um cenário real (um e-mail sobre incidente). O modelo não está recuperando um e-mail específico — ele continua o texto usando padrões vistos em comunicações técnicas parecidas."
+            "Uma lista curtíssima que torna a predição de próximo token bem concreta — você consegue ver rápido se a continuação \"combina\" com o padrão."
         },
         {
-          label: "Continuar comentário de código",
+          label: "Terminar a frase",
           prompt:
-            "Complete este comentário de código para que ele pareça algo comum em bases de código de produção:\n\n// Esta função valida o payload de entrada da API e ...",
+            "Complete esta frase de forma natural:\n\n\"Nos finais de semana eu gosto de\"",
           explanation:
-            "Aqui o modelo prevê como um comentário típico continuaria, baseado em padrões de muitos repositórios. Repare como tende a usar frases convencionais que desenvolvedores costumam escrever."
+            "Mostra como o modelo continua texto do dia a dia com base em padrões comuns que viu no treinamento."
         },
         {
-          label: "Resumir um conceito técnico",
+          label: "Responder a partir de fatos curtinhos",
           prompt:
-            "Explique o que é um feature flag para uma pessoa de produto em 3 frases. Foque em por que times usam isso e nos trade-offs que introduz.",
+            "Fatos:\n- O Sol é uma estrela.\n- A Terra orbita o Sol.\n- A Lua orbita a Terra.\n\nPergunta: O que a Lua orbita?",
           explanation:
-            "Este prompt mostra o modelo sintetizando conhecimento sobre um conceito real de engenharia de software. Observe como a resposta soa confiante, mesmo sendo apenas correspondência estatística de padrões — ela ainda pode ser incompleta ou ligeiramente imprecisa."
+            "Um exemplo mínimo de pergunta e resposta que destaca como o modelo usa um contexto pequeno em vez de algum \"banco de dados\" oculto."
         }
       ]
     },
@@ -127,28 +127,28 @@ O mesmo texto pode ter contagens de token diferentes entre modelos. A palavra "i
     ],
     playground: {
       description:
-        "Experimente prompts realistas para ver como a eficiência de tokens afeta custo, uso de contexto e qualidade da saída.",
+        "Compare prompts curtos e prolixos e veja como eles mudam o uso de tokens e a saída.",
       starterPrompts: [
         {
-          label: "Resumo de incidente conciso",
+          label: "Resumo curto (poucos tokens)",
           prompt:
-            "Resuma o relatório de incidente abaixo em uma frase (máx. 30 palavras):\n\n\"Em 12/07/2024, usuários começaram a ver erro 500 na página de checkout entre 11:03 e 11:27 (horário de Brasília). A taxa de erro chegou a 35% das requisições. O problema foi mitigado fazendo rollback de um deploy no serviço de pagamentos. A causa raiz ainda está em investigação.\"",
+            "Resuma em uma frase bem curta (máx. 15 palavras):\n\n\"Usuários viram erros 500 no checkout por 20 minutos até fazermos rollback de um deploy.\"",
           explanation:
-            "Esta instrução curta e precisa usa relativamente poucos tokens de entrada e incentiva uma saída compacta. Em uma ferramenta de gestão de incidentes real, isso ajuda a controlar custo e uso de contexto."
+            "Instrução direta que usa poucos tokens de entrada e incentiva uma saída pequena e barata."
         },
         {
-          label: "Prompt verboso para o mesmo resumo",
+          label: "Resumo exageradamente educado (muitos tokens)",
           prompt:
-            "Eu realmente gostaria que você pudesse, por gentileza, produzir um resumo bastante detalhado e bem escrito em linguagem natural do relatório de incidente abaixo, capturando todos os nuances e contextos que possam ser relevantes para qualquer pessoa que venha a ler esse material no futuro, mantendo um tom profissional e evitando jargão técnico excessivo:\n\n\"Em 12/07/2024, usuários começaram a ver erro 500 na página de checkout entre 11:03 e 11:27 (horário de Brasília). A taxa de erro chegou a 35% das requisições. O problema foi mitigado fazendo rollback de um deploy no serviço de pagamentos. A causa raiz ainda está em investigação.\"",
+            "Você poderia, por gentileza, escrever um resumo bem detalhado e muito bem escrito em linguagem natural da descrição curtinha de incidente abaixo, tomando cuidado para soar profissional e incluir qualquer nuance que possa ser relevante para qualquer pessoa que venha a ler este texto no futuro?\n\n\"Usuários viram erros 500 no checkout por 20 minutos até fazermos rollback de um deploy.\"",
           explanation:
-            "Aqui pedimos essencialmente a mesma coisa, mas gastando muitos tokens com frases redundantes. Compare a contagem de tokens e a qualidade da saída para ver como prompts prolixos aumentam custo sem benefício claro."
+            "Pede praticamente a mesma coisa, mas queima muitos tokens em floreios educados e redundantes."
         },
         {
-          label: "Tokenização em código na prática",
+          label: "Exemplo minúsculo de código",
           prompt:
-            "Escreva uma função TypeScript `buildUserFullName` que recebe `{ firstName: string; lastName: string; }` e retorna uma string com o nome completo formatado. Mantenha a implementação em 3–5 linhas.",
+            "Escreva uma função TypeScript `nomeCompleto` que recebe `{ firstName: string; lastName: string }` e retorna uma string como \"Ada Lovelace\". Mantenha tudo em 3–4 linhas.",
           explanation:
-            "Código tem densidade alta de tokens por causa de símbolos e identificadores. Gere esta função e repare como poucas linhas já viram um número relevante de tokens de saída."
+            "Mesmo um snippet pequeno de código vira um número perceptível de tokens por causa de símbolos e identificadores."
         }
       ]
     },
@@ -323,27 +323,28 @@ Se quiser uma lista, diga "como lista numerada". Se quiser JSON, especifique o s
       }
     ],
     playground: {
-      description: "Compare prompts vagos e estruturados em cenários reais de software e produto.",
+      description:
+        "Bata o olho nestes prompts curtinhos para sentir a diferença entre pedidos vagos e bem estruturados.",
       starterPrompts: [
         {
-          label: "Prompt vago",
-          prompt: "Me ajude com a minha API",
+          label: "Pedido vago",
+          prompt: "Me ajude com a minha API.",
           explanation:
-            "Este prompt é vago demais para um assistente em produção. O modelo não sabe se você se preocupa com design, performance, segurança ou erros específicos, então a resposta tende a ser genérica."
+            "Tão curto que o modelo não sabe se você se importa com design, erros, performance ou segurança — a resposta tende a ser genérica."
         },
         {
-          label: "Prompt estruturado",
+          label: "Pedido estruturado (CRISPE)",
           prompt:
-            "Você é uma pessoa desenvolvedora backend sênior.\n\nContexto:\n- Temos uma API REST usada pelo nosso app mobile\n- Usuários às vezes recebem erros HTTP 429 no endpoint `/search` durante picos de tráfego\n\nTarefa:\nExplique para uma pessoa desenvolvedora júnior, em 3–4 parágrafos curtos, o que é HTTP 429, por que ele acontece e 2 estratégias concretas de mitigação que podemos implementar.\n\nEstilo:\n- Use linguagem simples\n- Inclua pelo menos um exemplo concreto por estratégia",
+            "Você é uma pessoa desenvolvedora backend.\n\nContexto:\n- API REST usada por um app mobile\n- Usuários às vezes recebem HTTP 429 no endpoint `/search`\n\nTarefa:\nExplique para uma pessoa júnior o que é HTTP 429 e dê 2 ideias de mitigação.\n\nEstilo:\n- Linguagem simples\n- Use bullets, não parágrafos longos",
           explanation:
-            "Este prompt aplica as ideias do CRISPE: fornece contexto, papel, audiência, tarefa clara e restrições de estilo. Compare como a resposta fica mais focada e acionável em relação à versão vaga."
+            "Mesmo assunto, mas agora com papel, contexto, tarefa e estilo para o modelo saber exatamente o que fazer."
         },
         {
-          label: "Prompt com formato específico",
+          label: "Extração com formato específico",
           prompt:
-            "Você está ajudando uma pessoa de produto a montar um registro de riscos.\n\nA partir da descrição abaixo, extraia 3 riscos e proponha mitigações.\n\n\"Estamos migrando de um monólito para microservices nos próximos seis meses. Vários times vão alterar o mesmo banco de dados compartilhado. Também precisamos manter a performance aceitável para usuárias/os atuais durante a migração.\"\n\nRetorne o resultado exatamente neste formato:\n- Risco: <título curto>\n  Impacto: <uma frase curta>\n  Mitigação: <uma frase curta>",
+            "A partir do texto abaixo, extraia 3 riscos neste formato exato:\n- Risco: <título curto>\n  Impacto: <frase curta>\n  Mitigação: <frase curta>\n\n\"Estamos migrando de um monólito para microservices. Vários times vão mexer no mesmo banco compartilhado. Precisamos manter a performance aceitável para quem já usa o sistema.\"",
           explanation:
-            "Este exemplo mostra como instruções de formato explícitas tornam a saída fácil de colar em ferramentas (como Jira ou Notion) e também de parsear programaticamente, se necessário."
+            "Mostra como instruções de formato claras transformam um parágrafo em bullets estruturados e fáceis de escanear."
         }
       ]
     },
@@ -513,22 +514,29 @@ Saída:
       }
     ],
     playground: {
-      description: "Compare abordagens zero-shot e few-shot para ver como exemplos melhoram os resultados.",
+      description:
+        "Veja como adicionar 2–3 exemplos curtinhos ensina o modelo a seguir um padrão.",
       starterPrompts: [
         {
-          label: "Classificação zero-shot",
-          prompt: "Classifique este feedback de cliente como positivo, negativo ou neutro: 'O produto chegou atrasado mas funciona muito bem'",
-          explanation: "Sem exemplos, o modelo usa sua compreensão geral. Os resultados podem variar."
+          label: "Sentimento zero-shot",
+          prompt:
+            "Classifique o sentimento como positivo, negativo ou neutro:\n\n\"A entrega foi lenta, mas o produto é ótimo.\"",
+          explanation:
+            "Sem exemplos, o modelo usa sua noção geral de palavras positivas e negativas."
         },
         {
-          label: "Classificação few-shot",
-          prompt: "Classifique o feedback do cliente:\n\nFeedback: 'Adorei!'\nCategoria: positivo\n\nFeedback: 'Chegou quebrado'\nCategoria: negativo\n\nFeedback: 'É ok, nada especial'\nCategoria: neutro\n\nFeedback: 'O produto chegou atrasado mas funciona muito bem'\nCategoria:",
-          explanation: "Com exemplos, o modelo entende seus critérios e formato específicos de classificação."
+          label: "Sentimento few-shot",
+          prompt:
+            "Classifique o sentimento:\n\n\"Entrega rápida!\" → positivo\n\"Produto quebrado.\" → negativo\n\"Ainda não recebi.\" → negativo\n\nAgora classifique:\n\"A entrega foi lenta, mas o produto é ótimo.\" →",
+          explanation:
+            "Um conjunto mínimo de exemplos rotulados deixa as categorias e o estilo da resposta muito claros."
         },
         {
-          label: "Aprendizado de formato",
-          prompt: "Converta para formato slug:\n\nTítulo: 'Como construir APIs melhores'\nSlug: como-construir-apis-melhores\n\nTítulo: 'O guia definitivo de React Hooks'\nSlug: o-guia-definitivo-de-react-hooks\n\nTítulo: '10 dicas para código limpo'\nSlug:",
-          explanation: "Few-shot é ótimo para ensinar padrões de formatação específicos."
+          label: "Aprendendo um formato",
+          prompt:
+            "Converta títulos em slugs de URL:\n\n\"Como LLMs funcionam\" → como-llms-funcionam\n\"Fundamentos de few-shot learning\" → fundamentos-de-few-shot-learning\n\"Exemplos de saída em JSON\" →",
+          explanation:
+            "O modelo copia o padrão de alguns exemplos para um novo título com o mesmo estilo de slug."
         }
       ]
     },
@@ -604,22 +612,28 @@ Fornecer um template de schema melhora bastante a confiabilidade.`
       }
     ],
     playground: {
-      description: "Pratique extrair dados estruturados de linguagem natural.",
+      description: "Pratique transformar pedacinhos de texto em objetos e arrays JSON limpos.",
       starterPrompts: [
         {
-          label: "Extração JSON básica",
-          prompt: "Extraia as informações principais deste texto e retorne como JSON:\n\n'João Silva é um engenheiro de software de 32 anos de São Paulo que gosta de trilhas.'\n\nRetorne: {nome, idade, profissão, localização, hobby}",
-          explanation: "O modelo extrai dados estruturados de texto não estruturado. Especificar as chaves ajuda a garantir saída completa."
+          label: "Extração simples de campos",
+          prompt:
+            "Extraia os campos do texto abaixo e retorne JSON:\n\n\"Nome: João Silva\nEmail: joao@email.com\nPedido: #4932\"\n\nRetorne um objeto com: nome, email, idPedido",
+          explanation:
+            "Um mapeamento direto de um mini formulário para JSON — fácil de ler e de validar."
         },
         {
           label: "Saída guiada por schema",
-          prompt: "Liste 2 livros com esta estrutura JSON exata:\n{\n  \"livros\": [\n    {\"titulo\": \"\", \"autor\": \"\", \"ano\": 0, \"genero\": \"\"}\n  ]\n}",
-          explanation: "Fornecer o template exato do schema garante estrutura de saída consistente."
+          prompt:
+            "Liste 2 livros usando exatamente este formato JSON:\n{\n  \"livros\": [\n    {\"titulo\": \"\", \"autor\": \"\", \"ano\": 0}\n  ]\n}",
+          explanation:
+            "Repetir um templatede JSON curtinho empurra o modelo a manter a mesma estrutura para todos os itens."
         },
         {
           label: "JSON aninhado",
-          prompt: "Crie uma representação JSON de uma receita de cookies de chocolate com: nome, tempoPreparo (minutos), ingredientes (array de {item, quantidade}) e passos (array de strings). Limite a 3 ingredientes e 3 passos.",
-          explanation: "Estruturas aninhadas complexas exigem descrições claras de cada nível."
+          prompt:
+            "Crie um JSON para uma receita com:\n- nome\n- tempoPreparoMinutos\n- ingredientes: array de { item, quantidade }\n- passos: array de strings\n\nMantenha tudo bem pequeno: 2 ingredientes e 2 passos.",
+          explanation:
+            "Mostra como descrever um formato aninhado pequeno sem precisar de muito texto em volta."
         }
       ]
     },
@@ -798,28 +812,29 @@ Explore múltiplos ramos de raciocínio e avalie cada um.`
       }
     ],
     playground: {
-      description: "Compare respostas diretas com raciocínio em cadeia de pensamento em tarefas analíticas realistas.",
+      description:
+        "Rode os mesmos probleminhas com e sem \"pense passo a passo\" e compare o raciocínio.",
       starterPrompts: [
         {
-          label: "Sem CoT (cálculo de orçamento)",
+          label: "Sem CoT: conta rápida",
           prompt:
-            "Um time tem um orçamento trimestral de nuvem de R$ 60.000. No primeiro mês gastou R$ 16.500. No segundo mês gastou R$ 21.300. No terceiro mês espera gastar R$ 19.900.\n\nQuanto orçamento vai sobrar (ou estourar) no fim do trimestre?",
+            "Tenho R$ 50.\nCompro um livro por R$ 18 e um lanche por R$ 4.\n\nQuanto dinheiro sobra?",
           explanation:
-            "Quando perguntado de forma direta, o modelo ainda pode errar contas com vários passos — algo que afeta relatórios de custo e dashboards reais."
+            "Uma continha com poucos passos que o modelo ainda pode errar ao responder direto."
         },
         {
-          label: "Com CoT (cálculo de orçamento)",
+          label: "Com CoT: mostrar os passos",
           prompt:
-            "Um time tem um orçamento trimestral de nuvem de R$ 60.000. No primeiro mês gastou R$ 16.500. No segundo mês gastou R$ 21.300. No terceiro mês espera gastar R$ 19.900.\n\nPense passo a passo, mostrando cada cálculo intermediário e depois o orçamento final que sobra (ou o valor estourado).",
+            "Tenho R$ 50.\nCompro um livro por R$ 18 e um lanche por R$ 4.\n\nPense passo a passo. Mostre cada cálculo intermediário e depois diga quanto dinheiro sobra no final.",
           explanation:
-            "Cadeia de pensamento torna cada passo aritmético explícito, o que geralmente melhora a precisão e facilita a revisão humana do raciocínio."
+            "Os números são os mesmos, mas agora você pede explicitamente a cadeia de raciocínio antes da resposta final."
         },
         {
           label: "Priorizando chamados de suporte",
           prompt:
-            "Você é uma pessoa gerente de engenharia decidindo qual chamado de suporte priorizar.\n\nChamados:\n1) \"Formulário de pagamento falha para 5–10% das pessoas usuárias no Safari durante o checkout.\"\n2) \"O toggle de dark mode não persiste depois do refresh da página.\"\n3) \"Dashboard interno de admin carrega devagar (5–7 segundos) para algumas pessoas usuárias na região APAC.\"\n\nPense passo a passo sobre impacto, frequência e risco de negócio e depois recomende uma ordem de prioridade (P1, P2, P3) com uma justificativa curta.",
+            "Chamados:\n1) \"O botão de checkout às vezes não faz nada ao clicar.\"\n2) \"O toggle de dark mode não lembra minha escolha.\"\n3) \"A foto de avatar fica um pouco borrada na página de perfil.\"\n\nPense passo a passo sobre impacto e frequência e depois marque cada chamado como P1, P2 ou P3 com uma justificativa curta.",
           explanation:
-            "Este exemplo mostra CoT aplicado a raciocínio qualitativo. Os passos intermediários deixam claros os trade-offs por trás da priorização final."
+            "Um exemplo qualitativo curtinho em que você vê o modelo escrever o raciocínio antes de decidir as prioridades."
         }
       ]
     },
