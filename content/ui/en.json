@@ -38,7 +38,8 @@
     "links": {
       "home": "Home",
       "course": "Course",
-      "about": "About & Contact"
+      "about": "About & Contact",
+      "terms": "Terms of Use"
     }
   },
   "lesson": {

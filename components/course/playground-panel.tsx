@@ -92,6 +92,25 @@ export function PlaygroundPanel({
     }
   }
 
+  useEffect(() => {
+    if (retryAfter == null || retryAfter <= 0) return
+
+    const intervalId = window.setInterval(() => {
+      setRetryAfter((current) => {
+        if (current == null) return null
+        if (current <= 1) {
+          window.clearInterval(intervalId)
+          return null
+        }
+        return current - 1
+      })
+    }, 1000)
+
+    return () => {
+      window.clearInterval(intervalId)
+    }
+  }, [retryAfter])
+
   const runPrompt = async () => {
     if (!currentPromptText.trim()) return
 
@@ -116,16 +135,48 @@ export function PlaygroundPanel({
       setLatency(Math.round(endTime - startTimeRef.current))
 
       if (!res.ok || data.error) {
-        // Handle rate limit with retry info
-        if (res.status === 429 && data.retryAfter) {
-          setRetryAfter(data.retryAfter)
+        if (res.status === 429) {
+          if (typeof data.retryAfter === "number") {
+            setRetryAfter(data.retryAfter)
+          }
+          throw new Error(
+            data.error ||
+              t.playground.rateLimited ||
+              "You are sending requests too quickly. Please wait a few seconds and try again."
+          )
         }
-        throw new Error(data.error || "Failed to generate response")
+
+        if (res.status >= 500) {
+          throw new Error(
+            data.error ||
+              t.playground.serverError ||
+              "Temporary error while talking to the model. Please try again in a few seconds."
+          )
+        }
+
+        if (res.status >= 400) {
+          throw new Error(
+            data.error ||
+              t.playground.badRequestError ||
+              "The request was rejected by the server. Please check your prompt and try again."
+          )
+        }
+
+        throw new Error(
+          data.error ||
+            t.playground.genericError ||
+            "Failed to generate a response from the model."
+        )
       }
 
       setResponse(data.text)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An unexpected error occurred")
+      const message =
+        err instanceof Error
+          ? err.message
+          : t.playground.unexpectedError ||
+            "An unexpected error occurred while talking to the model. Please try again."
+      setError(message)
     } finally {
       setIsLoading(false)
     }
@@ -252,7 +303,7 @@ export function PlaygroundPanel({
         />
         <Button
           onClick={runPrompt}
-          disabled={isLoading || !currentPromptText.trim()}
+          disabled={isLoading || !!retryAfter || !currentPromptText.trim()}
           className="w-full mt-3 min-h-11 touch-manipulation"
         >
           {isLoading ? (
@@ -328,7 +379,9 @@ export function PlaygroundPanel({
                 <p className="text-sm text-destructive/80 mt-1">{error}</p>
                 {retryAfter != null && retryAfter > 0 && (
                   <p className="text-xs text-muted-foreground mt-1">
-                    Try again in {retryAfter}s
+                    {t.playground.retryAfterLabel
+                      ? t.playground.retryAfterLabel.replace("{seconds}", String(retryAfter))
+                      : `Try again in ${retryAfter}s`}
                   </p>
                 )}
                 <Button

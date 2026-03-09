@@ -98,9 +98,16 @@ export function SiteHeader({ locale, courseHref }: SiteHeaderProps) {
           {renderNavLinks("desktop")}
         </div>
 
-        {/* Right side: language + mobile toggle */}
+        {/* Right side: language + secondary links + mobile toggle */}
         <div className="flex items-center gap-2">
           <LanguageSwitcher currentLocale={locale} />
+
+          <Link
+            href={`/${locale}/terms`}
+            className="hidden md:inline-flex text-xs text-muted-foreground hover:text-foreground underline underline-offset-4"
+          >
+            {t.nav.links.terms}
+          </Link>
 
           <Button
             variant="ghost"
@@ -119,6 +126,15 @@ export function SiteHeader({ locale, courseHref }: SiteHeaderProps) {
         <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-sm">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex flex-col gap-3">
             {renderNavLinks("mobile")}
+            <div className="pt-1 border-t border-border/60 mt-2">
+              <Link
+                href={`/${locale}/terms`}
+                onClick={() => setMobileOpen(false)}
+                className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-4"
+              >
+                {t.nav.links.terms}
+              </Link>
+            </div>
           </div>
         </div>
       )}

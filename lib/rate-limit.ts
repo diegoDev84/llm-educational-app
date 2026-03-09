@@ -1,6 +1,14 @@
 /**
- * Lightweight in-memory rate limiter
- * Uses sliding window algorithm for smooth rate limiting
+ * Lightweight in-memory rate limiter.
+ *
+ * This implementation is process-local (in-memory) and is adequada para:
+ * - Desenvolvimento local
+ * - Deploys de pequena escala com uma única instância
+ *
+ * Em ambientes com múltiplas instâncias ou serverless, os limites serão
+ * aplicados por instância. Para uso em produção com mais escala, troque
+ * apenas a implementação interna por um store compartilhado (ex.: Redis/KV),
+ * mantendo a mesma assinatura de `rateLimit(ip, sessionId)`.
  */
 
 interface RateLimitEntry {
@@ -13,7 +21,12 @@ const ipStore = new Map<string, RateLimitEntry>()
 const sessionStore = new Map<string, RateLimitEntry>()
 
 // Configuration
-const WINDOW_MS = 60 * 1000 // 1 minute window
+// Janela deslizante de 1 minuto
+const WINDOW_MS = 60 * 1000
+
+// Limites pensados para playground educacional:
+// - IP: protege contra abusos de uma mesma rede
+// - Sessão: incentiva uso responsável por usuário
 const MAX_REQUESTS_PER_IP = 30 // 30 requests per minute per IP
 const MAX_REQUESTS_PER_SESSION = 20 // 20 requests per minute per session
 

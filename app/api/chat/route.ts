@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { generateText } from "@/lib/gemini"
 import { rateLimit, generateSessionId } from "@/lib/rate-limit"
+import { logError, logRequest } from "@/lib/logging"
 
 // Configuration
 const MAX_PROMPT_LENGTH = 2000 // Limit prompt size
@@ -39,6 +40,8 @@ function getOrCreateSessionId(request: NextRequest): { sessionId: string; isNew:
 }
 
 export async function POST(request: NextRequest) {
+  const startedAt = performance.now()
+
   try {
     // Get client identifiers
     const clientIP = getClientIP(request)
@@ -78,6 +81,16 @@ export async function POST(request: NextRequest) {
         })
       }
       
+      logRequest({
+        context: "chat-api",
+        method: "POST",
+        path: "/api/chat",
+        status: 429,
+        durationMs: Math.round(performance.now() - startedAt),
+        ip: clientIP,
+        sessionId,
+      })
+
       return response
     }
 
@@ -86,52 +99,124 @@ export async function POST(request: NextRequest) {
     try {
       body = await request.json()
     } catch {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { error: "Invalid JSON in request body" },
         { status: 400 }
       )
+
+      logRequest({
+        context: "chat-api",
+        method: "POST",
+        path: "/api/chat",
+        status: 400,
+        durationMs: Math.round(performance.now() - startedAt),
+        ip: clientIP,
+        sessionId,
+      })
+
+      return response
     }
 
     if (!body || typeof body !== "object") {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { error: "Invalid request body" },
         { status: 400 }
       )
+
+      logRequest({
+        context: "chat-api",
+        method: "POST",
+        path: "/api/chat",
+        status: 400,
+        durationMs: Math.round(performance.now() - startedAt),
+        ip: clientIP,
+        sessionId,
+      })
+
+      return response
     }
 
     const { prompt } = body as { prompt?: unknown }
 
     if (!prompt || typeof prompt !== "string") {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { error: "Prompt is required and must be a string" },
         { status: 400 }
       )
+
+      logRequest({
+        context: "chat-api",
+        method: "POST",
+        path: "/api/chat",
+        status: 400,
+        durationMs: Math.round(performance.now() - startedAt),
+        ip: clientIP,
+        sessionId,
+      })
+
+      return response
     }
 
     const trimmedPrompt = prompt.trim()
 
     if (trimmedPrompt.length === 0) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { error: "Prompt cannot be empty" },
         { status: 400 }
       )
+
+      logRequest({
+        context: "chat-api",
+        method: "POST",
+        path: "/api/chat",
+        status: 400,
+        durationMs: Math.round(performance.now() - startedAt),
+        ip: clientIP,
+        sessionId,
+      })
+
+      return response
     }
 
     if (trimmedPrompt.length > MAX_PROMPT_LENGTH) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { error: `Your prompt is too long. Please keep it under ${MAX_PROMPT_LENGTH} characters.` },
         { status: 400 }
       )
+
+      logRequest({
+        context: "chat-api",
+        method: "POST",
+        path: "/api/chat",
+        status: 400,
+        durationMs: Math.round(performance.now() - startedAt),
+        ip: clientIP,
+        sessionId,
+      })
+
+      return response
     }
 
     // Generate response
     const result = await generateText(trimmedPrompt)
 
     if (result.error) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { error: result.error },
         { status: 500 }
       )
+
+      logRequest({
+        context: "chat-api",
+        method: "POST",
+        path: "/api/chat",
+        status: 500,
+        durationMs: Math.round(performance.now() - startedAt),
+        ip: clientIP,
+        sessionId,
+      })
+
+      return response
     }
 
     // Success response with rate limit headers
@@ -156,12 +241,35 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    logRequest({
+      context: "chat-api",
+      method: "POST",
+      path: "/api/chat",
+      status: 200,
+      durationMs: Math.round(performance.now() - startedAt),
+      ip: clientIP,
+      sessionId,
+    })
+
     return response
   } catch (error) {
-    console.error("Chat API error:", error)
-    return NextResponse.json(
+    logError({ context: "chat-api", error })
+
+    const response = NextResponse.json(
       { error: "Something went wrong. Please try again." },
       { status: 500 }
     )
+
+    logRequest({
+      context: "chat-api",
+      method: "POST",
+      path: "/api/chat",
+      status: 500,
+      durationMs: Math.round(performance.now() - startedAt),
+      ip: getClientIP(request),
+      sessionId: getOrCreateSessionId(request).sessionId,
+    })
+
+    return response
   }
 }
