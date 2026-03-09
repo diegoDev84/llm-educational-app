@@ -9,8 +9,9 @@ import { getModules, getLessonNumber } from "@/lib/lessons"
 import { getTranslations } from "@/lib/translations"
 import { useLocale } from "@/components/locale-provider"
 import { LanguageSwitcher } from "@/components/language-switcher"
-import { ChevronDown, ChevronRight, Menu, X } from "lucide-react"
+import { ChevronDown, ChevronRight, Menu, X, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useCourseProgress } from "@/lib/client-progress"
 
 interface SidebarNavigationProps {
   className?: string
@@ -21,6 +22,7 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
   const locale = useLocale()
   const t = getTranslations(locale)
   const modules = getModules(locale)
+  const { progress, clearProgress } = useCourseProgress(locale)
   const [expandedModules, setExpandedModules] = useState<string[]>(
     modules.map((m) => m.name)
   )
@@ -37,28 +39,46 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
     )
   }
 
+  const handleClearProgress = () => {
+    const message = t.nav.clearProgressConfirm
+    if (typeof window !== "undefined") {
+      const confirmed = window.confirm(message)
+      if (!confirmed) return
+    }
+    clearProgress()
+  }
+
   const sidebarContent = (
     <div className="flex flex-col h-full">
       {/* Logo/Header */}
       <div className="p-6 border-b border-border">
-        <Link href={`/${locale}`} className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
-            <Image
-              src="/frodex-logo.png"
-              alt={t.nav.appName}
-              width={32}
-              height={32}
-              priority
-              className="w-8 h-8"
-            />
-          </div>
-          <div className="flex items-center gap-2">
-            <h1 className="font-semibold text-foreground">{t.nav.appName}</h1>
-            <span className="inline-flex items-center rounded-full border border-border/60 bg-muted/60 px-2 py-0.5 text-[10px] font-medium text-muted-foreground shrink-0">
-              Beta
-            </span>
-          </div>
-        </Link>
+        <div className="flex items-center justify-between gap-3">
+          <Link href={`/${locale}`} className="flex items-center gap-3 min-w-0">
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center shrink-0">
+              <Image
+                src="/frodex-logo.png"
+                alt={t.nav.appName}
+                width={32}
+                height={32}
+                priority
+                className="w-8 h-8"
+              />
+            </div>
+            <div className="flex items-center gap-2 min-w-0">
+              <h1 className="font-semibold text-foreground truncate">{t.nav.appName}</h1>
+              <span className="inline-flex items-center rounded-full border border-border/60 bg-muted/60 px-2 py-0.5 text-[10px] font-medium text-muted-foreground shrink-0">
+                Beta
+              </span>
+            </div>
+          </Link>
+          <button
+            type="button"
+            onClick={handleClearProgress}
+            className="text-[10px] text-muted-foreground hover:text-foreground underline underline-offset-2 shrink-0"
+          >
+            {t.nav.clearProgress}
+          </button>
+        </div>
         <div className="mt-3">
           <LanguageSwitcher currentLocale={locale} />
         </div>
@@ -105,6 +125,7 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
                     {module.lessons.map((lesson) => {
                       const isActive = lesson.slug === currentSlug
                       const lessonNumber = getLessonNumber(lesson.slug, locale)
+                      const isCompleted = progress.completedSlugs.includes(lesson.slug)
 
                       return (
                         <Link
@@ -119,15 +140,24 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
                               : "text-muted-foreground hover:text-foreground"
                           )}
                         >
-                          <span className={cn(
-                            "w-5 h-5 rounded-full flex items-center justify-center text-xs shrink-0",
-                            isActive
-                              ? "bg-primary text-primary-foreground"
-                              : "bg-secondary text-muted-foreground"
-                          )}>
-                            {lessonNumber}
+                          <span
+                            className={cn(
+                              "w-5 h-5 rounded-full flex items-center justify-center text-[11px] shrink-0 border",
+                              isCompleted
+                                ? "bg-primary text-primary-foreground border-primary"
+                                : "bg-secondary text-muted-foreground border-transparent"
+                            )}
+                            aria-label={isCompleted ? t.lesson?.completed ?? "Completed" : undefined}
+                          >
+                            {isCompleted ? (
+                              <Check className="w-3 h-3" />
+                            ) : (
+                              lessonNumber
+                            )}
                           </span>
-                          <span className="line-clamp-1">{lesson.title.replace(/^\d+\.\s*/, "").split(":")[0]}</span>
+                          <span className="line-clamp-1">
+                            {lesson.title.replace(/^\d+\.\s*/, "").split(":")[0]}
+                          </span>
                         </Link>
                       )
                     })}
@@ -138,14 +168,6 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
           })}
         </div>
       </nav>
-
-      {/* Footer */}
-      <div className="p-4 border-t border-border">
-        <div className="text-xs text-muted-foreground">
-          <p>{t.nav.lessonsCount}</p>
-          <p className="mt-1">{t.nav.builtFor}</p>
-        </div>
-      </div>
     </div>
   )
 

@@ -35,6 +35,8 @@
     "builtFor": "Built for developers and technology professionals",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
+    "clearProgress": "Clear progress",
+    "clearProgressConfirm": "Are you sure you want to clear all your progress?",
     "links": {
       "home": "Home",
       "course": "Course",

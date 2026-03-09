@@ -3,6 +3,7 @@ import { getLessonBySlug, getLessonSlugs } from "@/lib/lessons"
 import { SidebarNavigation } from "@/components/course/sidebar-navigation"
 import { LessonContent } from "@/components/course/lesson-content"
 import { PlaygroundPanel } from "@/components/course/playground-panel"
+import { LessonProgressTracker } from "@/components/course/lesson-progress-tracker"
 import type { Locale } from "@/lib/i18n"
 
 interface LessonPageProps {
@@ -36,6 +37,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      <LessonProgressTracker locale={locale as Locale} slug={slug} />
       <SidebarNavigation />
       <div className="lg:pl-72">
         <div className="flex flex-col xl:flex-row min-h-screen">

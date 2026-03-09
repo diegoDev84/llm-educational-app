@@ -35,6 +35,8 @@
     "builtFor": "Feito para desenvolvedores e profissionais de tecnologia",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
+    "clearProgress": "Limpar progresso",
+    "clearProgressConfirm": "Tem certeza que deseja limpar todo o seu progresso?",
     "links": {
       "home": "Início",
       "course": "Curso",

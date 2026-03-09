@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -10,6 +10,7 @@ import type { Locale } from "@/lib/i18n"
 import { getTranslations } from "@/lib/translations"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { Button } from "@/components/ui/button"
+import { useCourseProgress } from "@/lib/client-progress"
 
 interface SiteHeaderProps {
   locale: Locale
@@ -36,12 +37,20 @@ export function SiteHeader({ locale, courseHref }: SiteHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const pathname = usePathname()
   const t = getTranslations(locale)
+  const { progress } = useCourseProgress(locale)
 
   const activeKey = getActiveKey(pathname, locale)
 
+  const resolvedCourseHref = useMemo(() => {
+    if (progress.lastLessonSlug) {
+      return `/${locale}/lesson/${progress.lastLessonSlug}`
+    }
+    return courseHref
+  }, [courseHref, locale, progress.lastLessonSlug])
+
   const navItems: { key: "home" | "course" | "about"; href: string; label: string }[] = [
     { key: "home", href: `/${locale}`, label: t.nav.links.home },
-    { key: "course", href: courseHref, label: t.nav.links.course },
+    { key: "course", href: resolvedCourseHref, label: t.nav.links.course },
     { key: "about", href: `/${locale}/about`, label: t.nav.links.about },
   ]
 
