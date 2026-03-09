@@ -44,7 +44,7 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
         <Link href={`/${locale}`} className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
             <Image
-              src="/icon.svg"
+              src="/frodex-logo.png"
               alt={t.nav.appName}
               width={32}
               height={32}
@@ -54,7 +54,6 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
           </div>
           <div>
             <h1 className="font-semibold text-foreground">{t.nav.appName}</h1>
-            <p className="text-xs text-muted-foreground">{t.nav.tagline}</p>
           </div>
         </Link>
         <div className="mt-3">

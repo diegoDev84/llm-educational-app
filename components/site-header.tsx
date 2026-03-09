@@ -95,9 +95,6 @@ export function SiteHeader({ locale, courseHref }: SiteHeaderProps) {
                 <p className="text-sm font-semibold leading-tight text-foreground truncate">
                   {t.nav.appName}
                 </p>
-                <p className="text-xs text-muted-foreground truncate">
-                  {t.nav.tagline}
-                </p>
               </div>
             </div>
           </Link>
