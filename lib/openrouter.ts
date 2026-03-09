@@ -1,5 +1,6 @@
 const OPENROUTER_MODEL = "mistralai/mistral-nemo"
 const MAX_OUTPUT_TOKENS = 1000
+const LLM_TIMEOUT_MS = 30_000
 
 export interface GenerateTextResult {
   text: string
@@ -23,6 +24,11 @@ export async function generateText(prompt: string): Promise<GenerateTextResult> 
   }
 
   try {
+    const controller = new AbortController()
+    const timeoutId: ReturnType<typeof setTimeout> = setTimeout(() => {
+      controller.abort()
+    }, LLM_TIMEOUT_MS)
+
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -40,7 +46,10 @@ export async function generateText(prompt: string): Promise<GenerateTextResult> 
         ],
         stream: true,
       }),
+      signal: controller.signal,
     })
+
+    clearTimeout(timeoutId)
 
     if (!response.ok) {
       let errorMessage = `API request failed with status ${response.status}`
@@ -144,6 +153,13 @@ export async function generateText(prompt: string): Promise<GenerateTextResult> 
     return { text: fullText }
   } catch (error) {
     if (error instanceof Error) {
+      if (error.name === "AbortError") {
+        return {
+          text: "",
+          error: "O modelo de IA demorou demais para responder. Tente novamente.",
+        }
+      }
+
       const message = error.message.toLowerCase()
       const isAuthError =
         message.includes("unauthorized") ||
