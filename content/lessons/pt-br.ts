@@ -806,6 +806,7 @@ R: R$ 80
 **Com CoT:**
 P: Se uma camisa custa R$ 100 e tem 20% de desconto, qual o preço final? Pense passo a passo.
 R: Vamos calcular:
+
 1. Preço original: R$ 100
 2. Desconto: 20% de R$ 100 = R$ 20
 3. Preço final: R$ 100 - R$ 20 = R$ 80`

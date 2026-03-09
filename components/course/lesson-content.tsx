@@ -150,9 +150,9 @@ export function LessonContent({ lesson, locale, className }: LessonContentProps)
                 )
               }
 
-              // Regular paragraphs
+              // Regular paragraphs (pre-line preserves \n as line breaks)
               return (
-                <p key={pIndex} className="text-muted-foreground leading-[1.7]">
+                <p key={pIndex} className="text-muted-foreground leading-[1.7] whitespace-pre-line">
                   {formatInlineCode(paragraph)}
                 </p>
               )

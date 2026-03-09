@@ -853,6 +853,7 @@ A: $20
 **With CoT:**
 Q: If a shirt costs $25 and is 20% off, what's the final price? Think step by step.
 A: Let me work through this:
+
 1. Original price: $25
 2. Discount: 20% of $25 = $5
 3. Final price: $25 - $5 = $20`
