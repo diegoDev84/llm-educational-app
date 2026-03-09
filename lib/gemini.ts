@@ -8,7 +8,7 @@ const MAX_OUTPUT_TOKENS = 256
 // Resiliência / limites de chamada à Gemini
 const GEMINI_MAX_RETRIES = 1
 const GEMINI_RETRY_BASE_DELAY_MS = 10_000
-const GEMINI_REQUEST_TIMEOUT_MS = 15_000
+const GEMINI_REQUEST_TIMEOUT_MS = 30_000
 
 function sleep(ms: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, ms))
