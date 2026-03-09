@@ -12,6 +12,17 @@ import { LanguageSwitcher } from "@/components/language-switcher"
 import { ChevronDown, ChevronRight, Menu, X, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCourseProgress } from "@/lib/client-progress"
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog"
 
 interface SidebarNavigationProps {
   className?: string
@@ -39,15 +50,6 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
     )
   }
 
-  const handleClearProgress = () => {
-    const message = t.nav.clearProgressConfirm
-    if (typeof window !== "undefined") {
-      const confirmed = window.confirm(message)
-      if (!confirmed) return
-    }
-    clearProgress()
-  }
-
   const sidebarContent = (
     <div className="flex flex-col h-full">
       {/* Logo/Header */}
@@ -71,13 +73,32 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
               </span>
             </div>
           </Link>
-          <button
-            type="button"
-            onClick={handleClearProgress}
-            className="text-[10px] text-muted-foreground hover:text-foreground underline underline-offset-2 shrink-0"
-          >
-            {t.nav.clearProgress}
-          </button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <button
+                type="button"
+                className="text-[10px] text-muted-foreground hover:text-foreground underline underline-offset-2 shrink-0"
+              >
+                {t.nav.clearProgress}
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>{t.nav.clearProgress}</AlertDialogTitle>
+                <AlertDialogDescription>
+                  {t.nav.clearProgressConfirm}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>
+                  {locale === "pt-br" ? "Cancelar" : "Cancel"}
+                </AlertDialogCancel>
+                <AlertDialogAction onClick={clearProgress}>
+                  {t.nav.clearProgress}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
         <div className="mt-3">
           <LanguageSwitcher currentLocale={locale} />

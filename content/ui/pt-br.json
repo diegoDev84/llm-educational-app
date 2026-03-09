@@ -37,6 +37,7 @@
     "closeMenu": "Fechar menu",
     "clearProgress": "Limpar progresso",
     "clearProgressConfirm": "Tem certeza que deseja limpar todo o seu progresso?",
+    "clearProgressCancel": "Cancelar",
     "links": {
       "home": "Início",
       "course": "Curso",
