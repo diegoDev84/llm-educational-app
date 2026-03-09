@@ -1,11 +1,12 @@
 import Link from "next/link"
-import { modules, lessons, getLessonsForModule } from "@/lib/lessons"
+import { getModules, lessons, getLessonNumber } from "@/lib/lessons"
 import { Button } from "@/components/ui/button"
-import { BookOpen, ArrowRight, Sparkles, Code, Layers, Cpu, Rocket } from "lucide-react"
+import { BookOpen, ArrowRight, Sparkles, Code, Layers, Cpu, Rocket, Clock } from "lucide-react"
 
 const moduleIcons = [BookOpen, Code, Layers, Cpu, Rocket]
 
 export default function HomePage() {
+  const modules = getModules()
   const firstLesson = lessons[0]
 
   return (
@@ -125,11 +126,10 @@ export default function HomePage() {
           <div className="space-y-6">
             {modules.map((module, moduleIndex) => {
               const Icon = moduleIcons[moduleIndex]
-              const moduleLessons = getLessonsForModule(module.id)
 
               return (
                 <div
-                  key={module.id}
+                  key={module.name}
                   className="rounded-xl bg-card border border-border overflow-hidden"
                 >
                   {/* Module Header */}
@@ -140,22 +140,19 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
-                          Module {module.id}
+                          Module {moduleIndex + 1}
                         </p>
                         <h3 className="text-lg font-semibold text-foreground">
                           {module.name}
                         </h3>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {module.description}
-                        </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Lessons */}
                   <div className="divide-y divide-border">
-                    {moduleLessons.map((lesson) => {
-                      const lessonNumber = lessons.findIndex(l => l.slug === lesson.slug) + 1
+                    {module.lessons.map((lesson) => {
+                      const lessonNumber = getLessonNumber(lesson.slug)
 
                       return (
                         <Link
@@ -167,9 +164,15 @@ export default function HomePage() {
                             <span className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-sm text-muted-foreground font-medium">
                               {lessonNumber}
                             </span>
-                            <span className="text-foreground group-hover:text-primary transition-colors">
-                              {lesson.title}
-                            </span>
+                            <div>
+                              <span className="text-foreground group-hover:text-primary transition-colors block">
+                                {lesson.title}
+                              </span>
+                              <span className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
+                                <Clock className="w-3 h-3" />
+                                {lesson.duration}
+                              </span>
+                            </div>
                           </div>
                           <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                         </Link>

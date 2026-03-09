@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: LessonPageProps) {
 
   return {
     title: `${lesson.title} | LLM Mastery`,
-    description: lesson.goal,
+    description: lesson.summary,
   }
 }
 
@@ -55,7 +55,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
 
           {/* Playground Panel - Sticky on desktop, below content on mobile */}
           <aside className="xl:w-[400px] xl:sticky xl:top-0 xl:h-screen xl:overflow-y-auto border-t xl:border-t-0 border-border">
-            <PlaygroundPanel prompts={lesson.playgroundPrompts} />
+            <PlaygroundPanel playground={lesson.playground} />
           </aside>
         </div>
       </div>

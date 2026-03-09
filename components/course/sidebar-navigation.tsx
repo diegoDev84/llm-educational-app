@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { modules, lessons } from "@/lib/lessons"
+import { getModules, getLessonNumber } from "@/lib/lessons"
 import { ChevronDown, ChevronRight, BookOpen, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -14,16 +14,19 @@ interface SidebarNavigationProps {
 
 export function SidebarNavigation({ className }: SidebarNavigationProps) {
   const pathname = usePathname()
-  const [expandedModules, setExpandedModules] = useState<number[]>([1, 2, 3, 4, 5])
+  const modules = getModules()
+  const [expandedModules, setExpandedModules] = useState<string[]>(
+    modules.map(m => m.name)
+  )
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const currentSlug = pathname.split("/").pop()
 
-  const toggleModule = (moduleId: number) => {
+  const toggleModule = (moduleName: string) => {
     setExpandedModules(prev =>
-      prev.includes(moduleId)
-        ? prev.filter(id => id !== moduleId)
-        : [...prev, moduleId]
+      prev.includes(moduleName)
+        ? prev.filter(name => name !== moduleName)
+        : [...prev, moduleName]
     )
   }
 
@@ -45,16 +48,15 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto p-4">
         <div className="space-y-4">
-          {modules.map((module) => {
-            const moduleLessons = lessons.filter(l => l.moduleId === module.id)
-            const isExpanded = expandedModules.includes(module.id)
-            const hasActiveLesson = moduleLessons.some(l => l.slug === currentSlug)
+          {modules.map((module, moduleIndex) => {
+            const isExpanded = expandedModules.includes(module.name)
+            const hasActiveLesson = module.lessons.some(l => l.slug === currentSlug)
 
             return (
-              <div key={module.id} className="space-y-1">
+              <div key={module.name} className="space-y-1">
                 {/* Module Header */}
                 <button
-                  onClick={() => toggleModule(module.id)}
+                  onClick={() => toggleModule(module.name)}
                   className={cn(
                     "w-full flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
                     "hover:bg-secondary text-muted-foreground hover:text-foreground",
@@ -67,7 +69,7 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
                     <ChevronRight className="w-4 h-4 shrink-0" />
                   )}
                   <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    Module {module.id}
+                    Module {moduleIndex + 1}
                   </span>
                 </button>
 
@@ -81,9 +83,9 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
                 {/* Lessons */}
                 {isExpanded && (
                   <div className="ml-3 border-l border-border pl-3 space-y-1">
-                    {moduleLessons.map((lesson, index) => {
+                    {module.lessons.map((lesson) => {
                       const isActive = lesson.slug === currentSlug
-                      const lessonNumber = lessons.findIndex(l => l.slug === lesson.slug) + 1
+                      const lessonNumber = getLessonNumber(lesson.slug)
 
                       return (
                         <Link
