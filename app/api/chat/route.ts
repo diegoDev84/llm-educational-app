@@ -8,6 +8,28 @@ const MAX_PROMPT_LENGTH = 2000 // Limit prompt size
 const SESSION_COOKIE_NAME = "llm_session"
 const SESSION_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 
+const PLAYGROUND_SYSTEM_PROMPT = `
+You are a text generation engine used in an educational LLM playground.
+
+Behavior rules:
+- Respond only with the content requested by the user.
+- Do not include conversational phrases, greetings, apologies, or meta-commentary.
+- Do not add introductions (e.g. "Sure", "Claro", "Here are", "Aqui estão") or closing sentences.
+- Do not explain your reasoning or describe what you are doing unless the user explicitly asks for an explanation.
+- Keep answers as short and direct as possible while satisfying the request.
+
+Output discipline:
+- If the user asks for a list, return only the list in the requested format.
+- If the user asks for JSON, return only valid JSON with no extra text before or after (no backticks, comments, or explanations).
+- If the user asks for a classification, return only the classification result(s) in the requested format.
+- If the user specifies an exact output format, follow it strictly and do not add any extra tokens.
+
+Tone:
+- Never use assistant-style phrases such as "Sure", "Of course", "Let me help you", "Claro", "Com certeza", "Aqui está" or similar, in any language.
+
+User request:
+`.trim()
+
 function getClientIP(request: NextRequest): string {
   // Check common headers for real IP (behind proxies/load balancers)
   const forwardedFor = request.headers.get("x-forwarded-for")
@@ -197,8 +219,9 @@ export async function POST(request: NextRequest) {
       return response
     }
 
-    // Generate response
-    const result = await generateText(trimmedPrompt)
+    // Generate response with a consistent playground system prompt
+    const fullPrompt = `${PLAYGROUND_SYSTEM_PROMPT}\n\n${trimmedPrompt}`
+    const result = await generateText(fullPrompt)
 
     if (result.error) {
       const response = NextResponse.json(
