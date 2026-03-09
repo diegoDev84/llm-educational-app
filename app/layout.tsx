@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
@@ -7,9 +7,31 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'LLM Mastery | Learn to Build AI Applications',
-  description: 'A comprehensive, hands-on course teaching you how large language models work and how to build production-ready AI applications.',
-  generator: 'v0.app',
+  metadataBase:
+    process.env.VERCEL_URL != null
+      ? new URL(`https://${process.env.VERCEL_URL}`)
+      : new URL('http://localhost:3000'),
+  title: {
+    default: 'LLM Mastery | Learn to Build AI Applications',
+    template: '%s | LLM Mastery',
+  },
+  description: 'Hands-on course on large language models: from transformers and tokens to RAG, function calling, and production deployment. Interactive playground in every lesson.',
+  keywords: ['LLM', 'large language models', 'AI', 'prompt engineering', 'RAG', 'OpenAI', 'course', 'tutorial'],
+  authors: [{ name: 'LLM Mastery' }],
+  openGraph: {
+    type: 'website',
+    title: 'LLM Mastery | Learn to Build AI Applications',
+    description: 'Hands-on course on LLMs: from fundamentals to production. Interactive playground in every lesson.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'LLM Mastery | Learn to Build AI Applications',
+    description: 'Hands-on course on LLMs: from fundamentals to production. Interactive playground in every lesson.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
     icon: [
       {
@@ -27,6 +49,15 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-icon.png',
   },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fafafa' },
+    { media: '(prefers-color-scheme: dark)', color: '#0d0d0d' },
+  ],
 }
 
 export default function RootLayout({

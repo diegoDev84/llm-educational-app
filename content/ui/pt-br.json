@@ -1,0 +1,71 @@
+{
+  "home": {
+    "badge": "Curso interativo",
+    "heroTitle1": "Domine LLMs.",
+    "heroTitle2": "Entregue aplicações de IA.",
+    "heroDescription": "Um curso prático dos fundamentos à produção: arquitetura de transformadores, engenharia de prompts, RAG, function calling e otimização de custos — com playground interativo em cada lição.",
+    "startLearning": "Começar a aprender",
+    "viewCurriculum": "Ver currículo",
+    "lessons": "Lições",
+    "modules": "Módulos",
+    "playgroundExamples": "Exemplos no playground",
+    "whatYouLearn": "O que você vai aprender",
+    "whatYouLearnDesc": "De tokens e janelas de contexto a RAG e padrões de produção — tudo para construir e entregar aplicações com LLMs.",
+    "curriculum": "Currículo",
+    "curriculumDesc": "Cinco módulos: fundamentos, prompting, saídas estruturadas, técnicas avançadas e sistemas em produção.",
+    "moduleLabel": "Módulo",
+    "readyTitle": "Pronto para dominar LLMs?",
+    "readyDesc": "Comece pela primeira lição e evolua até padrões prontos para produção — no seu ritmo, com exemplos práticos.",
+    "startFirstLesson": "Começar primeira lição",
+    "footer": "LLM Mastery — Aprenda a construir aplicações de IA",
+    "learnCards": {
+      "llms": { "title": "Como LLMs funcionam", "description": "Entenda transformadores, tokenização e predição do próximo token" },
+      "prompting": { "title": "Engenharia de prompts", "description": "Domine system prompts, few-shot e saídas estruturadas" },
+      "functionCalling": { "title": "Function calling", "description": "Conecte LLMs a APIs e ferramentas externas" },
+      "cot": { "title": "Chain of Thought", "description": "Melhore precisão com raciocínio passo a passo" },
+      "rag": { "title": "Sistemas RAG", "description": "Construa geração aumentada por recuperação para respostas precisas" },
+      "production": { "title": "Produção", "description": "Streaming, avaliação e otimização de custos" }
+    }
+  },
+  "nav": {
+    "appName": "LLM Mastery",
+    "tagline": "Aprenda a desenvolver com IA",
+    "moduleLabel": "Módulo",
+    "lessonsCount": "14 lições",
+    "builtFor": "Feito para desenvolvedores",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu"
+  },
+  "lesson": {
+    "lessonOf": "Lição {current} de {total}",
+    "learningGoals": "Objetivos de aprendizagem",
+    "commonMistakes": "Erros comuns",
+    "keyTakeaways": "Principais pontos",
+    "previous": "Anterior",
+    "next": "Próxima",
+    "completeCourse": "Concluir curso"
+  },
+  "playground": {
+    "title": "Playground",
+    "reset": "Reiniciar",
+    "tryExperiments": "Experimente estes prompts",
+    "promptLabel": "Prompt",
+    "promptPlaceholder": "Digite seu prompt ou escolha um experimento acima...",
+    "runPrompt": "Executar prompt",
+    "running": "Executando...",
+    "response": "Resposta",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "generating": "Gerando resposta...",
+    "error": "Erro",
+    "retry": "Tentar novamente",
+    "emptyTitle": "Nenhuma resposta ainda",
+    "emptyDescription": "Escolha um experimento acima ou digite seu prompt e clique em Executar para ver a resposta do modelo aqui.",
+    "whyExperiment": "Por que este experimento?"
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "description": "A lição ou página que você procura não existe ou foi movida.",
+    "backHome": "Voltar ao início"
+  }
+}

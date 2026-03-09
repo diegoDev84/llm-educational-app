@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import type { Lesson } from "@/lib/lessons"
+import { getTranslations } from "@/lib/translations"
+import type { Locale } from "@/lib/i18n"
 import {
   Play,
   Sparkles,
@@ -15,19 +17,30 @@ import {
   Clock,
   ChevronDown,
   ChevronUp,
+  MessageSquare,
 } from "lucide-react"
+import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  EmptyDescription,
+} from "@/components/ui/empty"
 
 interface PlaygroundPanelProps {
   playground: Lesson["playground"]
   lessonSlug: string
+  locale: Locale
   className?: string
 }
 
 export function PlaygroundPanel({
   playground,
   lessonSlug,
+  locale,
   className,
 }: PlaygroundPanelProps) {
+  const t = getTranslations(locale)
   const [selectedPromptIndex, setSelectedPromptIndex] = useState(0)
   const [customPrompt, setCustomPrompt] = useState("")
   const [response, setResponse] = useState("")
@@ -151,7 +164,7 @@ export function PlaygroundPanel({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-primary" />
-            <h2 className="font-semibold text-foreground">Playground</h2>
+            <h2 className="font-semibold text-foreground">{t.playground.title}</h2>
           </div>
           <Button
             variant="ghost"
@@ -160,7 +173,7 @@ export function PlaygroundPanel({
             className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
           >
             <RotateCcw className="w-3 h-3 mr-1" />
-            Reset
+            {t.playground.reset}
           </Button>
         </div>
       </div>
@@ -175,7 +188,7 @@ export function PlaygroundPanel({
       {/* Starter Prompts as Cards */}
       <div className="p-4 border-b border-border overflow-auto max-h-[260px]">
         <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wide">
-          Try These Experiments
+          {t.playground.tryExperiments}
         </p>
         <div className="space-y-2">
           {playground.starterPrompts.map((prompt, index) => (
@@ -225,12 +238,12 @@ export function PlaygroundPanel({
       {/* Prompt Input */}
       <div className="p-4 border-b border-border flex-shrink-0">
         <label className="text-xs font-medium text-muted-foreground mb-2 block uppercase tracking-wide">
-          Prompt
+          {t.playground.promptLabel}
         </label>
         <textarea
           value={currentPromptText}
           onChange={(e) => setCustomPrompt(e.target.value)}
-          placeholder="Enter your prompt or select an experiment above..."
+          placeholder={t.playground.promptPlaceholder}
           className={cn(
             "w-full h-28 px-3 py-2 text-sm rounded-lg resize-none",
             "bg-secondary border border-border",
@@ -247,12 +260,12 @@ export function PlaygroundPanel({
           {isLoading ? (
             <>
               <Spinner className="w-4 h-4 mr-2" />
-              Running...
+              {t.playground.running}
             </>
           ) : (
             <>
               <Play className="w-4 h-4 mr-2" />
-              Run Prompt
+              {t.playground.runPrompt}
             </>
           )}
         </Button>
@@ -263,7 +276,7 @@ export function PlaygroundPanel({
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Response
+              {t.playground.response}
             </label>
             {latency !== null && !isLoading && !error && (
               <span className="flex items-center gap-1 text-xs text-muted-foreground/70">
@@ -282,12 +295,12 @@ export function PlaygroundPanel({
               {copied ? (
                 <>
                   <Check className="w-3 h-3 mr-1" />
-                  Copied
+                  {t.playground.copied}
                 </>
               ) : (
                 <>
                   <Copy className="w-3 h-3 mr-1" />
-                  Copy
+                  {t.playground.copy}
                 </>
               )}
             </Button>
@@ -307,13 +320,13 @@ export function PlaygroundPanel({
           {isLoading ? (
             <div className="flex flex-col items-center justify-center h-full gap-3 text-muted-foreground">
               <Spinner className="w-6 h-6" />
-              <span className="text-sm">Generating response...</span>
+              <span className="text-sm">{t.playground.generating}</span>
             </div>
           ) : error ? (
             <div className="flex items-start gap-3 text-destructive">
               <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-medium">Error</p>
+                <p className="text-sm font-medium">{t.playground.error}</p>
                 <p className="text-sm text-destructive/80 mt-1">{error}</p>
                 <Button
                   variant="outline"
@@ -322,7 +335,7 @@ export function PlaygroundPanel({
                   className="mt-3 h-7 text-xs"
                 >
                   <RotateCcw className="w-3 h-3 mr-1" />
-                  Retry
+                  {t.playground.retry}
                 </Button>
               </div>
             </div>
@@ -342,9 +355,17 @@ export function PlaygroundPanel({
               </div>
             )
           ) : (
-            <p className="text-sm text-muted-foreground italic">
-              Response will appear here after running the prompt
-            </p>
+            <Empty className="min-h-[120px] p-6 border-0 bg-transparent">
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <MessageSquare className="size-5 text-muted-foreground" />
+                </EmptyMedia>
+                <EmptyTitle className="text-base">{t.playground.emptyTitle}</EmptyTitle>
+                <EmptyDescription>
+                  {t.playground.emptyDescription}
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           )}
         </div>
       </div>
@@ -356,7 +377,7 @@ export function PlaygroundPanel({
             onClick={() => setShowExplanation(!showExplanation)}
             className="flex items-center justify-between w-full text-xs font-medium text-muted-foreground uppercase tracking-wide hover:text-foreground transition-colors"
           >
-            <span>Why This Experiment?</span>
+            <span>{t.playground.whyExperiment}</span>
             {showExplanation ? (
               <ChevronUp className="w-4 h-4" />
             ) : (

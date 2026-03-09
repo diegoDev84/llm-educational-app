@@ -1,0 +1,71 @@
+{
+  "home": {
+    "badge": "Interactive course",
+    "heroTitle1": "Master LLMs.",
+    "heroTitle2": "Ship AI applications.",
+    "heroDescription": "A hands-on course from first principles to production: transformers, prompt engineering, RAG, function calling, and cost optimization — with an interactive playground in every lesson.",
+    "startLearning": "Start learning",
+    "viewCurriculum": "View curriculum",
+    "lessons": "Lessons",
+    "modules": "Modules",
+    "playgroundExamples": "Playground examples",
+    "whatYouLearn": "What you'll learn",
+    "whatYouLearnDesc": "From tokens and context windows to RAG and production patterns — everything you need to build and ship LLM-powered applications.",
+    "curriculum": "Curriculum",
+    "curriculumDesc": "Five modules: foundations, prompting, structured outputs, advanced techniques, and production systems.",
+    "moduleLabel": "Module",
+    "readyTitle": "Ready to master LLMs?",
+    "readyDesc": "Start with the first lesson and build up to production-ready patterns — at your own pace, with hands-on examples.",
+    "startFirstLesson": "Start first lesson",
+    "footer": "LLM Mastery — Learn to build AI applications",
+    "learnCards": {
+      "llms": { "title": "How LLMs Work", "description": "Understand transformers, tokenization, and next-token prediction" },
+      "prompting": { "title": "Prompt Engineering", "description": "Master system prompts, few-shot learning, and structured outputs" },
+      "functionCalling": { "title": "Function Calling", "description": "Enable LLMs to interact with external APIs and tools" },
+      "cot": { "title": "Chain of Thought", "description": "Improve accuracy with step-by-step reasoning techniques" },
+      "rag": { "title": "RAG Systems", "description": "Build retrieval-augmented generation for accurate responses" },
+      "production": { "title": "Production Skills", "description": "Learn streaming, evaluation, and cost optimization" }
+    }
+  },
+  "nav": {
+    "appName": "LLM Mastery",
+    "tagline": "Learn AI Development",
+    "moduleLabel": "Module",
+    "lessonsCount": "14 lessons",
+    "builtFor": "Built for developers",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "lesson": {
+    "lessonOf": "Lesson {current} of {total}",
+    "learningGoals": "Learning goals",
+    "commonMistakes": "Common mistakes",
+    "keyTakeaways": "Key takeaways",
+    "previous": "Previous",
+    "next": "Next",
+    "completeCourse": "Complete Course"
+  },
+  "playground": {
+    "title": "Playground",
+    "reset": "Reset",
+    "tryExperiments": "Try These Experiments",
+    "promptLabel": "Prompt",
+    "promptPlaceholder": "Enter your prompt or select an experiment above...",
+    "runPrompt": "Run Prompt",
+    "running": "Running...",
+    "response": "Response",
+    "copy": "Copy",
+    "copied": "Copied",
+    "generating": "Generating response...",
+    "error": "Error",
+    "retry": "Retry",
+    "emptyTitle": "No response yet",
+    "emptyDescription": "Choose an experiment above or type your own prompt, then click Run to see the model's response here.",
+    "whyExperiment": "Why This Experiment?"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The lesson or page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to home"
+  }
+}

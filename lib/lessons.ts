@@ -1,71 +1,54 @@
-export interface StarterPrompt {
-  label: string
-  prompt: string
-  explanation: string
+export type { Lesson, Section, StarterPrompt } from "./lesson-types"
+import type { Lesson } from "./lesson-types"
+import type { Locale } from "./i18n"
+import { lessons as lessonsPtBr } from "@/content/lessons/pt-br"
+
+function getLessons(locale: Locale): Lesson[] {
+  return locale === "pt-br" ? lessonsPtBr : lessonsEn
 }
 
-export interface Section {
-  title: string
-  content: string
-}
-
-export interface Lesson {
-  title: string
-  slug: string
-  module: string
-  summary: string
-  duration: string
-  goals: string[]
-  sections: Section[]
-  playground: {
-    description: string
-    starterPrompts: StarterPrompt[]
-  }
-  commonMistakes: string[]
-  takeaways: string[]
-}
-
-// Derive modules from lesson data
-export function getModules(): { name: string; lessons: Lesson[] }[] {
+export function getModules(locale: Locale): { name: string; lessons: Lesson[] }[] {
+  const list = getLessons(locale)
   const moduleMap = new Map<string, Lesson[]>()
-  
-  for (const lesson of lessons) {
-    if (!moduleMap.has(lesson.module)) {
-      moduleMap.set(lesson.module, [])
-    }
+  for (const lesson of list) {
+    if (!moduleMap.has(lesson.module)) moduleMap.set(lesson.module, [])
     moduleMap.get(lesson.module)!.push(lesson)
   }
-  
-  return Array.from(moduleMap.entries()).map(([name, moduleLessons]) => ({
-    name,
-    lessons: moduleLessons
-  }))
+  return Array.from(moduleMap.entries()).map(([name, lessons]) => ({ name, lessons }))
 }
 
-export function getLessonBySlug(slug: string): Lesson | undefined {
-  return lessons.find(lesson => lesson.slug === slug)
+export function getLessonBySlug(slug: string, locale: Locale): Lesson | undefined {
+  return getLessons(locale).find((l) => l.slug === slug)
 }
 
-export function getNextLesson(currentSlug: string): Lesson | undefined {
-  const currentIndex = lessons.findIndex(lesson => lesson.slug === currentSlug)
-  return currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : undefined
+export function getNextLesson(currentSlug: string, locale: Locale): Lesson | undefined {
+  const list = getLessons(locale)
+  const i = list.findIndex((l) => l.slug === currentSlug)
+  return i >= 0 && i < list.length - 1 ? list[i + 1] : undefined
 }
 
-export function getPreviousLesson(currentSlug: string): Lesson | undefined {
-  const currentIndex = lessons.findIndex(lesson => lesson.slug === currentSlug)
-  return currentIndex > 0 ? lessons[currentIndex - 1] : undefined
+export function getPreviousLesson(currentSlug: string, locale: Locale): Lesson | undefined {
+  const list = getLessons(locale)
+  const i = list.findIndex((l) => l.slug === currentSlug)
+  return i > 0 ? list[i - 1] : undefined
 }
 
-export function getLessonProgress(currentSlug: string): { current: number; total: number } {
-  const currentIndex = lessons.findIndex(lesson => lesson.slug === currentSlug)
-  return { current: currentIndex + 1, total: lessons.length }
+export function getLessonProgress(currentSlug: string, locale: Locale): { current: number; total: number } {
+  const list = getLessons(locale)
+  const i = list.findIndex((l) => l.slug === currentSlug)
+  return { current: i + 1, total: list.length }
 }
 
-export function getLessonNumber(slug: string): number {
-  return lessons.findIndex(lesson => lesson.slug === slug) + 1
+export function getLessonNumber(slug: string, locale: Locale): number {
+  return getLessons(locale).findIndex((l) => l.slug === slug) + 1
 }
 
-export const lessons: Lesson[] = [
+export function getLessonSlugs(locale: Locale): string[] {
+  return getLessons(locale).map((l) => l.slug)
+}
+
+// EN data lives in lessons-data.ts to avoid circular import with content/lessons/pt-br
+export const lessonsEn: Lesson[] = [
   {
     title: "Introduction: How LLMs Work",
     slug: "how-llms-work",
