@@ -46,7 +46,7 @@ export default async function TermsPage({ params }: TermsPageProps) {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-12 lg:py-16 space-y-8">
         <section className="space-y-3">
           <p className="text-sm font-medium text-primary uppercase tracking-wide">
-            {isPtBr ? "LLM Mastery · Termos" : "LLM Mastery · Terms"}
+            {isPtBr ? "Frodex · Termos" : "Frodex · Terms"}
           </p>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance">
             {isPtBr ? "Termos de Uso da Plataforma" : "Terms of Use for This Platform"}

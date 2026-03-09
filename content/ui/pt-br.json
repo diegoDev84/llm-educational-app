@@ -17,7 +17,7 @@
     "readyTitle": "Pronto para construir com LLMs?",
     "readyDesc": "Comece pela primeira lição e experimente até chegar em padrões prontos para produção — no seu ritmo, com exemplos focados em sistemas reais.",
     "startFirstLesson": "Começar primeiro experimento",
-    "footer": "LLM Mastery — Entenda como sistemas com LLMs realmente se comportam",
+    "footer": "Frodex — Lições interativas e experimentos em playground para entender como sistemas com LLMs se comportam na prática.",
     "learnCards": {
       "llms": { "title": "Como LLMs funcionam", "description": "Entenda Transformer, tokenização e predição do próximo token" },
       "prompting": { "title": "Engenharia de prompts", "description": "Domine system prompts, few-shot e saídas estruturadas" },
@@ -28,8 +28,8 @@
     }
   },
   "nav": {
-    "appName": "LLM Mastery",
-    "tagline": "Aprenda a construir com LLMs",
+    "appName": "Frodex",
+    "tagline": "Explore como modelos de linguagem realmente funcionam",
     "moduleLabel": "Módulo",
     "lessonsCount": "14 lições",
     "builtFor": "Feito para desenvolvedores e profissionais de tecnologia",

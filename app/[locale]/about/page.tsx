@@ -52,7 +52,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
         {/* Intro */}
         <section className="space-y-4">
           <p className="text-sm font-medium text-primary uppercase tracking-wide">
-            LLM Mastery
+            Frodex
           </p>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance">
             {copy.pageTitle}

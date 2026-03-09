@@ -25,8 +25,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: LessonPageProps) {
   const { locale, slug } = await params
   const lesson = getLessonBySlug(slug, locale as Locale)
-  if (!lesson) return { title: "Lesson Not Found | LLM Mastery" }
-  return { title: `${lesson.title} | LLM Mastery`, description: lesson.summary }
+  if (!lesson) return { title: "Lesson Not Found | Frodex" }
+  return { title: `${lesson.title} | Frodex`, description: lesson.summary }
 }
 
 export default async function LessonPage({ params }: LessonPageProps) {

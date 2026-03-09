@@ -17,7 +17,7 @@ interface SiteHeaderProps {
   courseHref: string
 }
 
-function getActiveKey(pathname: string | null, locale: Locale): "home" | "course" | "about" | null {
+function getActiveKey(pathname: string | null, _locale: Locale): "home" | "course" | "about" | null {
   if (!pathname) return null
   const segments = pathname.split("/").filter(Boolean)
 
@@ -77,26 +77,28 @@ export function SiteHeader({ locale, courseHref }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
-        {/* Logo / Brand */}
+        {/* Logo / Brand + future mascot slot */}
         <div className="flex items-center gap-2 min-w-0">
           <Link href={`/${locale}`} className="flex items-center gap-2 min-w-0">
-            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center shrink-0">
-              <Image
-                src="/icon.svg"
-                alt={t.nav.appName}
-                width={32}
-                height={32}
-                priority
-                className="w-8 h-8"
-              />
-            </div>
-            <div className="hidden sm:block min-w-0">
-              <p className="text-sm font-semibold leading-tight text-foreground truncate">
-                {t.nav.appName}
-              </p>
-              <p className="text-xs text-muted-foreground truncate">
-                {t.nav.tagline}
-              </p>
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center shrink-0" data-slot="mascot-icon">
+                <Image
+                  src="/frodex-logo.png"
+                  alt={t.nav.appName}
+                  width={36}
+                  height={36}
+                  priority
+                  className="w-9 h-9"
+                />
+              </div>
+              <div className="hidden sm:block min-w-0">
+                <p className="text-sm font-semibold leading-tight text-foreground truncate">
+                  {t.nav.appName}
+                </p>
+                <p className="text-xs text-muted-foreground truncate">
+                  {t.nav.tagline}
+                </p>
+              </div>
             </div>
           </Link>
         </div>

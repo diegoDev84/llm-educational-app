@@ -13,21 +13,31 @@ export const metadata: Metadata = {
       ? new URL(`https://${process.env.VERCEL_URL}`)
       : new URL('http://localhost:3000'),
   title: {
-    default: 'LLM Mastery | Learn to Build AI Applications',
-    template: '%s | LLM Mastery',
+    default: 'Frodex — Explore how language models actually work',
+    template: '%s | Frodex',
   },
-  description: 'Hands-on course on large language models: from transformers and tokens to RAG, function calling, and production deployment. Interactive playground in every lesson.',
+  description:
+    'Interactive lessons and playground experiments to understand how large language models behave in real systems.',
   keywords: ['LLM', 'large language models', 'AI', 'prompt engineering', 'RAG', 'OpenAI', 'course', 'tutorial'],
-  authors: [{ name: 'LLM Mastery' }],
+  authors: [{ name: 'Frodex' }],
   openGraph: {
     type: 'website',
-    title: 'LLM Mastery | Learn to Build AI Applications',
-    description: 'Hands-on course on LLMs: from fundamentals to production. Interactive playground in every lesson.',
+    title: 'Frodex — Explore how language models actually work',
+    description:
+      'Interactive lessons and playground experiments to understand how large language models behave in real systems.',
+    images: [
+      {
+        url: '/frodex-logo.png',
+        alt: 'Frodex',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LLM Mastery | Learn to Build AI Applications',
-    description: 'Hands-on course on LLMs: from fundamentals to production. Interactive playground in every lesson.',
+    title: 'Frodex — Explore how language models actually work',
+    description:
+      'Interactive lessons and playground experiments to understand how large language models behave in real systems.',
+    images: ['/frodex-logo.png'],
   },
   robots: {
     index: true,
@@ -36,12 +46,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/frodex-logo.png',
+        type: 'image/png',
       },
     ],
-    shortcut: '/icon.svg',
-    apple: '/icon.svg',
+    shortcut: '/frodex-logo.png',
+    apple: '/frodex-logo.png',
   },
 }
 
