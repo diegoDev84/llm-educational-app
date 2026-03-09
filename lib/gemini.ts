@@ -6,8 +6,8 @@ const GEMINI_API_URL =
 const MAX_OUTPUT_TOKENS = 256
 
 // Resiliência / limites de chamada à Gemini
-const GEMINI_MAX_RETRIES = 2
-const GEMINI_RETRY_BASE_DELAY_MS = 5_000
+const GEMINI_MAX_RETRIES = 1
+const GEMINI_RETRY_BASE_DELAY_MS = 10_000
 const GEMINI_REQUEST_TIMEOUT_MS = 15_000
 
 function sleep(ms: number) {
@@ -84,13 +84,6 @@ async function callGeminiWithRetry(prompt: string, apiKey: string): Promise<Gemi
           (maybeErrorBody as GeminiResponse).error?.message ||
           (maybeErrorBody as { error?: { message?: string } }).error?.message
 
-        const isRetriableStatus = status === 429 || (status >= 500 && status < 600)
-
-        if (isRetriableStatus && attempt < GEMINI_MAX_RETRIES) {
-          await sleep(getBackoffDelayMs(attempt))
-          continue
-        }
-
         if (status === 429) {
           throw new Error(
             apiMessage ||
@@ -114,11 +107,6 @@ async function callGeminiWithRetry(prompt: string, apiKey: string): Promise<Gemi
         const code = data.error.code
         const isRateLimited =
           code === 429 || status === "RESOURCE_EXHAUSTED" || status === "UNAVAILABLE"
-
-        if (isRateLimited && attempt < GEMINI_MAX_RETRIES) {
-          await sleep(getBackoffDelayMs(attempt))
-          continue
-        }
 
         if (isRateLimited) {
           throw new Error(
