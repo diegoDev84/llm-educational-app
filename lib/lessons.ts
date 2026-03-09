@@ -154,12 +154,15 @@ As a rough rule: **1 token ≈ 4 characters** or **100 tokens ≈ 75 words** in 
       {
         title: "Why Tokens Matter",
         content: `### Cost
+
 API pricing is typically per-token. Both input (prompt) and output (completion) tokens are counted. A verbose prompt costs more than a concise one.
 
 ### Context Window
+
 Each model has a maximum context length (e.g., 8K, 32K, 128K tokens). This limit includes both your input AND the model's output. A 32K context model can process about 24,000 words total.
 
 ### Performance
+
 Longer contexts can affect response quality. Information at the beginning and end of long prompts tends to be weighted more heavily than information in the middle.`
       },
       {
@@ -256,12 +259,15 @@ Use either temperature OR top-p for control, not both simultaneously.`
       {
         title: "Other Parameters",
         content: `### Stop Sequences
+
 Strings that terminate generation when encountered. Useful for structured outputs.
 
 ### Frequency Penalty (0.0 - 2.0)
+
 Reduces repetition by penalizing tokens that have already appeared. Higher values = less repetition.
 
 ### Presence Penalty (0.0 - 2.0)
+
 Encourages the model to introduce new topics. Higher values = more diverse content.`
       }
     ],
@@ -328,30 +334,38 @@ Encourages the model to introduce new topics. Higher values = more diverse conte
         content: `A strong prompt often includes these elements:
 
 ### C - Context
+
 Background information the model needs to understand the task.
 
 ### R - Role
+
 Who the model should act as (expert, assistant, character).
 
 ### I - Instructions
+
 Clear, specific directions for what to do.
 
 ### S - Specifics
+
 Details about format, length, style, or constraints.
 
 ### P - Persona
+
 Tone and voice characteristics for the response.
 
 ### E - Examples
+
 Sample inputs and outputs to demonstrate expectations.`
       },
       {
         title: "Prompt Structure Best Practices",
         content: `### Be Specific, Not Vague
+
 ❌ "Write something about dogs"
 ✅ "Write a 100-word informative paragraph about Golden Retrievers' temperament for first-time dog owners"
 
 ### Use Clear Delimiters
+
 Separate different parts of your prompt with clear markers:
 
 \`\`\`
@@ -363,9 +377,11 @@ Format: [Expected output format]
 \`\`\`
 
 ### Order Matters
+
 Put the most important information at the beginning and end of prompts. Information in the middle may receive less attention (the "lost in the middle" problem).
 
 ### Be Explicit About Format
+
 If you want a list, say "as a numbered list." If you want JSON, specify the schema.`
       }
     ],
@@ -433,12 +449,14 @@ Most APIs distinguish between "system" and "user" messages, giving system prompt
       {
         title: "Designing Effective Personas",
         content: `### Define the Role Clearly
+
 \`\`\`
 You are a senior software architect with 15 years of experience
 in distributed systems. You prioritize scalability and maintainability.
 \`\`\`
 
 ### Set Behavioral Rules
+
 \`\`\`
 Rules:
 - Always ask clarifying questions before providing solutions
@@ -447,6 +465,7 @@ Rules:
 \`\`\`
 
 ### Establish Boundaries
+
 \`\`\`
 Limitations:
 - You can only discuss topics related to software architecture
@@ -457,12 +476,15 @@ Limitations:
       {
         title: "System Prompt Patterns",
         content: `### The Expert Pattern
+
 Position the model as a domain expert with specific knowledge and approach.
 
 ### The Persona Pattern
+
 Give the model a character with personality traits, speaking style, and values.
 
 ### The Safety Pattern
+
 Include instructions for handling edge cases, sensitive topics, and error conditions.`
       }
     ],
@@ -516,29 +538,35 @@ Include instructions for handling edge cases, sensitive topics, and error condit
         content: `Few-shot learning teaches the model by providing examples of the desired input-output pairs. Instead of explaining what to do, you show it.
 
 ### Zero-Shot
+
 No examples, just instructions. Works for common tasks.
 
 ### One-Shot
+
 Single example provided. Good for simple patterns.
 
 ### Few-Shot
+
 Multiple examples (typically 3-5). Best for complex or unusual tasks.`
       },
       {
         title: "Crafting Effective Examples",
         content: `### Diversity
+
 Include examples that cover different cases:
 - Different input formats
 - Edge cases
 - Various output lengths
 
 ### Consistency
+
 Keep example format identical:
 - Same delimiters
 - Same structure
 - Same level of detail
 
 ### Quality
+
 Each example should be a perfect demonstration:
 - No errors
 - Clear pattern
@@ -846,15 +874,19 @@ CoT is especially effective for:
       {
         title: "CoT Techniques",
         content: `### Zero-Shot CoT
+
 Simply add "Think step by step" or "Let's work through this" to your prompt.
 
 ### Few-Shot CoT
+
 Provide examples that demonstrate step-by-step reasoning.
 
 ### Self-Consistency
+
 Generate multiple CoT paths and take the majority answer.
 
 ### Tree of Thoughts
+
 Explore multiple reasoning branches and evaluate each.`
       }
     ],
@@ -938,18 +970,22 @@ For critical information, place it at the beginning or end of your context.`
       {
         title: "Context Management Strategies",
         content: `### Summarization
+
 Periodically summarize older messages:
 \`\`\`
 [Summary of previous conversation: User asked about X, we discussed Y, agreed on Z]
 \`\`\`
 
 ### Sliding Window
+
 Keep only the N most recent messages.
 
 ### Selective Inclusion
+
 Only include messages relevant to the current query.
 
 ### Hierarchical Memory
+
 Store detailed information externally, include summaries in context.`
       }
     ],
@@ -1127,16 +1163,19 @@ User Query
       {
         title: "Implementation Considerations",
         content: `### Chunking Strategy
+
 - Too small: loses context
 - Too large: noise and irrelevance
 - Sweet spot: 200-500 tokens with overlap
 
 ### Retrieval Quality
+
 - Number of results (k): balance relevance vs context size
 - Similarity threshold: filter low-relevance results
 - Hybrid search: combine semantic + keyword matching
 
 ### Prompt Design
+
 - Clearly separate context from question
 - Instruct model to say "I don't know" if context doesn't contain the answer
 - Consider citing sources`
@@ -1223,15 +1262,18 @@ Server-Sent Events (SSE) or WebSockets deliver chunks to the browser.`
       {
         title: "Streaming Considerations",
         content: `### Error Handling
+
 Errors can occur mid-stream. Always handle:
 - Connection drops
 - Rate limits
 - Model errors
 
 ### Parsing Structured Output
+
 If streaming JSON, wait for complete object before parsing.
 
 ### UI/UX
+
 - Show typing indicator during generation
 - Handle rapid content updates efficiently
 - Consider smooth scroll behavior`
@@ -1285,11 +1327,13 @@ If streaming JSON, wait for complete object before parsing.
       {
         title: "Evaluation Methods",
         content: `### Automated Metrics
+
 - **Exact match**: Response matches expected output
 - **BLEU/ROUGE**: Text similarity scores
 - **Custom validators**: Schema compliance, keyword presence
 
 ### LLM-as-Judge
+
 Use a (different) LLM to evaluate responses:
 \`\`\`
 Rate this response on accuracy (1-5):
@@ -1299,6 +1343,7 @@ Response: {response}
 \`\`\`
 
 ### Human Evaluation
+
 - A/B testing with users
 - Expert review for high-stakes applications
 - Periodic quality audits`
@@ -1306,16 +1351,19 @@ Response: {response}
       {
         title: "Cost Optimization",
         content: `### Model Selection
+
 - Use smaller models for simple tasks
 - GPT-3.5 for classification, GPT-4 for complex reasoning
 - Fine-tuned small models can outperform large general models
 
 ### Prompt Optimization
+
 - Shorter prompts = lower costs
 - Remove redundant instructions
 - Compress examples
 
 ### Caching
+
 - Cache identical queries
 - Semantic caching for similar queries
 - TTL based on content freshness needs`
@@ -1325,16 +1373,19 @@ Response: {response}
         content: `Track these metrics:
 
 ### Performance
+
 - Latency (p50, p95, p99)
 - Time to first token
 - Token throughput
 
 ### Quality
+
 - Error rates
 - User feedback signals
 - Automated quality scores
 
 ### Cost
+
 - Token usage per request
 - Cost per user/feature
 - Daily/weekly spend trends`

@@ -106,12 +106,15 @@ Como regra aproximada: **1 token ≈ 4 caracteres** ou **100 tokens ≈ 75 palav
       {
         title: "Por que tokens importam",
         content: `### Custo
+
 O preço de API costuma ser por token. Tanto tokens de entrada (prompt) quanto de saída (completion) são contados. Um prompt verboso custa mais que um conciso.
 
 ### Janela de contexto
+
 Cada modelo tem um comprimento máximo de contexto (ex.: 8K, 32K, 128K tokens). Esse limite inclui sua entrada E a saída do modelo. Um modelo de 32K de contexto processa cerca de 24.000 palavras no total.
 
 ### Desempenho
+
 Contextos longos podem afetar a qualidade da resposta. Informações no início e no fim de prompts longos tendem a ter mais peso que as do meio.`
       },
       {
@@ -208,12 +211,15 @@ Use temperatura OU top-p para controle, não os dois ao mesmo tempo.`
       {
         title: "Outros parâmetros",
         content: `### Sequências de parada
+
 Strings que terminam a geração quando encontradas. Úteis para saídas estruturadas.
 
 ### Frequency penalty (0,0 - 2,0)
+
 Reduz repetição penalizando tokens que já apareceram. Valores maiores = menos repetição.
 
 ### Presence penalty (0,0 - 2,0)
+
 Incentiva o modelo a introduzir novos tópicos. Valores maiores = conteúdo mais diverso.`
       }
     ],
@@ -281,30 +287,38 @@ Incentiva o modelo a introduzir novos tópicos. Valores maiores = conteúdo mais
         content: `Um prompt forte costuma incluir estes elementos:
 
 ### C - Contexto
+
 Informações de fundo que o modelo precisa para entender a tarefa.
 
 ### R - Papel
+
 Quem o modelo deve interpretar (especialista, assistente, personagem).
 
 ### I - Instruções
+
 Orientações claras e específicas do que fazer.
 
 ### S - Especificidades
+
 Detalhes sobre formato, extensão, estilo ou restrições.
 
 ### P - Persona
+
 Tom e características de voz da resposta.
 
 ### E - Exemplos
+
 Exemplos de entradas e saídas para demonstrar expectativas.`
       },
       {
         title: "Boas práticas de estrutura de prompt",
         content: `### Seja específico, não vago
+
 ❌ "Escreva algo sobre cachorros"
 ✅ "Escreva um parágrafo informativo de 100 palavras sobre o temperamento de Golden Retrievers para donos de primeira viagem"
 
 ### Use delimitadores claros
+
 Separe partes diferentes do prompt com marcadores claros:
 
 \`\`\`
@@ -316,9 +330,11 @@ Formato: [Formato esperado da saída]
 \`\`\`
 
 ### A ordem importa
+
 Coloque as informações mais importantes no início e no fim dos prompts. Informações no meio podem receber menos atenção (o problema do "perdido no meio").
 
 ### Seja explícito sobre o formato
+
 Se quiser uma lista, diga "como lista numerada". Se quiser JSON, especifique o schema.`
       }
     ],
@@ -386,12 +402,14 @@ A maioria das APIs distingue mensagens "system" e "user", dando prioridade ao sy
       {
         title: "Desenhando personas eficazes",
         content: `### Defina o papel com clareza
+
 \`\`\`
 Você é um arquiteto de software sênior com 15 anos de experiência
 em sistemas distribuídos. Você prioriza escalabilidade e manutenibilidade.
 \`\`\`
 
 ### Defina regras de comportamento
+
 \`\`\`
 Regras:
 - Sempre faça perguntas de esclarecimento antes de dar soluções
@@ -400,6 +418,7 @@ Regras:
 \`\`\`
 
 ### Estabeleça limites
+
 \`\`\`
 Limitações:
 - Você só pode discutir tópicos relacionados a arquitetura de software
@@ -410,12 +429,15 @@ Limitações:
       {
         title: "Padrões de system prompt",
         content: `### Padrão do especialista
+
 Posicione o modelo como especialista de domínio com conhecimento e abordagem específicos.
 
 ### Padrão da persona
+
 Dê ao modelo um personagem com traços de personalidade, estilo de fala e valores.
 
 ### Padrão de segurança
+
 Inclua instruções para lidar com casos extremos, tópicos sensíveis e condições de erro.`
       }
     ],
@@ -469,29 +491,35 @@ Inclua instruções para lidar com casos extremos, tópicos sensíveis e condiç
         content: `Few-shot learning ensina o modelo fornecendo exemplos dos pares entrada-saída desejados. Em vez de explicar o que fazer, você mostra.
 
 ### Zero-shot
+
 Sem exemplos, só instruções. Funciona para tarefas comuns.
 
 ### One-shot
+
 Um único exemplo. Bom para padrões simples.
 
 ### Few-shot
+
 Vários exemplos (tipicamente 3–5). Melhor para tarefas complexas ou incomuns.`
       },
       {
         title: "Criando exemplos eficazes",
         content: `### Diversidade
+
 Inclua exemplos que cubram diferentes casos:
 - Formatos de entrada diferentes
 - Casos extremos
 - Extensões de saída variadas
 
 ### Consistência
+
 Mantenha o formato dos exemplos idêntico:
 - Mesmos delimitadores
 - Mesma estrutura
 - Mesmo nível de detalhe
 
 ### Qualidade
+
 Cada exemplo deve ser uma demonstração perfeita:
 - Sem erros
 - Padrão claro
@@ -799,15 +827,19 @@ CoT é especialmente eficaz para:
       {
         title: "Técnicas de CoT",
         content: `### Zero-shot CoT
+
 Simplesmente adicione "Pense passo a passo" ou "Vamos trabalhar isso" ao seu prompt.
 
 ### Few-shot CoT
+
 Forneça exemplos que demonstrem raciocínio passo a passo.
 
 ### Auto-consistência
+
 Gere vários caminhos de CoT e tome a resposta majoritária.
 
 ### Árvore de pensamentos
+
 Explore múltiplos ramos de raciocínio e avalie cada um.`
       }
     ],
@@ -891,18 +923,22 @@ Para informações críticas, coloque-as no início ou no fim do contexto.`
       {
         title: "Estratégias de gestão de contexto",
         content: `### Resumo
+
 Resuma periodicamente mensagens antigas:
 \`\`\`
 [Resumo da conversa anterior: Usuário perguntou sobre X, discutimos Y, concordamos em Z]
 \`\`\`
 
 ### Janela deslizante
+
 Mantenha apenas as N mensagens mais recentes.
 
 ### Inclusão seletiva
+
 Inclua só mensagens relevantes para a consulta atual.
 
 ### Memória hierárquica
+
 Armazene detalhes externamente, inclua resumos no contexto.`
       }
     ],
@@ -1080,16 +1116,19 @@ Consulta do usuário
       {
         title: "Considerações de implementação",
         content: `### Estratégia de chunking
+
 - Muito pequeno: perde contexto
 - Muito grande: ruído e irrelevância
 - Ponto ideal: 200–500 tokens com sobreposição
 
 ### Qualidade da recuperação
+
 - Número de resultados (k): balance relevância vs tamanho do contexto
 - Limiar de similaridade: filtre resultados de baixa relevância
 - Busca híbrida: combine semântica + correspondência por palavra-chave
 
 ### Design do prompt
+
 - Separe claramente contexto da pergunta
 - Instrua o modelo a dizer "não sei" se o contexto não tiver a resposta
 - Considere citar fontes`
@@ -1176,15 +1215,18 @@ Server-Sent Events (SSE) ou WebSockets entregam os chunks ao navegador.`
       {
         title: "Considerações de streaming",
         content: `### Tratamento de erros
+
 Erros podem ocorrer no meio do stream. Sempre trate:
 - Quedas de conexão
 - Rate limits
 - Erros do modelo
 
 ### Parsing de saída estruturada
+
 Se estiver fazendo streaming de JSON, espere o objeto completo antes de fazer parse.
 
 ### UI/UX
+
 - Mostre indicador de digitação durante a geração
 - Trate atualizações rápidas de conteúdo de forma eficiente
 - Considere comportamento de scroll suave`
@@ -1238,11 +1280,13 @@ Se estiver fazendo streaming de JSON, espere o objeto completo antes de fazer pa
       {
         title: "Métodos de avaliação",
         content: `### Métricas automatizadas
+
 - **Correspondência exata**: Resposta igual à saída esperada
 - **BLEU/ROUGE**: Pontuações de similaridade de texto
 - **Validadores customizados**: Conformidade de schema, presença de palavras-chave
 
 ### LLM como juiz
+
 Use um LLM (diferente) para avaliar respostas:
 \`\`\`
 Avalie esta resposta em precisão (1-5):
@@ -1252,6 +1296,7 @@ Resposta: {resposta}
 \`\`\`
 
 ### Avaliação humana
+
 - Testes A/B com usuários
 - Revisão por especialistas para aplicações de alto risco
 - Auditorias de qualidade periódicas`
@@ -1259,16 +1304,19 @@ Resposta: {resposta}
       {
         title: "Otimização de custo",
         content: `### Escolha do modelo
+
 - Use modelos menores para tarefas simples
 - GPT-3.5 para classificação, GPT-4 para raciocínio complexo
 - Modelos pequenos fine-tunados podem superar modelos grandes gerais
 
 ### Otimização de prompt
+
 - Prompts mais curtos = custo menor
 - Remova instruções redundantes
 - Comprima exemplos
 
 ### Cache
+
 - Cache para consultas idênticas
 - Cache semântico para consultas similares
 - TTL baseado na necessidade de atualização do conteúdo`
@@ -1278,16 +1326,19 @@ Resposta: {resposta}
         content: `Acompanhe estas métricas:
 
 ### Performance
+
 - Latência (p50, p95, p99)
 - Tempo até o primeiro token
 - Throughput de tokens
 
 ### Qualidade
+
 - Taxa de erro
 - Sinais de feedback do usuário
 - Pontuações de qualidade automatizadas
 
 ### Custo
+
 - Uso de tokens por requisição
 - Custo por usuário/funcionalidade
 - Tendências de gasto diário/semanal`
