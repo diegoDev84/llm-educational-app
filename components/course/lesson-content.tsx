@@ -1,5 +1,3 @@
-"use client"
-
 import { cn } from "@/lib/utils"
 import type { Lesson } from "@/lib/lessons"
 import { getLessonProgress, getNextLesson, getPreviousLesson } from "@/lib/lessons"

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
@@ -52,14 +52,18 @@ export function PlaygroundPanel({
   const [showExplanation, setShowExplanation] = useState(true)
   const startTimeRef = useRef<number>(0)
 
-  // Reset state when lesson changes
-  useEffect(() => {
-    setSelectedPromptIndex(0)
+  const clearResponseState = useCallback(() => {
     setCustomPrompt("")
     setResponse("")
     setError(null)
+    setRetryAfter(null)
     setLatency(null)
-  }, [lessonSlug])
+  }, [])
+
+  useEffect(() => {
+    setSelectedPromptIndex(0)
+    clearResponseState()
+  }, [lessonSlug, clearResponseState])
 
   const selectedPrompt = playground.starterPrompts[selectedPromptIndex]
   const currentPromptText = customPrompt || selectedPrompt?.prompt || ""
@@ -135,19 +139,12 @@ export function PlaygroundPanel({
 
   const selectStarterPrompt = (index: number) => {
     setSelectedPromptIndex(index)
-    setCustomPrompt("")
-    setResponse("")
-    setError(null)
-    setLatency(null)
+    clearResponseState()
   }
 
   const resetPlayground = () => {
     setSelectedPromptIndex(0)
-    setCustomPrompt("")
-    setResponse("")
-    setError(null)
-    setRetryAfter(null)
-    setLatency(null)
+    clearResponseState()
   }
 
   const responseIsJson = response && isJsonResponse(response)
@@ -155,12 +152,13 @@ export function PlaygroundPanel({
   return (
     <div
       className={cn(
-        "flex flex-col h-full bg-card border-l border-border",
+        "flex flex-col h-full min-h-0 bg-card border-l border-border",
+        "max-xl:border-l-0 max-xl:min-h-[320px]",
         className
       )}
     >
       {/* Header */}
-      <div className="p-4 border-b border-border">
+      <div className="p-4 border-b border-border shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-primary" />
@@ -186,7 +184,7 @@ export function PlaygroundPanel({
       </div>
 
       {/* Starter Prompts as Cards */}
-      <div className="p-4 border-b border-border overflow-auto max-h-[260px]">
+      <div className="p-4 border-b border-border overflow-auto max-h-[260px] shrink-0">
         <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wide">
           {t.playground.tryExperiments}
         </p>
@@ -245,17 +243,17 @@ export function PlaygroundPanel({
           onChange={(e) => setCustomPrompt(e.target.value)}
           placeholder={t.playground.promptPlaceholder}
           className={cn(
-            "w-full h-28 px-3 py-2 text-sm rounded-lg resize-none",
+            "w-full h-28 min-h-[88px] px-3 py-2.5 text-sm rounded-lg resize-y max-h-40",
             "bg-secondary border border-border",
             "text-foreground placeholder:text-muted-foreground",
             "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
-            "font-mono"
+            "font-mono touch-manipulation"
           )}
         />
         <Button
           onClick={runPrompt}
           disabled={isLoading || !currentPromptText.trim()}
-          className="w-full mt-3"
+          className="w-full mt-3 min-h-11 touch-manipulation"
         >
           {isLoading ? (
             <>
@@ -314,7 +312,7 @@ export function PlaygroundPanel({
             error
               ? "bg-destructive/10 border-destructive/30"
               : "bg-secondary/50 border-border",
-            "min-h-[120px]"
+            "min-h-[120px] max-xl:min-h-[140px]"
           )}
         >
           {isLoading ? (
@@ -328,6 +326,11 @@ export function PlaygroundPanel({
               <div>
                 <p className="text-sm font-medium">{t.playground.error}</p>
                 <p className="text-sm text-destructive/80 mt-1">{error}</p>
+                {retryAfter != null && retryAfter > 0 && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Try again in {retryAfter}s
+                  </p>
+                )}
                 <Button
                   variant="outline"
                   size="sm"

@@ -22,7 +22,19 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `app/[locale]/page.tsx`. The page auto-updates as you edit the file.
+
+## Environment variables
+
+Copy `.env.example` to `.env.local` and set:
+
+- **`GEMINI_API_KEY`** – Required for the lesson Playground (chat API). Get a key at [Google AI Studio](https://aistudio.google.com/app/apikey). Without it, the Playground will show an error when running prompts.
+
+## Deployment (Vercel)
+
+1. Push the repo to GitHub and import the project in [Vercel](https://vercel.com).
+2. Add the **`GEMINI_API_KEY`** environment variable in the Vercel project settings.
+3. Deploy. The app uses `VERCEL_URL` for metadata and works with the default Next.js build (`npm run build`).
 
 ## Learn More
 
