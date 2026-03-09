@@ -1092,7 +1092,7 @@ Por que RAG resolve isso?
       {
         title: "Arquitetura RAG",
         content: `\`\`\`
-Consulta do usuário
+      Consulta do usuário
               ↓
 ┌─────────────────┐
 │  Embed da query            │

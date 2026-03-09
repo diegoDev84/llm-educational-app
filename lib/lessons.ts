@@ -1138,29 +1138,29 @@ RAG solves this by:
       {
         title: "RAG Architecture",
         content: `\`\`\`
-User Query
-    ↓
+          User Query
+              ↓
 ┌─────────────────┐
-│  Embed Query    │
-└────────┬────────┘
-         ↓
+│  Embed Query               │
+└─────────────────┘
+              ↓
 ┌─────────────────┐
-│  Vector Search  │ ← Your document embeddings
-└────────┬────────┘
-         ↓
+│  Vector Search             │ ← Your document embeddings
+└─────────────────┘
+              ↓
 ┌─────────────────┐
-│  Top K Results  │
-└────────┬────────┘
-         ↓
+│  Top K Results             │
+└─────────────────┘
+              ↓
 ┌─────────────────┐
-│  Augment Prompt │
-└────────┬────────┘
-         ↓
+│  Augment Prompt            │
+└─────────────────┘
+              ↓
 ┌─────────────────┐
-│  Generate       │
-└────────┬────────┘
-         ↓
-    Response
+│  Generate                  │
+└─────────────────┘
+              ↓
+         Response
 \`\`\``
       },
       {
