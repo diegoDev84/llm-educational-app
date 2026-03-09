@@ -91,32 +91,40 @@ export function LessonContent({ lesson, locale, className }: LessonContentProps)
             {section.title}
           </h2>
           <div className="space-y-5">
-            {section.content.split("\n\n").map((paragraph, pIndex) => {
+            {parseContentBlocks(section.content).map((block, pIndex) => {
+              if (block.type === "code") {
+                return (
+                  <pre
+                    key={pIndex}
+                    className="bg-secondary rounded-lg p-4 overflow-x-auto text-sm my-5 font-mono leading-relaxed"
+                  >
+                    <code className="text-foreground">{block.content}</code>
+                  </pre>
+                )
+              }
+
+              const paragraph = block.content
+
               // Handle headers
               if (paragraph.startsWith("### ")) {
                 return (
-                  <h3 key={pIndex} className="text-lg font-medium mt-7 mb-3 text-foreground tracking-tight">
+                  <h3
+                    key={pIndex}
+                    className="text-lg font-medium mt-7 mb-3 text-foreground tracking-tight"
+                  >
                     {paragraph.replace("### ", "")}
                   </h3>
                 )
               }
 
-              // Handle code blocks
-              if (paragraph.startsWith("```")) {
-                const lines = paragraph.split("\n")
-                const code = lines.slice(1, -1).join("\n")
-                return (
-                  <pre key={pIndex} className="bg-secondary rounded-lg p-4 overflow-x-auto text-sm my-5 font-mono leading-relaxed">
-                    <code className="text-foreground">{code}</code>
-                  </pre>
-                )
-              }
-
               // Handle lists
               if (paragraph.includes("\n- ") || paragraph.startsWith("- ")) {
-                const items = paragraph.split("\n").filter(line => line.startsWith("- "))
+                const items = paragraph.split("\n").filter((line) => line.startsWith("- "))
                 return (
-                  <ul key={pIndex} className="list-disc list-inside space-y-2.5 text-muted-foreground pl-1">
+                  <ul
+                    key={pIndex}
+                    className="list-disc list-inside space-y-2.5 text-muted-foreground pl-1"
+                  >
                     {items.map((item, i) => (
                       <li key={i} className="leading-relaxed pl-0.5">
                         {formatInlineCode(item.replace(/^- /, ""))}
@@ -127,9 +135,12 @@ export function LessonContent({ lesson, locale, className }: LessonContentProps)
               }
 
               if (paragraph.match(/^\d+\./)) {
-                const items = paragraph.split("\n").filter(line => line.match(/^\d+\./))
+                const items = paragraph.split("\n").filter((line) => line.match(/^\d+\./))
                 return (
-                  <ol key={pIndex} className="list-decimal list-inside space-y-2.5 text-muted-foreground pl-1">
+                  <ol
+                    key={pIndex}
+                    className="list-decimal list-inside space-y-2.5 text-muted-foreground pl-1"
+                  >
                     {items.map((item, i) => (
                       <li key={i} className="leading-relaxed pl-0.5">
                         {formatInlineCode(item.replace(/^\d+\.\s*/, ""))}
@@ -233,6 +244,66 @@ export function LessonContent({ lesson, locale, className }: LessonContentProps)
       </nav>
     </article>
   )
+}
+
+type ContentBlock =
+  | { type: "code"; content: string }
+  | { type: "paragraph"; content: string }
+
+function parseContentBlocks(content: string): ContentBlock[] {
+  const blocks: ContentBlock[] = []
+  const lines = content.split("\n")
+
+  let inCodeBlock = false
+  let currentCodeLines: string[] = []
+  let currentParagraphLines: string[] = []
+
+  const flushParagraph = () => {
+    if (currentParagraphLines.length) {
+      blocks.push({ type: "paragraph", content: currentParagraphLines.join("\n") })
+      currentParagraphLines = []
+    }
+  }
+
+  const flushCode = () => {
+    if (currentCodeLines.length) {
+      blocks.push({ type: "code", content: currentCodeLines.join("\n") })
+      currentCodeLines = []
+    }
+  }
+
+  for (const line of lines) {
+    if (line.startsWith("```")) {
+      if (inCodeBlock) {
+        // Closing code fence
+        inCodeBlock = false
+        flushCode()
+      } else {
+        // Opening code fence
+        flushParagraph()
+        inCodeBlock = true
+      }
+      continue
+    }
+
+    if (inCodeBlock) {
+      currentCodeLines.push(line)
+      continue
+    }
+
+    if (line.trim() === "") {
+      flushParagraph()
+      continue
+    }
+
+    currentParagraphLines.push(line)
+  }
+
+  // Flush any remaining content
+  flushParagraph()
+  flushCode()
+
+  return blocks
 }
 
 // Helper to format inline code

@@ -814,10 +814,10 @@ R: Vamos calcular:
         title: "Por que CoT funciona",
         content: `Cadeia de pensamento melhora a precisão ao:
 
-- **Decompor** problemas complexos em passos menores
-- **Reduzir** erros em raciocínio com múltiplos passos
-- **Tornar** o processo de raciocínio auditável
-- **Detectar** erros antes da resposta final
+- Decompor problemas complexos em passos menores
+- Reduzir erros em raciocínio com múltiplos passos
+- Tornar o processo de raciocínio auditável
+- Detectar erros antes da resposta final
 
 CoT é especialmente eficaz para:
 - Problemas de matemática
@@ -1024,9 +1024,11 @@ Exemplos de consultas que a busca semântica lida bem:
 - "ML" encontra documentos sobre "aprendizado de máquina"
 
 O processo:
+
 1. Gere embedding da sua consulta
 2. Encontre vetores similares no seu banco
-3. Retorne os documentos correspondentes`
+3. Retorne os documentos correspondentes
+`
       }
     ],
     playground: {
@@ -1092,26 +1094,26 @@ RAG resolve isso ao:
 Consulta do usuário
     ↓
 ┌─────────────────┐
-│  Embed da query │
-└────────┬────────┘
-         ↓
+│  Embed da query            │
+└─────────────────┘
+              ↓
 ┌─────────────────┐
-│  Busca vetorial │ ← Seus embeddings de documentos
-└────────┬────────┘
-         ↓
+│  Busca vetorial            │ ← Seus embeddings de documentos
+└─────────────────┘
+              ↓
 ┌─────────────────┐
-│  Top K resultados │
-└────────┬────────┘
-         ↓
+│  Top K resultados          │
+└─────────────────┘
+              ↓
 ┌─────────────────┐
-│  Aumentar prompt │
-└────────┬────────┘
-         ↓
+│  Aumentar prompt           │
+└─────────────────┘
+              ↓
 ┌─────────────────┐
-│  Gerar           │
-└────────┬────────┘
-         ↓
-    Resposta
+│  Gerar                     │
+└─────────────────┘
+              ↓
+          Resposta
 \`\`\``
       },
       {

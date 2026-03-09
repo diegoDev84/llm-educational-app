@@ -1071,6 +1071,7 @@ Example queries that semantic search handles well:
 - "ML" finds documents about "machine learning"
 
 The process:
+
 1. Embed your query
 2. Find similar vectors in your database
 3. Return the corresponding documents`
