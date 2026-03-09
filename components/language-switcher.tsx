@@ -48,7 +48,12 @@ export function LanguageSwitcher({ currentLocale, className }: LanguageSwitcherP
   const pathname = usePathname()
 
   return (
-    <div className={cn("flex items-center gap-0.5 rounded-lg border border-border bg-secondary/30 p-0.5", className)}>
+    <div
+      className={cn(
+        "inline-flex items-center gap-0.5 rounded-md border border-border bg-secondary/30 px-0.5 py-0.5",
+        className
+      )}
+    >
       {locales.map((locale) => {
         const isActive = locale === currentLocale
         const href = pathWithLocale(pathname ?? `/${currentLocale}`, locale)
@@ -58,7 +63,7 @@ export function LanguageSwitcher({ currentLocale, className }: LanguageSwitcherP
             href={href}
             onClick={() => setStoredLocale(locale)}
             className={cn(
-              "rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors",
+              "rounded-md px-2 py-1 text-[11px] font-medium transition-colors",
               isActive
                 ? "bg-primary text-primary-foreground"
                 : "text-muted-foreground hover:text-foreground hover:bg-secondary"
