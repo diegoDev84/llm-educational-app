@@ -315,6 +315,7 @@ Exemplos de entradas e saídas para demonstrar expectativas.`
         content: `### Seja específico, não vago
 
 ❌ "Escreva algo sobre cachorros"
+
 ✅ "Escreva um parágrafo informativo de 100 palavras sobre o temperamento de Golden Retrievers para donos de primeira viagem"
 
 ### Use delimitadores claros

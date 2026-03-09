@@ -362,6 +362,7 @@ Sample inputs and outputs to demonstrate expectations.`
         content: `### Be Specific, Not Vague
 
 ❌ "Write something about dogs"
+
 ✅ "Write a 100-word informative paragraph about Golden Retrievers' temperament for first-time dog owners"
 
 ### Use Clear Delimiters
