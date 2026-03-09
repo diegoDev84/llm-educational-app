@@ -51,6 +51,7 @@ export function PlaygroundPanel({
   const [latency, setLatency] = useState<number | null>(null)
   const [showExplanation, setShowExplanation] = useState(true)
   const startTimeRef = useRef<number>(0)
+  const promptTextareaRef = useRef<HTMLTextAreaElement>(null)
 
   const clearResponseState = useCallback(() => {
     setCustomPrompt("")
@@ -191,6 +192,7 @@ export function PlaygroundPanel({
   const selectStarterPrompt = (index: number) => {
     setSelectedPromptIndex(index)
     clearResponseState()
+    promptTextareaRef.current?.scrollTo(0, 0)
   }
 
   const resetPlayground = () => {
@@ -288,6 +290,7 @@ export function PlaygroundPanel({
               {t.playground.promptLabel}
             </label>
             <textarea
+              ref={promptTextareaRef}
               value={currentPromptText}
               onChange={(e) => setCustomPrompt(e.target.value)}
               placeholder={t.playground.promptPlaceholder}
