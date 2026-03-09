@@ -4,6 +4,22 @@ import { defaultLocale, isValidLocale } from "@/lib/i18n"
 
 const LOCALE_COOKIE = "llm-mastery-locale"
 
+function getBrowserLocale(request: NextRequest): string | null {
+  const header = request.headers.get("accept-language")
+  if (!header) return null
+
+  const [first] = header.split(",")
+  if (!first) return null
+
+  const code = first.split(";")[0]?.trim().toLowerCase()
+  if (!code) return null
+
+  if (code.startsWith("pt")) return "pt-br"
+  if (code.startsWith("en")) return "en"
+
+  return null
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
@@ -26,10 +42,17 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Prefer locale from cookie when visiting /
+  // Prefer locale from cookie when visiting /, then fall back to browser locale, then default
   const cookieLocale = request.cookies.get(LOCALE_COOKIE)?.value
+  const browserLocale = pathname === "/" ? getBrowserLocale(request) : null
+
   const locale =
-    pathname === "/" && cookieLocale && isValidLocale(cookieLocale) ? cookieLocale : defaultLocale
+    pathname === "/" && cookieLocale && isValidLocale(cookieLocale)
+      ? cookieLocale
+      : pathname === "/" && browserLocale && isValidLocale(browserLocale)
+        ? browserLocale
+        : defaultLocale
+
   const newUrl = new URL(`/${locale}${pathname === "/" ? "" : pathname}`, request.url)
   return NextResponse.redirect(newUrl)
 }
