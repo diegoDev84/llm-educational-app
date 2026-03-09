@@ -34,7 +34,12 @@
     "lessonsCount": "14 lessons",
     "builtFor": "Built for developers",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "links": {
+      "home": "Home",
+      "course": "Course",
+      "about": "About & Contact"
+    }
   },
   "lesson": {
     "lessonOf": "Lesson {current} of {total}",

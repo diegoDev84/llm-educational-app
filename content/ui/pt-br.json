@@ -34,7 +34,12 @@
     "lessonsCount": "14 lições",
     "builtFor": "Feito para desenvolvedores",
     "openMenu": "Abrir menu",
-    "closeMenu": "Fechar menu"
+    "closeMenu": "Fechar menu",
+    "links": {
+      "home": "Início",
+      "course": "Curso",
+      "about": "Sobre & Contato"
+    }
   },
   "lesson": {
     "lessonOf": "Lição {current} de {total}",
