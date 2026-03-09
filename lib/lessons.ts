@@ -53,7 +53,7 @@ export const lessonsEn: Lesson[] = [
     title: "Introduction: How LLMs Work",
     slug: "how-llms-work",
     module: "Foundations",
-    summary: "Understand the fundamental mechanics of large language models",
+    summary: "Understand the fundamental mechanics of large language models so you can reason about real-world LLM systems",
     duration: "15 min",
     goals: [
       "Understand how transformer architecture enables text generation",
@@ -125,7 +125,7 @@ The model can generate code because it has learned the statistical patterns of h
     title: "Tokens: The Currency of LLMs",
     slug: "tokens",
     module: "Foundations",
-    summary: "Learn what tokens are and why they matter for cost and context",
+    summary: "Learn what tokens are and why they matter for cost, context, and real application design",
     duration: "12 min",
     goals: [
       "Understand what tokens are and how text is tokenized",
@@ -203,7 +203,7 @@ The same text may have different token counts across models. The word "indescrib
     title: "Controlling the Model: Generation Parameters",
     slug: "generation-parameters",
     module: "Foundations",
-    summary: "Master the parameters that control how LLMs generate text",
+    summary: "Master the parameters that control how LLMs generate text in real applications",
     duration: "15 min",
     goals: [
       "Understand temperature and its effect on output randomness",
@@ -293,7 +293,7 @@ Encourages the model to introduce new topics. Higher values = more diverse conte
     title: "Anatomy of a Good Prompt",
     slug: "anatomy-of-prompt",
     module: "Communicating with LLMs",
-    summary: "Learn the components of effective prompts",
+    summary: "Learn the components of effective prompts for real LLM-powered products",
     duration: "18 min",
     goals: [
       "Understand the CRISPE framework for structuring prompts",
@@ -384,7 +384,7 @@ If you want a list, say "as a numbered list." If you want JSON, specify the sche
     title: "System Prompts and Personas",
     slug: "system-prompts",
     module: "Communicating with LLMs",
-    summary: "Shape model behavior with system prompts and personas",
+    summary: "Shape model behavior with system prompts and personas for specific products and workflows",
     duration: "15 min",
     goals: [
       "Understand what system prompts are and how they work",
@@ -475,7 +475,7 @@ Include instructions for handling edge cases, sensitive topics, and error condit
     title: "Few-Shot Learning",
     slug: "few-shot-learning",
     module: "Communicating with LLMs",
-    summary: "Teach models new tasks through examples",
+    summary: "Teach models new tasks through examples, as you would in real product flows",
     duration: "12 min",
     goals: [
       "Understand few-shot learning and when to use it",
@@ -569,7 +569,7 @@ Output:
     title: "JSON Mode and Structured Output",
     slug: "json-mode",
     module: "Structured Outputs",
-    summary: "Get predictable, parseable responses from LLMs",
+    summary: "Get predictable, parseable responses from LLMs so your systems can rely on them",
     duration: "15 min",
     goals: [
       "Understand JSON mode and when to use it",
@@ -660,7 +660,7 @@ Providing a schema template significantly improves reliability.`
     title: "Function Calling",
     slug: "function-calling",
     module: "Structured Outputs",
-    summary: "Enable LLMs to interact with external systems",
+    summary: "Enable LLMs to interact with external systems in a controlled, production-ready way",
     duration: "20 min",
     goals: [
       "Understand function calling and tool use",
@@ -764,7 +764,7 @@ Model: "It's currently 22°C and sunny in Tokyo."
     title: "Chain of Thought Reasoning",
     slug: "chain-of-thought",
     module: "Advanced Techniques",
-    summary: "Improve complex reasoning with step-by-step thinking",
+    summary: "Improve complex reasoning with step-by-step thinking for real-world decision making",
     duration: "15 min",
     goals: [
       "Understand chain of thought (CoT) prompting",
@@ -854,7 +854,7 @@ Explore multiple reasoning branches and evaluate each.`
     title: "Managing the Context Window",
     slug: "context-window",
     module: "Advanced Techniques",
-    summary: "Work effectively within token limits",
+    summary: "Work effectively within token limits when designing real conversational and assistant flows",
     duration: "15 min",
     goals: [
       "Understand context window limitations",
@@ -942,7 +942,7 @@ Store detailed information externally, include summaries in context.`
     title: "Embeddings and Semantic Search",
     slug: "embeddings",
     module: "Advanced Techniques",
-    summary: "Convert text to vectors for similarity search",
+    summary: "Convert text to vectors for similarity search in real applications and systems",
     duration: "18 min",
     goals: [
       "Understand what embeddings are and how they work",
@@ -1028,7 +1028,7 @@ The process:
     title: "Retrieval-Augmented Generation (RAG)",
     slug: "rag",
     module: "Production Systems",
-    summary: "Ground LLM responses in your own data",
+    summary: "Ground LLM responses in your own data to build reliable LLM applications",
     duration: "20 min",
     goals: [
       "Understand the RAG architecture",
@@ -1131,7 +1131,7 @@ User Query
     title: "Streaming Responses",
     slug: "streaming",
     module: "Production Systems",
-    summary: "Deliver faster perceived performance with streaming",
+    summary: "Deliver faster perceived performance with streaming in production LLM interfaces",
     duration: "12 min",
     goals: [
       "Understand why streaming improves UX",
@@ -1226,7 +1226,7 @@ If streaming JSON, wait for complete object before parsing.
     title: "Evaluation and Cost Optimization",
     slug: "evaluation",
     module: "Production Systems",
-    summary: "Measure quality and optimize costs in production",
+    summary: "Measure quality and optimize costs in production LLM systems",
     duration: "18 min",
     goals: [
       "Learn to evaluate LLM output quality",

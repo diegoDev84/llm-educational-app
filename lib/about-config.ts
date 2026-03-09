@@ -51,24 +51,26 @@ export interface AboutConfig {
 
 export const aboutConfig: AboutConfig = {
   author: {
-    name: "Diego Fedrizzi Petry",
+    name: "Diego Fedrizzi Petry Becker",
     role: {
-      en: "Software engineer & AI product builder",
-      "pt-br": "Engenheiro de software e criador de produtos de IA",
+      en: "Software engineer and technical leader focused on AI-powered systems",
+      "pt-br": "Engenheiro de software e líder técnico com foco em sistemas com IA",
     },
     location: {
-      en: "Based in Brazil, working with global teams",
-      "pt-br": "Baseado no Brasil, atuando com equipes globais",
+      en: "Based in Brazil.",
+      "pt-br": "Baseado no Brasil.",
     },
     shortBio: {
-      en: "I help teams design, build, and ship reliable AI-powered products — with a strong focus on developer experience and real-world constraints.",
-      "pt-br": "Ajudo equipes a desenhar, construir e entregar produtos com IA de forma confiável — com foco forte em experiência de desenvolvedor e restrições do mundo real.",
+      en: "I work on building platforms and systems that use modern AI capabilities to solve real problems at scale. My focus is on turning language models, automation, and data into reliable tools that teams can actually use and evolve in production.",
+      "pt-br":
+        "Trabalho na construção de plataformas e sistemas que usam capacidades modernas de IA para resolver problemas reais em escala. Meu foco é transformar modelos de linguagem, automação e dados em ferramentas confiáveis, que equipes conseguem de fato usar e evoluir em produção.",
     },
     whyBuilt: {
-      en: "I created this platform to give developers a serious, practical path into LLMs — beyond hype, with clear mental models and code you can actually ship.",
-      "pt-br": "Criei esta plataforma para oferecer a desenvolvedores um caminho sério e prático para trabalhar com LLMs — além do hype, com modelos mentais claros e código que você realmente consegue colocar em produção.",
+      en: "I created this platform to help developers and technology professionals build practical intuition about how LLM-based systems really work — beyond the hype, with clear concepts, explicit trade-offs, and hands-on experimentation. If you’d like to talk about AI systems, architecture, or building products with AI, I’m always happy to exchange ideas.",
+      "pt-br":
+        "Criei esta plataforma para ajudar desenvolvedores e profissionais de tecnologia a desenvolver intuição prática sobre como sistemas baseados em LLMs realmente funcionam — indo além do hype, com conceitos claros, trade-offs explícitos e experimentação concreta. Se quiser conversar sobre sistemas de IA, arquitetura ou construção de produtos com IA, fico feliz em trocar ideias.",
     },
-    avatarUrl: undefined,
+    avatarUrl: "/diego.png",
   },
   links: {
     linkedin: "https://www.linkedin.com/in/diegofedrizzipetry",
@@ -85,15 +87,15 @@ export const aboutConfig: AboutConfig = {
   },
   content: {
     en: {
-      pageTitle: "About the project & how to reach me",
+      pageTitle: "About the project & who it's for",
       pageSubtitle:
-        "A focused learning experience for developers who want to build real products with large language models — and a direct line if you want to talk.",
+        "A focused, practical learning environment for developers and technology professionals who are building real AI-powered products with large language models — plus a direct line if you want to talk.",
       aboutProject: {
         title: "About this platform",
         paragraphs: [
-          "This platform is designed as a serious, modern learning environment for developers who want to understand how large language models actually work — and how to ship real applications with them.",
-          "Instead of being a loose collection of tips or disconnected demos, the course is structured as a coherent path: from transformers and tokens, to prompting, structured outputs, RAG, and production patterns.",
-          "Every lesson is built to be practical: you read the concepts, then immediately experiment in an integrated playground with curated prompts and scenarios that mirror real product work.",
+          "This platform is designed as a serious, modern learning environment for people who build with AI day to day — developers, product managers, data professionals, and technical founders who want to understand how large language models actually work in real systems.",
+          "Instead of being an introductory AI course for the general public or a loose collection of tips, the curriculum is structured as a coherent path: from transformers and tokens, to prompting, structured outputs, RAG, and production patterns used in real-world LLM products.",
+          "Every lesson is built to be practical: you read the concepts, then immediately experiment in an integrated playground with curated prompts and scenarios that mirror real application and system design work.",
         ],
       },
       aboutCreatorSectionTitle: "About the creator",
@@ -112,15 +114,15 @@ export const aboutConfig: AboutConfig = {
       },
     },
     "pt-br": {
-      pageTitle: "Sobre o projeto e como falar comigo",
+      pageTitle: "Sobre o projeto e para quem ele foi feito",
       pageSubtitle:
-        "Uma experiência de aprendizagem focada para desenvolvedores que querem construir produtos reais com modelos de linguagem — e um canal direto caso você queira conversar.",
+        "Um ambiente de aprendizagem focado e prático para desenvolvedores e profissionais de tecnologia que estão construindo produtos reais com modelos de linguagem — e um canal direto caso você queira conversar.",
       aboutProject: {
         title: "Sobre esta plataforma",
         paragraphs: [
-          "Esta plataforma foi desenhada como um ambiente moderno e sério de aprendizagem para desenvolvedores que querem entender como modelos de linguagem funcionam de verdade — e como colocar aplicações com LLMs em produção.",
-          "Em vez de ser apenas uma coleção solta de dicas ou demos isoladas, o curso é estruturado como um caminho coerente: de transformadores e tokens, passando por prompting, saídas estruturadas, RAG e padrões de produção.",
-          "Cada lição foi pensada para ser prática: você lê os conceitos e imediatamente experimenta em um playground integrado, com prompts e cenários curados que se parecem com trabalho real de produto.",
+          "Esta plataforma foi desenhada como um ambiente moderno e sério de aprendizagem para quem constrói com IA no dia a dia — desenvolvedores, PMs, pessoas de dados e fundadores técnicos que querem entender como LLMs funcionam de verdade em sistemas reais.",
+          "Em vez de ser um curso introdutório de IA para o público geral ou uma coleção solta de dicas, o currículo é estruturado como um caminho coerente: de Transformer e tokens, passando por prompting, saídas estruturadas, RAG e padrões de produção usados em produtos com LLMs.",
+          "Cada lição foi pensada para ser prática: você lê os conceitos e imediatamente experimenta em um playground integrado, com prompts e cenários curados que se parecem com trabalho real de aplicação e design de sistemas.",
         ],
       },
       aboutCreatorSectionTitle: "Sobre o criador",

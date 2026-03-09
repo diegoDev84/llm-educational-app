@@ -5,19 +5,19 @@ export const lessons: Lesson[] = [
     title: "Introdução: Como funcionam os LLMs",
     slug: "how-llms-work",
     module: "Fundamentos",
-    summary: "Entenda a mecânica fundamental dos grandes modelos de linguagem",
+    summary: "Entenda a mecânica fundamental dos LLMs para conseguir raciocinar sobre sistemas reais com modelos de linguagem",
     duration: "15 min",
     goals: [
-      "Entender como a arquitetura transformer permite a geração de texto",
+      "Entender como a arquitetura Transformer permite a geração de texto",
       "Aprender sobre predição do próximo token e geração autoregressiva",
       "Reconhecer as limitações dos LLMs em relação a memória e compreensão"
     ],
     sections: [
       {
         title: "A arquitetura Transformer",
-        content: `Grandes Modelos de Linguagem (LLMs) são redes neurais treinadas em quantidades massivas de texto para entender e gerar linguagem semelhante à humana. Em essência, funcionam prevendo o token mais provável em uma sequência.
+        content: `Grandes modelos de linguagem (LLMs) são redes neurais treinadas em quantidades massivas de texto para entender e gerar linguagem semelhante à humana. Em essência, funcionam prevendo o token mais provável em uma sequência.
 
-Os LLMs modernos são construídos sobre a arquitetura transformer, introduzida no artigo de 2017 "Attention Is All You Need". A inovação central é o **mecanismo de atenção**, que permite ao modelo ponderar a relevância de diferentes partes da entrada ao gerar cada token de saída.
+Os LLMs modernos são construídos sobre a arquitetura Transformer, introduzida no artigo de 2017 "Attention Is All You Need". A inovação central é o **mecanismo de atenção**, que permite ao modelo ponderar a relevância de diferentes partes da entrada ao gerar cada token de saída.
 
 Quando você envia um prompt a um LLM, acontece o seguinte:
 
@@ -427,7 +427,7 @@ Inclua instruções para lidar com casos extremos, tópicos sensíveis e condiç
     title: "Few-shot learning",
     slug: "few-shot-learning",
     module: "Comunicando com LLMs",
-    summary: "Ensine novos tarefas ao modelo por meio de exemplos",
+    summary: "Ensine novas tarefas ao modelo por meio de exemplos",
     duration: "12 min",
     goals: [
       "Entender few-shot learning e quando usar",
