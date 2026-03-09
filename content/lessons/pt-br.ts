@@ -1078,22 +1078,22 @@ O processo:
     ],
     sections: [
       {
-        title: "Por que RAG?",
-        content: `LLMs têm limitações:
+        title: "LLMs genéricas",
+        content: `LLMs genéricas (usadas sem seus dados) têm limitações:
 - Corte de conhecimento (não sabem eventos recentes)
 - Não acessam dados privados
 - Podem alucinar fatos
 
-RAG resolve isso ao:
-1. **Recuperar** documentos relevantes dos seus dados
-2. **Aumentar** o prompt com esse contexto
-3. **Gerar** uma resposta ancorada em informação real`
+Por que RAG resolve isso?
+1. **Recupera** documentos relevantes dos seus dados
+2. **Aumenta** o prompt com esse contexto
+3. **Gera** uma resposta ancorada em informação real`
       },
       {
         title: "Arquitetura RAG",
         content: `\`\`\`
 Consulta do usuário
-    ↓
+              ↓
 ┌─────────────────┐
 │  Embed da query            │
 └─────────────────┘

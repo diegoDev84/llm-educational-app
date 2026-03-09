@@ -1124,8 +1124,8 @@ The process:
     ],
     sections: [
       {
-        title: "Why RAG?",
-        content: `LLMs have limitations:
+        title: "Generic LLMs",
+        content: `Generic LLMs (used without your data) have limitations:
 - Knowledge cutoff (don't know recent events)
 - Can't access private data
 - May hallucinate facts
