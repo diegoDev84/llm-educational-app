@@ -2,9 +2,16 @@
 
 import { cn } from "@/lib/utils"
 import type { Lesson } from "@/lib/lessons"
-import { getLessonProgress, getNextLesson, getPreviousLesson, getModules, getLessonNumber } from "@/lib/lessons"
+import { getLessonProgress, getNextLesson, getPreviousLesson } from "@/lib/lessons"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Target, AlertTriangle, Lightbulb, Clock } from "lucide-react"
+import {
+  ChevronLeft,
+  ChevronRight,
+  Target,
+  AlertTriangle,
+  Lightbulb,
+  Clock,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface LessonContentProps {
