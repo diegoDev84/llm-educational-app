@@ -33,6 +33,7 @@ export function PlaygroundPanel({
   const [response, setResponse] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [retryAfter, setRetryAfter] = useState<number | null>(null)
   const [copied, setCopied] = useState(false)
   const [latency, setLatency] = useState<number | null>(null)
   const [showExplanation, setShowExplanation] = useState(true)
@@ -80,6 +81,7 @@ export function PlaygroundPanel({
     setIsLoading(true)
     setResponse("")
     setError(null)
+    setRetryAfter(null)
     setLatency(null)
     startTimeRef.current = performance.now()
 
@@ -97,6 +99,10 @@ export function PlaygroundPanel({
       setLatency(Math.round(endTime - startTimeRef.current))
 
       if (!res.ok || data.error) {
+        // Handle rate limit with retry info
+        if (res.status === 429 && data.retryAfter) {
+          setRetryAfter(data.retryAfter)
+        }
         throw new Error(data.error || "Failed to generate response")
       }
 
@@ -127,6 +133,7 @@ export function PlaygroundPanel({
     setCustomPrompt("")
     setResponse("")
     setError(null)
+    setRetryAfter(null)
     setLatency(null)
   }
 
