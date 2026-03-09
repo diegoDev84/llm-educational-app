@@ -2,6 +2,7 @@ import Link from "next/link"
 import { getModules, getLessonBySlug, getLessonNumber, getLessonSlugs } from "@/lib/lessons"
 import { getTranslations } from "@/lib/translations"
 import { Button } from "@/components/ui/button"
+import { LanguageSwitcher } from "@/components/language-switcher"
 import { BookOpen, ArrowRight, Sparkles, Code, Layers, Cpu, Rocket, Clock } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
 
@@ -25,9 +26,12 @@ export default async function HomePage({ params }: HomePageProps) {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
         <div className="relative max-w-5xl mx-auto px-4 py-16 sm:px-6 sm:py-20 lg:py-32">
-          <div className="flex items-center gap-2 text-primary mb-6">
-            <Sparkles className="w-5 h-5" />
-            <span className="text-sm font-medium uppercase tracking-wide">{t.home.badge}</span>
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <div className="flex items-center gap-2 text-primary">
+              <Sparkles className="w-5 h-5" />
+              <span className="text-sm font-medium uppercase tracking-wide">{t.home.badge}</span>
+            </div>
+            <LanguageSwitcher currentLocale={locale as Locale} />
           </div>
           <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6 text-balance">
             {t.home.heroTitle1}

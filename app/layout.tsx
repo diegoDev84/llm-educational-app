@@ -67,8 +67,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={cn(geist.className, "antialiased")}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(geist.className, "antialiased")} suppressHydrationWarning>
         {children}
         <Analytics />
       </body>
