@@ -69,9 +69,9 @@ export const aboutConfig: AboutConfig = {
         "Trabalho na construção de plataformas e sistemas que usam capacidades modernas de IA para resolver problemas reais em escala. Meu foco é transformar modelos de linguagem, automação e dados em ferramentas confiáveis, que equipes conseguem de fato usar e evoluir em produção.",
     },
     whyBuilt: {
-      en: "I created this platform to help developers and technology professionals build practical intuition about how LLM-based systems really work — beyond the hype, with clear concepts, explicit trade-offs, and hands-on experimentation. If you’d like to talk about AI systems, architecture, or building products with AI, I’m always happy to exchange ideas.",
+      en: "I created this platform to help developers and technology professionals build practical intuition about how LLM-based systems really work — beyond the hype, with clear concepts, explicit trade-offs, and hands-on experimentation.",
       "pt-br":
-        "Criei esta plataforma para ajudar desenvolvedores e profissionais de tecnologia a desenvolver intuição prática sobre como sistemas baseados em LLMs realmente funcionam — indo além do hype, com conceitos claros, trade-offs explícitos e experimentação concreta. Se quiser conversar sobre sistemas de IA, arquitetura ou construção de produtos com IA, fico feliz em trocar ideias.",
+        "Criei esta plataforma para ajudar desenvolvedores e profissionais de tecnologia a desenvolver intuição prática sobre como sistemas baseados em LLMs realmente funcionam — indo além do hype, com conceitos claros, trade-offs explícitos e experimentação concreta.",
     },
     avatarUrl: "/diego.png",
   },
@@ -85,14 +85,14 @@ export const aboutConfig: AboutConfig = {
     defaultMessage: {
       en: "Hi Diego! I found your LLM course and would love to connect to talk about AI, products, or the project.",
       "pt-br":
-        "Oi Diego! Encontrei sua plataforma de LLMs e gostaria de conversar sobre IA, produtos ou o projeto.",
+        "Oi Diego! Encontrei sua plataforma de LLMs e gostaria de conversar ou entender como posso contribuir com o projeto.",
     },
   },
   content: {
     en: {
       pageTitle: "About the project & how to reach me",
       pageSubtitle:
-        "A focused learning experience for developers and technology professionals who want to understand how real LLM systems behave — and a direct line if you want to talk.",
+        "A focused learning experience for developers and technology professionals who want to understand how real LLM systems behave.",
       aboutProject: {
         title: "About this platform",
         paragraphs: [
@@ -124,7 +124,7 @@ export const aboutConfig: AboutConfig = {
     "pt-br": {
       pageTitle: "Sobre o projeto e como falar comigo",
       pageSubtitle:
-        "Uma experiência de aprendizagem focada para desenvolvedores e profissionais de tecnologia que querem entender como sistemas com LLMs se comportam na prática — e um canal direto caso você queira conversar.",
+        "Uma experiência de aprendizagem focada para desenvolvedores e profissionais de tecnologia que querem entender como sistemas com LLMs se comportam na prática.",
       aboutProject: {
         title: "Sobre esta plataforma",
         paragraphs: [
@@ -137,16 +137,16 @@ export const aboutConfig: AboutConfig = {
       aboutCreatorSectionTitle: "Sobre o criador",
       networkingSectionTitle: "Vamos nos conectar",
       networkingSectionDescription:
-        "Estes são, em geral, os melhores lugares para se conectar e continuar a conversa.",
+        "Estes são, em geral, os melhores lugares para se conectar, continuar a conversa ou falar sobre possíveis contribuições ao projeto.",
       networkingLinkedinDescription: "Conexão profissional e networking.",
       networkingGithubDescription: "Código, projetos e trabalho open source.",
       whatsappSectionTitle: "Contato rápido",
       whatsappSectionDescription:
-        "Se quiser conversar sobre IA aplicada, arquitetura de sistemas ou este projeto, o WhatsApp é a forma mais rápida de falar comigo.",
+        "Se quiser conversar sobre IA aplicada, arquitetura de sistemas, este projeto ou formas de contribuir, o WhatsApp é a forma mais rápida de falar comigo.",
       contactForm: {
         title: "Mensagem estruturada",
         description:
-          "Se preferir enviar uma mensagem mais detalhada, você pode usar este formulário.",
+          "Se preferir enviar uma mensagem mais detalhada — seja para conversar, dar feedback ou explorar formas de contribuição — você pode usar este formulário.",
         nameLabel: "Nome",
         emailLabel: "E-mail",
         messageLabel: "Mensagem",

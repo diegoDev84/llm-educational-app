@@ -52,8 +52,11 @@ export function SidebarNavigation({ className }: SidebarNavigationProps) {
               className="w-8 h-8"
             />
           </div>
-          <div>
+          <div className="flex items-center gap-2">
             <h1 className="font-semibold text-foreground">{t.nav.appName}</h1>
+            <span className="inline-flex items-center rounded-full border border-border/60 bg-muted/60 px-2 py-0.5 text-[10px] font-medium text-muted-foreground shrink-0">
+              Beta
+            </span>
           </div>
         </Link>
         <div className="mt-3">

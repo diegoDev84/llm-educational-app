@@ -37,8 +37,11 @@ export default async function HomePage({ params }: HomePageProps) {
             <br />
             <span className="text-muted-foreground">{t.home.heroTitle2}</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mb-10 leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-2xl mb-2 leading-relaxed">
             {t.home.heroDescription}
+          </p>
+          <p className="text-sm text-muted-foreground max-w-2xl mb-10">
+            Free to use during beta.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             {firstLesson && (
@@ -165,6 +168,9 @@ export default async function HomePage({ params }: HomePageProps) {
       <footer className="py-8 border-t border-border">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center text-sm text-muted-foreground">
           <p>{t.home.footer}</p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            Frodex is currently in beta. Features and content may change as the platform evolves.
+          </p>
         </div>
       </footer>
     </div>

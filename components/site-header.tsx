@@ -91,10 +91,13 @@ export function SiteHeader({ locale, courseHref }: SiteHeaderProps) {
                   className="w-9 h-9"
                 />
               </div>
-              <div className="hidden sm:block min-w-0">
+              <div className="hidden sm:flex items-center gap-2 min-w-0">
                 <p className="text-sm font-semibold leading-tight text-foreground truncate">
                   {t.nav.appName}
                 </p>
+                <span className="inline-flex items-center rounded-full border border-border/60 bg-muted/60 px-2 py-0.5 text-[10px] font-medium text-muted-foreground shrink-0">
+                  Beta
+                </span>
               </div>
             </div>
           </Link>
