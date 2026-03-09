@@ -4,6 +4,7 @@
     "heroTitle1": "Build with LLMs.",
     "heroTitle2": "Understand real AI systems.",
     "heroDescription": "A practical learning environment for developers and technology professionals to see how LLM systems actually behave — from tokens and prompts to RAG, tooling, and production patterns, with an interactive playground in every lesson.",
+    "betaNote": "Free to use during beta.",
     "startLearning": "Start building",
     "viewCurriculum": "View curriculum",
     "lessons": "Lessons",

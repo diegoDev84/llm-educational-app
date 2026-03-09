@@ -41,7 +41,7 @@ export default async function HomePage({ params }: HomePageProps) {
             {t.home.heroDescription}
           </p>
           <p className="text-sm text-muted-foreground max-w-2xl mb-10">
-            Free to use during beta.
+            {t.home.betaNote}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             {firstLesson && (
