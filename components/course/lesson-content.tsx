@@ -200,7 +200,7 @@ export function LessonContent({ lesson, locale, className }: LessonContentProps)
       <nav className="flex flex-wrap items-center justify-between gap-4 pt-10 border-t border-border">
         {prevLesson ? (
           <Link href={`/${locale}/lesson/${prevLesson.slug}`}>
-            <Button variant="ghost" className="gap-2">
+            <Button variant="ghost" className="gap-2 text-foreground hover:text-foreground hover:bg-muted">
               <ChevronLeft className="w-4 h-4" />
               <div className="text-left">
                 <span className="block text-xs text-muted-foreground">{t.lesson.previous}</span>
@@ -214,7 +214,7 @@ export function LessonContent({ lesson, locale, className }: LessonContentProps)
 
         {nextLesson ? (
           <Link href={`/${locale}/lesson/${nextLesson.slug}`}>
-            <Button variant="ghost" className="gap-2">
+            <Button variant="ghost" className="gap-2 text-foreground hover:text-foreground hover:bg-muted">
               <div className="text-right">
                 <span className="block text-xs text-muted-foreground">{t.lesson.next}</span>
                 <span className="block text-sm">{nextLesson.title.split(":")[0]}</span>

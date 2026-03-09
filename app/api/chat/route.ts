@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { generateText } from "@/lib/gemini"
+import { generateText } from "@/lib/openrouter"
 import { rateLimit, generateSessionId } from "@/lib/rate-limit"
 import { logError, logRequest } from "@/lib/logging"
 
