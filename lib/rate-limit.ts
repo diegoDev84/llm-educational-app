@@ -26,9 +26,13 @@ const WINDOW_MS = 60 * 1000
 
 // Limites pensados para playground educacional:
 // - IP: protege contra abusos de uma mesma rede
-// - Sessão: incentiva uso responsável por usuário
-const MAX_REQUESTS_PER_IP = 30 // 30 requests per minute per IP
-const MAX_REQUESTS_PER_SESSION = 20 // 20 requests per minute per session
+// - Sessão: incentiva uso responsável por usuário individual
+//
+// Com estes valores, um aluno consegue interagir bastante (várias execuções
+// por minuto) sem risco real de abuso acidental, enquanto scripts/bots
+// batem rapidamente no limite.
+const MAX_REQUESTS_PER_IP = 20 // 20 requests per minute per IP
+const MAX_REQUESTS_PER_SESSION = 10 // 10 requests per minute per session
 
 // Cleanup old entries periodically (every 5 minutes)
 const CLEANUP_INTERVAL = 5 * 60 * 1000
