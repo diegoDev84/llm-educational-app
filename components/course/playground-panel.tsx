@@ -1,41 +1,107 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import type { Lesson } from "@/lib/lessons"
-import { Play, Sparkles, Copy, Check, ChevronDown, ChevronUp } from "lucide-react"
+import {
+  Play,
+  Sparkles,
+  Copy,
+  Check,
+  RotateCcw,
+  AlertCircle,
+  Clock,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react"
 
 interface PlaygroundPanelProps {
   playground: Lesson["playground"]
+  lessonSlug: string
   className?: string
 }
 
-export function PlaygroundPanel({ playground, className }: PlaygroundPanelProps) {
+export function PlaygroundPanel({
+  playground,
+  lessonSlug,
+  className,
+}: PlaygroundPanelProps) {
   const [selectedPromptIndex, setSelectedPromptIndex] = useState(0)
   const [customPrompt, setCustomPrompt] = useState("")
   const [response, setResponse] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
+  const [latency, setLatency] = useState<number | null>(null)
   const [showExplanation, setShowExplanation] = useState(true)
+  const startTimeRef = useRef<number>(0)
+
+  // Reset state when lesson changes
+  useEffect(() => {
+    setSelectedPromptIndex(0)
+    setCustomPrompt("")
+    setResponse("")
+    setError(null)
+    setLatency(null)
+  }, [lessonSlug])
 
   const selectedPrompt = playground.starterPrompts[selectedPromptIndex]
   const currentPromptText = customPrompt || selectedPrompt?.prompt || ""
+
+  const isJsonResponse = (text: string): boolean => {
+    const trimmed = text.trim()
+    if (
+      (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+      (trimmed.startsWith("[") && trimmed.endsWith("]"))
+    ) {
+      try {
+        JSON.parse(trimmed)
+        return true
+      } catch {
+        return false
+      }
+    }
+    return false
+  }
+
+  const formatJson = (text: string): string => {
+    try {
+      return JSON.stringify(JSON.parse(text.trim()), null, 2)
+    } catch {
+      return text
+    }
+  }
 
   const runPrompt = async () => {
     if (!currentPromptText.trim()) return
 
     setIsLoading(true)
     setResponse("")
+    setError(null)
+    setLatency(null)
+    startTimeRef.current = performance.now()
 
-    // Simulate API response with educational content
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1500))
+    try {
+      // Simulate API response with educational content
+      const delay = 800 + Math.random() * 1200
+      await new Promise((resolve) => setTimeout(resolve, delay))
 
-    // Generate contextual response based on the prompt
-    const simulatedResponse = generateResponse(currentPromptText)
-    setResponse(simulatedResponse)
-    setIsLoading(false)
+      // Simulate occasional errors for demo purposes (5% chance)
+      if (Math.random() < 0.05) {
+        throw new Error("Rate limit exceeded. Please try again in a moment.")
+      }
+
+      const simulatedResponse = generateResponse(currentPromptText)
+      const endTime = performance.now()
+      setLatency(Math.round(endTime - startTimeRef.current))
+      setResponse(simulatedResponse)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An unexpected error occurred")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const copyResponse = () => {
@@ -48,25 +114,57 @@ export function PlaygroundPanel({ playground, className }: PlaygroundPanelProps)
     setSelectedPromptIndex(index)
     setCustomPrompt("")
     setResponse("")
+    setError(null)
+    setLatency(null)
   }
 
+  const resetPlayground = () => {
+    setSelectedPromptIndex(0)
+    setCustomPrompt("")
+    setResponse("")
+    setError(null)
+    setLatency(null)
+  }
+
+  const responseIsJson = response && isJsonResponse(response)
+
   return (
-    <div className={cn("flex flex-col h-full bg-card border-l border-border", className)}>
+    <div
+      className={cn(
+        "flex flex-col h-full bg-card border-l border-border",
+        className
+      )}
+    >
       {/* Header */}
       <div className="p-4 border-b border-border">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-primary" />
-          <h2 className="font-semibold text-foreground">Playground</h2>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <h2 className="font-semibold text-foreground">Playground</h2>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={resetPlayground}
+            className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+          >
+            <RotateCcw className="w-3 h-3 mr-1" />
+            Reset
+          </Button>
         </div>
-        <p className="text-xs text-muted-foreground mt-1">
+      </div>
+
+      {/* Experiment Description */}
+      <div className="px-4 py-3 bg-secondary/30 border-b border-border">
+        <p className="text-sm text-muted-foreground leading-relaxed">
           {playground.description}
         </p>
       </div>
 
-      {/* Starter Prompts */}
-      <div className="p-4 border-b border-border">
+      {/* Starter Prompts as Cards */}
+      <div className="p-4 border-b border-border overflow-auto max-h-[260px]">
         <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wide">
-          Starter Prompts
+          Try These Experiments
         </p>
         <div className="space-y-2">
           {playground.starterPrompts.map((prompt, index) => (
@@ -74,14 +172,40 @@ export function PlaygroundPanel({ playground, className }: PlaygroundPanelProps)
               key={index}
               onClick={() => selectStarterPrompt(index)}
               className={cn(
-                "w-full text-left px-3 py-2 rounded-lg text-sm transition-colors",
+                "w-full text-left p-3 rounded-lg transition-all",
                 "border",
                 selectedPromptIndex === index && !customPrompt
-                  ? "bg-primary/10 border-primary/50 text-foreground"
-                  : "bg-secondary/50 border-transparent text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  ? "bg-primary/10 border-primary/50 ring-1 ring-primary/20"
+                  : "bg-secondary/50 border-border hover:bg-secondary hover:border-border/80"
               )}
             >
-              {prompt.label}
+              <div className="flex items-start gap-3">
+                <div
+                  className={cn(
+                    "w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium shrink-0 mt-0.5",
+                    selectedPromptIndex === index && !customPrompt
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground"
+                  )}
+                >
+                  {index + 1}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p
+                    className={cn(
+                      "text-sm font-medium",
+                      selectedPromptIndex === index && !customPrompt
+                        ? "text-foreground"
+                        : "text-muted-foreground"
+                    )}
+                  >
+                    {prompt.label}
+                  </p>
+                  <p className="text-xs text-muted-foreground/70 mt-1 line-clamp-2">
+                    {prompt.explanation}
+                  </p>
+                </div>
+              </div>
             </button>
           ))}
         </div>
@@ -95,12 +219,13 @@ export function PlaygroundPanel({ playground, className }: PlaygroundPanelProps)
         <textarea
           value={currentPromptText}
           onChange={(e) => setCustomPrompt(e.target.value)}
-          placeholder="Enter your prompt or select a starter above..."
+          placeholder="Enter your prompt or select an experiment above..."
           className={cn(
-            "w-full h-32 px-3 py-2 text-sm rounded-lg resize-none",
+            "w-full h-28 px-3 py-2 text-sm rounded-lg resize-none",
             "bg-secondary border border-border",
             "text-foreground placeholder:text-muted-foreground",
-            "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+            "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
+            "font-mono"
           )}
         />
         <Button
@@ -125,10 +250,18 @@ export function PlaygroundPanel({ playground, className }: PlaygroundPanelProps)
       {/* Response */}
       <div className="flex-1 flex flex-col min-h-0 p-4">
         <div className="flex items-center justify-between mb-2">
-          <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-            Response
-          </label>
-          {response && (
+          <div className="flex items-center gap-3">
+            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              Response
+            </label>
+            {latency !== null && !isLoading && !error && (
+              <span className="flex items-center gap-1 text-xs text-muted-foreground/70">
+                <Clock className="w-3 h-3" />
+                {latency}ms
+              </span>
+            )}
+          </div>
+          {response && !error && (
             <Button
               variant="ghost"
               size="sm"
@@ -149,21 +282,54 @@ export function PlaygroundPanel({ playground, className }: PlaygroundPanelProps)
             </Button>
           )}
         </div>
-        
-        <div className={cn(
-          "flex-1 rounded-lg p-4 overflow-auto",
-          "bg-secondary/50 border border-border",
-          "min-h-[120px]"
-        )}>
+
+        <div
+          className={cn(
+            "flex-1 rounded-lg p-4 overflow-auto",
+            "border",
+            error
+              ? "bg-destructive/10 border-destructive/30"
+              : "bg-secondary/50 border-border",
+            "min-h-[120px]"
+          )}
+        >
           {isLoading ? (
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Spinner className="w-4 h-4" />
+            <div className="flex flex-col items-center justify-center h-full gap-3 text-muted-foreground">
+              <Spinner className="w-6 h-6" />
               <span className="text-sm">Generating response...</span>
             </div>
-          ) : response ? (
-            <div className="text-sm text-foreground whitespace-pre-wrap font-mono">
-              {response}
+          ) : error ? (
+            <div className="flex items-start gap-3 text-destructive">
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-medium">Error</p>
+                <p className="text-sm text-destructive/80 mt-1">{error}</p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={runPrompt}
+                  className="mt-3 h-7 text-xs"
+                >
+                  <RotateCcw className="w-3 h-3 mr-1" />
+                  Retry
+                </Button>
+              </div>
             </div>
+          ) : response ? (
+            responseIsJson ? (
+              <div className="relative">
+                <div className="absolute top-0 right-0 px-2 py-0.5 bg-primary/20 text-primary text-[10px] font-medium rounded-bl rounded-tr-lg uppercase tracking-wide">
+                  JSON
+                </div>
+                <pre className="text-sm text-foreground font-mono whitespace-pre overflow-x-auto">
+                  <code>{formatJson(response)}</code>
+                </pre>
+              </div>
+            ) : (
+              <div className="text-sm text-foreground whitespace-pre-wrap">
+                {response}
+              </div>
+            )
           ) : (
             <p className="text-sm text-muted-foreground italic">
               Response will appear here after running the prompt
@@ -172,14 +338,14 @@ export function PlaygroundPanel({ playground, className }: PlaygroundPanelProps)
         </div>
       </div>
 
-      {/* Explanation */}
+      {/* Explanation Panel */}
       {selectedPrompt && !customPrompt && (
         <div className="p-4 border-t border-border">
           <button
             onClick={() => setShowExplanation(!showExplanation)}
-            className="flex items-center justify-between w-full text-xs font-medium text-muted-foreground uppercase tracking-wide"
+            className="flex items-center justify-between w-full text-xs font-medium text-muted-foreground uppercase tracking-wide hover:text-foreground transition-colors"
           >
-            <span>Why This Prompt?</span>
+            <span>Why This Experiment?</span>
             {showExplanation ? (
               <ChevronUp className="w-4 h-4" />
             ) : (
@@ -213,7 +379,10 @@ function generateResponse(prompt: string): string {
     return "Quantum entanglement is a phenomenon where two or more particles become correlated in such a way that the quantum state of each particle cannot be described independently. When particles are entangled, measuring one particle instantly affects its partner, regardless of the distance between them—a property Einstein famously called 'spooky action at a distance.' This connection persists even across vast cosmic distances, though it cannot be used to transmit information faster than light."
   }
 
-  if (lowerPrompt.includes("list 5 programming languages") || lowerPrompt.includes("programming language")) {
+  if (
+    lowerPrompt.includes("list 5 programming languages") ||
+    lowerPrompt.includes("programming language")
+  ) {
     return "1. Python\n2. JavaScript\n3. TypeScript\n4. Go\n5. Rust"
   }
 
@@ -237,7 +406,10 @@ function generateResponse(prompt: string): string {
     return "Apple\nBanana\nOrange"
   }
 
-  if (lowerPrompt.includes("machine learning") && (lowerPrompt.includes("first-year") || lowerPrompt.includes("professor"))) {
+  if (
+    lowerPrompt.includes("machine learning") &&
+    (lowerPrompt.includes("first-year") || lowerPrompt.includes("professor"))
+  ) {
     return "Machine learning is teaching computers to learn from examples instead of explicit instructions. Imagine teaching a child to recognize cats not by describing features, but by showing thousands of cat pictures until they 'get it.' That's essentially what ML does with data."
   }
 
@@ -256,7 +428,10 @@ function generateResponse(prompt: string): string {
     return "The function is simple and functional. However:\n\n1. No input validation - what happens with non-numeric inputs?\n2. No JSDoc comments explaining the function's purpose\n3. Could benefit from TypeScript types for better maintainability"
   }
 
-  if (lowerPrompt.includes("cooking assistant") && lowerPrompt.includes("programming")) {
+  if (
+    lowerPrompt.includes("cooking assistant") &&
+    lowerPrompt.includes("programming")
+  ) {
     return "I appreciate your curiosity! However, I'm specialized in cooking and culinary topics. I'd be happy to help you with recipes, cooking techniques, or ingredient substitutions instead. Is there anything food-related I can help you with?"
   }
 
@@ -302,7 +477,11 @@ function generateResponse(prompt: string): string {
     return "18 apples"
   }
 
-  if (lowerPrompt.includes("roses") && lowerPrompt.includes("flowers") && lowerPrompt.includes("fade")) {
+  if (
+    lowerPrompt.includes("roses") &&
+    lowerPrompt.includes("flowers") &&
+    lowerPrompt.includes("fade")
+  ) {
     return "Let me analyze this step by step:\n\n1. **Premise 1**: All roses are flowers (Roses ⊆ Flowers)\n2. **Premise 2**: Some flowers fade quickly\n\n**Analysis**:\n- We know roses are a subset of flowers\n- We know some flowers fade quickly\n- However, we don't know if the fading flowers include roses\n\n**Conclusion**: No, we cannot conclude that some roses fade quickly.\n\nThis is a logical fallacy. The flowers that fade quickly might be tulips, daisies, or other non-rose flowers."
   }
 
@@ -326,7 +505,10 @@ function generateResponse(prompt: string): string {
     return "**Likely Issues**:\n1. Semantic ambiguity - \"vacation\" has multiple meanings\n2. Missing domain context\n\n**Solutions**:\n1. Add metadata filtering by document category\n2. Use hybrid search (semantic + keyword)\n3. Query expansion: \"vacation policy time off PTO leave\"\n4. Re-rank results with a cross-encoder"
   }
 
-  if (lowerPrompt.includes("streaming") && (lowerPrompt.includes("3 seconds") || lowerPrompt.includes("without"))) {
+  if (
+    lowerPrompt.includes("streaming") &&
+    (lowerPrompt.includes("3 seconds") || lowerPrompt.includes("without"))
+  ) {
     return "**Without Streaming**:\n- User waits 3 seconds seeing nothing\n- Entire response appears at once\n- Perceived latency: 3000ms\n\n**With Streaming**:\n- First tokens appear in ~200ms\n- Response builds progressively\n- Perceived latency: 200ms\n\n**Result**: Streaming feels 15x faster, even though total generation time is identical."
   }
 
@@ -346,10 +528,14 @@ function generateResponse(prompt: string): string {
     return "**Daily Cost Calculation**:\n\n- Input: 100K × 500 tokens = 50M tokens → $500/day\n- Output: 100K × 200 tokens = 20M tokens → $600/day\n- **Total: $1,100/day** (~$33K/month)\n\n**Cost Reduction Strategies**:\n\n1. **Use smaller models for simple queries** (save 40-60%)\n2. **Implement response caching** (save 20-40%)\n3. **Optimize prompt length** (save 20-30%)\n\nCombined approach: ~50% savings possible"
   }
 
-  if (lowerPrompt.includes("caching strategy") && lowerPrompt.includes("faq")) {
-    return "**FAQ Bot Caching Strategy**:\n\n**What to Cache**:\n- Full responses for exact matches\n- Embeddings for similarity search\n\n**Invalidation Rules**:\n- TTL of 24-48 hours\n- Immediate invalidation on content updates\n\n**Handling Variations**:\n- Similarity threshold > 0.92 for cache hits\n- Canonical question mapping\n- Two-tier cache: exact match + semantic match"
+  if (lowerPrompt.includes("temperature") && lowerPrompt.includes("0.0")) {
+    return "With temperature 0.0, the model produces highly deterministic output.\n\nRunning the same prompt multiple times:\n1. \"The capital of France is Paris.\"\n2. \"The capital of France is Paris.\"\n3. \"The capital of France is Paris.\"\n\nNotice: Identical outputs every time. This is ideal for factual queries where consistency matters."
   }
 
-  // Default response
-  return "I've processed your prompt. This playground simulates how LLMs respond to various inputs. In production, this would connect to an actual LLM API.\n\nTry different prompts to explore the concepts covered in this lesson!"
+  if (lowerPrompt.includes("temperature") && lowerPrompt.includes("1.0")) {
+    return "With temperature 1.0, the model produces more varied, creative output.\n\nRunning the same prompt multiple times:\n1. \"Paris, the City of Light, serves as France's capital.\"\n2. \"France's governmental seat is in Paris.\"\n3. \"The capital of France is Paris, along the Seine.\"\n\nNotice: Each response is different. Higher temperature is great for creative tasks."
+  }
+
+  // Default response for unmatched prompts
+  return "This is a simulated response demonstrating how an LLM would process your input. In a real implementation, this would connect to an actual language model API.\n\nThe response would be generated based on:\n- The model's training data\n- Your prompt's context and instructions\n- The configured generation parameters (temperature, max tokens, etc.)"
 }
