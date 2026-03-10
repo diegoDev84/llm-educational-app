@@ -906,11 +906,14 @@ Explore múltiplos ramos de raciocínio e avalie cada um.`
 - Mensagem atual do usuário
 - Resposta do modelo
 
-Tamanhos comuns de contexto:
-- GPT-3.5: 4K–16K tokens
-- GPT-4: 8K–128K tokens
-- Claude: 100K–200K tokens
-- Llama: varia por modelo`
+Tamanhos comuns de contexto (atualizado):
+- GPT-4o: 128K tokens
+- GPT-4.1: até 1M tokens
+- GPT-5.4: 1,05M tokens (1M)
+- Claude 3.5 Sonnet: 200K tokens
+- Claude Opus/Sonnet 4.5–4.6: 200K padrão; até 1M em beta (4.6)
+- Llama 3: 8K oficial; variantes (ex.: 3.1) até 128K
+- Llama 4 (Maverick/Scout): até 1M–10M dependendo da variante (efetivo bem menor em contextos longos)`
       },
       {
         title: "O problema do meio",
@@ -1240,14 +1243,16 @@ Se estiver fazendo streaming de JSON, espere o objeto completo antes de fazer pa
       description: "Entenda padrões e trade-offs de streaming.",
       starterPrompts: [
         {
-          label: "Benefícios do streaming",
-          prompt: "Uma resposta leva 3 segundos para gerar (500 tokens). Compare a experiência do usuário com e sem streaming. Qual a diferença de latência percebida?",
-          explanation: "Streaming mostra os primeiros tokens em ~200 ms vs 3000 ms de espera, melhorando muito a performance percebida."
+          label: "Sem streaming",
+          prompt: "Escreva um parágrafo de aproximadamente 50 palavras descrevendo um dia na vida de um astronauta em Marte.",
+          explanation: "Sem streaming, o usuário espera a resposta inteira antes de ver qualquer coisa — a latência percebida é o tempo total de geração.",
+          stream: false
         },
         {
-          label: "Desafios do streaming",
-          prompt: "Estou fazendo streaming de respostas JSON. A resposta parcial até agora é: {\"nome\": \"Jo\n\nQue desafios isso cria e como devo lidar?",
-          explanation: "JSON parcial não pode ser parseado. Buffer até ter objetos completos ou JSON válido."
+          label: "Com streaming",
+          prompt: "Escreva um parágrafo de aproximadamente 50 palavras descrevendo um dia na vida de um astronauta em Marte.",
+          explanation: "Com streaming, os primeiros tokens aparecem em ~200 ms; o usuário vê o texto surgindo aos poucos e a experiência parece mais rápida.",
+          stream: true
         },
         {
           label: "Recuperação de erro",
@@ -1310,7 +1315,8 @@ Resposta: {resposta}
         content: `### Escolha do modelo
 
 - Use modelos menores para tarefas simples
-- GPT-3.5 para classificação, GPT-4 para raciocínio complexo
+- Mini e Nano (ex.: GPT-4.1 Mini/Nano) para tarefas leves: classificação, formatação, respostas curtas
+- Modelos de raciocínio/thinking (ex.: o1, GPT-5.4) para código, análise complexa e raciocínio profundo
 - Modelos pequenos fine-tunados podem superar modelos grandes gerais
 
 ### Otimização de prompt
@@ -1353,7 +1359,7 @@ Resposta: {resposta}
       starterPrompts: [
         {
           label: "Prompt LLM como juiz",
-          prompt: "Desenhe um prompt que use GPT-4 para avaliar a qualidade de respostas de suporte ao cliente. Inclua:\n- Critérios de avaliação (precisão, tom, completude)\n- Rubrica de pontuação (escala 1-5)\n- Exemplos de respostas boas e ruins",
+          prompt: "Desenhe um prompt que use um modelo capaz (ex.: GPT-4.1 ou GPT-5.4) para avaliar a qualidade de respostas de suporte ao cliente. Inclua:\n- Critérios de avaliação (precisão, tom, completude)\n- Rubrica de pontuação (escala 1-5)\n- Exemplos de respostas boas e ruins",
           explanation: "LLM como juiz oferece avaliação de qualidade escalável para critérios subjetivos."
         },
         {
@@ -1376,7 +1382,7 @@ Resposta: {resposta}
     ],
     takeaways: [
       "Combine métricas automatizadas, LLM como juiz e avaliação humana para uma visão completa",
-      "Combine a capacidade do modelo à complexidade da tarefa — não use GPT-4 para classificação simples",
+      "Combine a capacidade do modelo à complexidade da tarefa — não use modelo frontier ou de raciocínio (ex.: GPT-5.4) para classificação simples",
       "Implemente cache, otimização de prompt e batch para reduzir custos",
       "Monitore latência, taxa de erro, uso de tokens e pontuações de qualidade em produção"
     ]

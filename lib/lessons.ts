@@ -953,11 +953,14 @@ Explore multiple reasoning branches and evaluate each.`
 - Current user message
 - Model's response
 
-Common context sizes:
-- GPT-3.5: 4K-16K tokens
-- GPT-4: 8K-128K tokens
-- Claude: 100K-200K tokens
-- Llama: varies by model`
+Common context sizes (updated):
+- GPT-4o: 128K tokens
+- GPT-4.1: up to 1M tokens
+- GPT-5.4: 1.05M tokens (1M)
+- Claude 3.5 Sonnet: 200K tokens
+- Claude Opus/Sonnet 4.5–4.6: 200K default; up to 1M in beta (4.6)
+- Llama 3: 8K official; variants (e.g. 3.1) up to 128K
+- Llama 4 (Maverick/Scout): up to 1M–10M depending on variant (effective context much lower in long contexts)`
       },
       {
         title: "The Middle Problem",
@@ -1286,14 +1289,16 @@ If streaming JSON, wait for complete object before parsing.
       description: "Understand streaming patterns and trade-offs.",
       starterPrompts: [
         {
-          label: "Streaming Benefits",
-          prompt: "A response takes 3 seconds to generate (500 tokens). Compare the user experience with and without streaming. What's the perceived latency difference?",
-          explanation: "Streaming shows first tokens in ~200ms vs 3000ms wait, dramatically improving perceived performance."
+          label: "Without streaming",
+          prompt: "Write a paragraph of about 50 words describing a day in the life of an astronaut on Mars.",
+          explanation: "Without streaming, the user waits for the full response before seeing anything—perceived latency is the full generation time.",
+          stream: false
         },
         {
-          label: "Streaming Challenges",
-          prompt: "I'm streaming JSON responses. The partial response so far is: {\"name\": \"Joh\n\nWhat challenges does this create and how should I handle it?",
-          explanation: "Partial JSON can't be parsed. Buffer until you have complete objects or valid JSON."
+          label: "With streaming",
+          prompt: "Write a paragraph of about 50 words describing a day in the life of an astronaut on Mars.",
+          explanation: "With streaming, the first tokens appear in ~200ms; the user sees text appearing gradually and the experience feels much faster.",
+          stream: true
         },
         {
           label: "Error Recovery",
@@ -1356,7 +1361,8 @@ Response: {response}
         content: `### Model Selection
 
 - Use smaller models for simple tasks
-- GPT-3.5 for classification, GPT-4 for complex reasoning
+- Mini and Nano (e.g. GPT-4.1 Mini/Nano) for light tasks: classification, formatting, short answers
+- Thinking/reasoning models (e.g. o1, GPT-5.4) for code, complex analysis, and deep reasoning
 - Fine-tuned small models can outperform large general models
 
 ### Prompt Optimization
@@ -1399,7 +1405,7 @@ Response: {response}
       starterPrompts: [
         {
           label: "LLM-as-Judge Prompt",
-          prompt: "Design a prompt that uses GPT-4 to evaluate the quality of customer support responses. Include:\n- Evaluation criteria (accuracy, tone, completeness)\n- Scoring rubric (1-5 scale)\n- Example good and bad responses",
+          prompt: "Design a prompt that uses a capable model (e.g. GPT-4.1 or GPT-5.4) to evaluate the quality of customer support responses. Include:\n- Evaluation criteria (accuracy, tone, completeness)\n- Scoring rubric (1-5 scale)\n- Example good and bad responses",
           explanation: "LLM-as-judge provides scalable quality evaluation for subjective criteria."
         },
         {
@@ -1422,7 +1428,7 @@ Response: {response}
     ],
     takeaways: [
       "Combine automated metrics, LLM-as-judge, and human evaluation for comprehensive assessment",
-      "Match model capability to task complexity—don't use GPT-4 for simple classification",
+      "Match model capability to task complexity—don't use a frontier or reasoning model (e.g. GPT-5.4) for simple classification",
       "Implement caching, prompt optimization, and batching to reduce costs",
       "Monitor latency, error rates, token usage, and quality scores in production"
     ]

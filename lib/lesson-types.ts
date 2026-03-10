@@ -2,6 +2,8 @@ export interface StarterPrompt {
   label: string
   prompt: string
   explanation: string
+  /** When true, response is streamed (only used in streaming lesson). Omit or false = full response at once. */
+  stream?: boolean
 }
 
 export interface Section {

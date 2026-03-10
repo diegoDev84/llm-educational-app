@@ -24,6 +24,8 @@ Copy `.env.example` to `.env.local` and set:
 
 - **`GEMINI_API_KEY`** – Required for the lesson Playground (chat API). Get a key at [Google AI Studio](https://aistudio.google.com/app/apikey). Without it, the Playground will show an error when running prompts.
 
+- **`ZAPIER_CERTIFICATE_WEBHOOK_URL`** (optional) – When users request a completion certificate, the API sends a POST with `{ name, email, locale, courseTitle, courseDuration, completedAt }` to this URL (e.g. a Zapier webhook). If unset, the certificate still works; no webhook is called.
+
 ## Deployment
 
 This project can be deployed to any platform that supports Node.js and Next.js (for example, a managed hosting provider or your own server).

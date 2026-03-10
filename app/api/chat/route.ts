@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { generateText } from "@/lib/openrouter"
+import { generateText, streamTextChunks } from "@/lib/openrouter"
 import { rateLimit, generateSessionId } from "@/lib/rate-limit"
 import { logError, logRequest } from "@/lib/logging"
 
@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
       return response
     }
 
-    const { prompt } = body as { prompt?: unknown }
+    const { prompt, stream: useStream } = body as { prompt?: unknown; stream?: unknown }
 
     if (!prompt || typeof prompt !== "string") {
       const response = NextResponse.json(
@@ -221,8 +221,66 @@ export async function POST(request: NextRequest) {
       return response
     }
 
-    // Generate response with a consistent playground system prompt
     const fullPrompt = `${PLAYGROUND_SYSTEM_PROMPT}\n\n${trimmedPrompt}`
+    const streamRequested = useStream === true
+
+    if (streamRequested) {
+      const encoder = new TextEncoder()
+      const stream = new ReadableStream({
+        async start(controller) {
+          try {
+            for await (const chunk of streamTextChunks(fullPrompt)) {
+              controller.enqueue(
+                encoder.encode(`data: ${JSON.stringify({ text: chunk })}\n\n`)
+              )
+            }
+            controller.enqueue(encoder.encode("data: [DONE]\n\n"))
+          } catch (err) {
+            const message = err instanceof Error ? err.message : "Stream failed"
+            controller.enqueue(
+              encoder.encode(`data: ${JSON.stringify({ error: message })}\n\n`)
+            )
+          } finally {
+            controller.close()
+          }
+        },
+      })
+
+      const response = new NextResponse(stream, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache, no-transform",
+          Connection: "keep-alive",
+          "X-RateLimit-Remaining": String(rateLimitResult.remaining),
+          "X-RateLimit-Reset": String(rateLimitResult.resetIn),
+        },
+      })
+
+      if (isNewSession) {
+        response.cookies.set(SESSION_COOKIE_NAME, sessionId, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+          maxAge: SESSION_COOKIE_MAX_AGE,
+          path: "/",
+        })
+      }
+
+      logRequest({
+        context: "chat-api",
+        method: "POST",
+        path: "/api/chat",
+        status: 200,
+        durationMs: Math.round(performance.now() - startedAt),
+        ip: clientIP,
+        sessionId,
+      })
+
+      return response
+    }
+
+    // Non-streaming: full response then JSON
     const result = await generateText(fullPrompt)
 
     if (result.error) {
@@ -230,7 +288,6 @@ export async function POST(request: NextRequest) {
         { error: result.error },
         { status: 500 }
       )
-
       logRequest({
         context: "chat-api",
         method: "POST",
@@ -240,22 +297,19 @@ export async function POST(request: NextRequest) {
         ip: clientIP,
         sessionId,
       })
-
       return response
     }
 
-    // Success response with rate limit headers
     const response = NextResponse.json(
       { text: result.text },
       {
         headers: {
           "X-RateLimit-Remaining": String(rateLimitResult.remaining),
           "X-RateLimit-Reset": String(rateLimitResult.resetIn),
-        }
+        },
       }
     )
 
-    // Set session cookie for new sessions
     if (isNewSession) {
       response.cookies.set(SESSION_COOKIE_NAME, sessionId, {
         httpOnly: true,

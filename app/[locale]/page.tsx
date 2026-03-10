@@ -2,7 +2,7 @@ import Link from "next/link"
 import { getModules, getLessonBySlug, getLessonNumber, getLessonSlugs } from "@/lib/lessons"
 import { getTranslations } from "@/lib/translations"
 import { Button } from "@/components/ui/button"
-import { BookOpen, ArrowRight, Sparkles, Code, Layers, Cpu, Rocket, Clock } from "lucide-react"
+import { BookOpen, ArrowRight, Sparkles, Code, Layers, Cpu, Rocket, Clock, Award } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
 import { SiteHeader } from "@/components/site-header"
 
@@ -58,18 +58,30 @@ export default async function HomePage({ params }: HomePageProps) {
               </Button>
             </Link>
           </div>
-          <div className="flex flex-wrap items-center gap-6 sm:gap-8 mt-12 pt-8 border-t border-border">
-            <div>
-              <p className="text-2xl font-bold text-foreground">14</p>
-              <p className="text-sm text-muted-foreground">{t.home.lessons}</p>
+          <div className="flex flex-wrap items-end gap-6 sm:gap-8 mt-12 pt-8 border-t border-border">
+            <div className="flex flex-col">
+              <div className="min-h-8 flex items-end">
+                <p className="text-2xl font-bold text-foreground leading-none">14</p>
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">{t.home.lessons}</p>
             </div>
-            <div>
-              <p className="text-2xl font-bold text-foreground">5</p>
-              <p className="text-sm text-muted-foreground">{t.home.modules}</p>
+            <div className="flex flex-col">
+              <div className="min-h-8 flex items-end">
+                <p className="text-2xl font-bold text-foreground leading-none">5</p>
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">{t.home.modules}</p>
             </div>
-            <div>
-              <p className="text-2xl font-bold text-foreground">50+</p>
-              <p className="text-sm text-muted-foreground">{t.home.playgroundExamples}</p>
+            <div className="flex flex-col">
+              <div className="min-h-8 flex items-end">
+                <p className="text-2xl font-bold text-foreground leading-none">50+</p>
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">{t.home.playgroundExamples}</p>
+            </div>
+            <div className="flex flex-col">
+              <div className="min-h-8 flex items-end">
+                <Award className="w-7 h-7 text-primary" aria-hidden />
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">{t.home.certificateOnComplete}</p>
             </div>
           </div>
         </div>

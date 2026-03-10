@@ -141,6 +141,11 @@ export default async function TermsPage({ params }: TermsPageProps) {
                 ? "No futuro, a plataforma poderá introduzir algum nível de registro ou monitoramento de uso para finalidades como segurança, prevenção de abuso, melhoria do serviço ou governança. Caso isso ocorra, estas práticas serão comunicadas por meio de atualizações destes Termos de Uso, e o texto será ajustado para refletir com clareza quais dados são coletados e como são tratados."
                 : "In the future, the platform may introduce some level of logging or usage monitoring for purposes such as security, abuse prevention, service improvement, or governance. If this happens, these practices will be communicated through updates to these Terms of Use, and the text will be updated to clearly describe what data is collected and how it is handled."}
             </p>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              {isPtBr
+                ? "Ao solicitar o certificado de conclusão do curso, são coletados seu nome e seu e-mail. Esses dados são utilizados para personalizar o certificado e podem ser enviados a uma ferramenta de automação (por exemplo, Zapier) para fins de envio do certificado e eventual contato relacionado ao curso. O usuário concorda com essa coleta ao preencher o formulário e aceitar os termos na própria tela do certificado."
+                : "When you request the course completion certificate, your name and email are collected. These data are used to personalize the certificate and may be sent to an automation tool (e.g., Zapier) for certificate delivery and any course-related follow-up. By filling in the form and accepting the terms on the certificate screen, you agree to this collection."}
+            </p>
           </section>
 
           {/* 7. Acceptable use */}

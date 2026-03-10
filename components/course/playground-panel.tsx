@@ -122,31 +122,34 @@ export function PlaygroundPanel({
     setLatency(null)
     startTimeRef.current = performance.now()
 
+    const useStream = !customPrompt && selectedPrompt?.stream === true
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: currentPromptText }),
+        body: JSON.stringify({ prompt: currentPromptText, stream: useStream }),
       })
 
-      const data = await res.json()
-      const endTime = performance.now()
-      setLatency(Math.round(endTime - startTimeRef.current))
-
-      if (!res.ok || data.error) {
+      // Non-OK: try to parse JSON error (e.g. 429, 400)
+      if (!res.ok) {
+        setLatency(Math.round(performance.now() - startTimeRef.current))
+        let data: { error?: string; retryAfter?: number } = {}
+        try {
+          data = await res.json()
+        } catch {
+          // ignore
+        }
         if (res.status === 429) {
-          if (typeof data.retryAfter === "number") {
-            setRetryAfter(data.retryAfter)
-          }
+          if (typeof data.retryAfter === "number") setRetryAfter(data.retryAfter)
           throw new Error(
             data.error ||
               t.playground.rateLimited ||
               "You are sending requests too quickly. Please wait a few seconds and try again."
           )
         }
-
         if (res.status >= 500) {
           throw new Error(
             data.error ||
@@ -154,7 +157,6 @@ export function PlaygroundPanel({
               "Temporary error while talking to the model. Please try again in a few seconds."
           )
         }
-
         if (res.status >= 400) {
           throw new Error(
             data.error ||
@@ -162,7 +164,6 @@ export function PlaygroundPanel({
               "The request was rejected by the server. Please check your prompt and try again."
           )
         }
-
         throw new Error(
           data.error ||
             t.playground.genericError ||
@@ -170,7 +171,75 @@ export function PlaygroundPanel({
         )
       }
 
-      setResponse(data.text)
+      if (!useStream) {
+        const data = (await res.json()) as { text?: string; error?: string }
+        setLatency(Math.round(performance.now() - startTimeRef.current))
+        if (data.error) setError(data.error)
+        else if (typeof data.text === "string") setResponse(data.text)
+        return
+      }
+
+      // Stream SSE response
+      const reader = res.body?.getReader()
+      if (!reader) {
+        throw new Error(
+          t.playground.genericError ||
+            "Failed to generate a response from the model."
+        )
+      }
+
+      const decoder = new TextDecoder()
+      let buffer = ""
+      let firstChunk = true
+
+      while (true) {
+        const { value, done } = await reader.read()
+        if (done) break
+
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split("\n")
+        buffer = lines.pop() ?? ""
+
+        for (const line of lines) {
+          const trimmed = line.trim()
+          if (!trimmed.startsWith("data:")) continue
+          const data = trimmed.slice("data:".length).trim()
+          if (data === "[DONE]") continue
+          try {
+            const parsed = JSON.parse(data) as { text?: string; error?: string }
+            if (parsed.error) {
+              setError(parsed.error)
+              return
+            }
+            if (typeof parsed.text === "string") {
+              if (firstChunk) {
+                firstChunk = false
+                setLatency(Math.round(performance.now() - startTimeRef.current))
+              }
+              setResponse((prev) => prev + parsed.text)
+            }
+          } catch {
+            // skip malformed lines
+          }
+        }
+      }
+
+      // Flush remaining buffer
+      if (buffer.trim()) {
+        const data = buffer.trim().startsWith("data:")
+          ? buffer.trim().slice("data:".length).trim()
+          : null
+        if (data && data !== "[DONE]") {
+          try {
+            const parsed = JSON.parse(data) as { text?: string; error?: string }
+            if (parsed.error) setError(parsed.error)
+            else if (typeof parsed.text === "string")
+              setResponse((prev) => prev + parsed.text)
+          } catch {
+            // ignore
+          }
+        }
+      }
     } catch (err) {
       const message =
         err instanceof Error
@@ -342,7 +411,7 @@ export function PlaygroundPanel({
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                   {t.playground.response}
                 </span>
-                {latency !== null && !isLoading && !error && (
+                {latency !== null && !error && (
                   <span className="flex items-center gap-1 text-xs text-muted-foreground/70">
                     <Clock className="w-3 h-3" />
                     {latency}ms
@@ -380,7 +449,7 @@ export function PlaygroundPanel({
                   : "bg-secondary/40 border-border/70"
               )}
             >
-              {isLoading ? (
+              {isLoading && !response ? (
                 <div className="flex flex-col items-center justify-center gap-3 py-6 text-muted-foreground">
                   <Spinner className="w-6 h-6" />
                   <span className="text-sm">{t.playground.generating}</span>
@@ -416,7 +485,7 @@ export function PlaygroundPanel({
                   </div>
                 </div>
               ) : response ? (
-                responseIsJson ? (
+                responseIsJson && !isLoading ? (
                   <div className="relative">
                     <div className="absolute top-0 right-0 px-2 py-0.5 bg-primary/20 text-primary text-[10px] font-medium rounded-bl rounded-tr-lg uppercase tracking-wide">
                       JSON
@@ -428,6 +497,9 @@ export function PlaygroundPanel({
                 ) : (
                   <div className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">
                     {response}
+                    {isLoading && (
+                      <span className="inline-block w-2 h-4 ml-0.5 bg-primary animate-pulse align-middle" aria-hidden />
+                    )}
                   </div>
                 )
               ) : (

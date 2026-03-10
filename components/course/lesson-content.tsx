@@ -234,7 +234,7 @@ export function LessonContent({ lesson, locale, className }: LessonContentProps)
             </Button>
           </Link>
         ) : (
-          <Link href={`/${locale}`}>
+          <Link href={`/${locale}/course-complete`}>
             <Button className="gap-2">
               {t.lesson.completeCourse}
               <ChevronRight className="w-4 h-4" />
