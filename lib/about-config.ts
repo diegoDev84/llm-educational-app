@@ -12,6 +12,7 @@ export interface AuthorProfile {
 export interface NetworkingLinks {
   linkedin: string
   github?: string
+  repoUrl?: string
   website?: string
 }
 
@@ -27,6 +28,13 @@ export interface AboutPageCopy {
   aboutProject: {
     title: string
     paragraphs: string[]
+  }
+  openSource: {
+    title: string
+    description: string
+    contributeText: string
+    githubLabel: string
+    githubDescription: string
   }
   aboutCreatorSectionTitle: string
   networkingSectionTitle: string
@@ -78,6 +86,7 @@ export const aboutConfig: AboutConfig = {
   links: {
     linkedin: "https://www.linkedin.com/in/diego-becker-21668720b/",
     github: "https://github.com/diegoDev84",
+    repoUrl: "https://github.com/diegoDev84/llm-educational-app",
     website: undefined,
   },
   whatsapp: {
@@ -90,17 +99,26 @@ export const aboutConfig: AboutConfig = {
   },
   content: {
     en: {
-      pageTitle: "About the project & how to reach me",
+      pageTitle: "An open-source platform for understanding LLM systems",
       pageSubtitle:
-        "A focused learning experience for developers and technology professionals who want to understand how real LLM systems behave.",
+        "Frodex is a practical learning environment where developers can explore how LLM-based systems actually behave — from tokens and prompts to RAG, tooling, and production patterns.",
       aboutProject: {
-        title: "About this platform",
+        title: "What is Frodex?",
         paragraphs: [
-          "This platform was created as a learning environment for people who build with AI every day — developers, technical PMs, data professionals, and founders who want to understand how LLMs actually behave inside real systems.",
-          "Instead of being an introductory course for a general audience or just a collection of prompting tips, the content follows a structured path: from fundamentals like transformers and tokens to practices used in real products, such as advanced prompting, structured outputs, RAG, and production patterns.",
+          "Frodex is a learning environment for people who build with AI every day — developers, technical PMs, data professionals, and founders who want to understand how LLMs actually behave inside real systems.",
+          "The content follows a structured path: from fundamentals like transformers and tokens to practices used in real products, such as advanced prompting, structured outputs, RAG, and production patterns.",
           "Every lesson is designed to be practical: you understand the concepts and then immediately experiment in an integrated playground, with prompts and scenarios inspired by real application and system design problems.",
           "The goal is to build practical intuition — not just learn concepts, but see how these tools behave once they become real systems.",
         ],
+      },
+      openSource: {
+        title: "Open source",
+        description:
+          "Frodex is an open-source project. The codebase, lessons, and playground experiments are all available on GitHub. If you find a bug, have a suggestion, or want to contribute — pull requests and issues are welcome.",
+        contributeText:
+          "The platform is intentionally kept simple and modular so it’s easy to navigate and contribute to. Whether you want to fix a typo, improve an explanation, or propose a new module — there’s room for it.",
+        githubLabel: "View on GitHub",
+        githubDescription: "Source code, issues, and contributions.",
       },
       aboutCreatorSectionTitle: "About the creator",
       networkingSectionTitle: "Let’s connect",
@@ -122,17 +140,26 @@ export const aboutConfig: AboutConfig = {
       },
     },
     "pt-br": {
-      pageTitle: "Sobre o projeto e como falar comigo",
+      pageTitle: "Uma plataforma open source para entender sistemas com LLMs",
       pageSubtitle:
-        "Uma experiência de aprendizagem focada para desenvolvedores e profissionais de tecnologia que querem entender como sistemas com LLMs se comportam na prática.",
+        "Frodex é um ambiente de aprendizagem prático onde desenvolvedores podem explorar como sistemas com LLMs realmente se comportam — de tokens e prompts a RAG, ferramentas e padrões de produção.",
       aboutProject: {
-        title: "Sobre esta plataforma",
+        title: "O que é o Frodex?",
         paragraphs: [
-          "Esta plataforma foi criada como um ambiente de aprendizado para quem constrói com IA no dia a dia — desenvolvedores, PMs técnicos, profissionais de dados e fundadores que querem entender como LLMs realmente se comportam em sistemas reais.",
-          "Em vez de ser um curso introdutório para o público geral ou apenas uma coleção de dicas de prompting, o conteúdo segue um caminho estruturado: dos fundamentos, como Transformer e tokens, até práticas usadas em produtos reais, como prompting avançado, saídas estruturadas, RAG e padrões de produção.",
+          "Frodex é um ambiente de aprendizado para quem constrói com IA no dia a dia — desenvolvedores, PMs técnicos, profissionais de dados e fundadores que querem entender como LLMs realmente se comportam em sistemas reais.",
+          "O conteúdo segue um caminho estruturado: dos fundamentos, como Transformer e tokens, até práticas usadas em produtos reais, como prompting avançado, saídas estruturadas, RAG e padrões de produção.",
           "Cada lição foi pensada para ser prática: você entende os conceitos e imediatamente experimenta em um playground integrado, com prompts e cenários inspirados em problemas reais de aplicação e de design de sistemas.",
           "A ideia é desenvolver intuição prática — não só aprender conceitos, mas enxergar como essas ferramentas se comportam quando viram sistemas de verdade.",
         ],
+      },
+      openSource: {
+        title: "Open source",
+        description:
+          "Frodex é um projeto open source. O código, as lições e os experimentos do playground estão disponíveis no GitHub. Se você encontrar um bug, tiver uma sugestão ou quiser contribuir — pull requests e issues são bem-vindos.",
+        contributeText:
+          "A plataforma foi mantida propositalmente simples e modular para facilitar a navegação e a contribuição. Seja para corrigir um texto, melhorar uma explicação ou propor um novo módulo — há espaço para isso.",
+        githubLabel: "Ver no GitHub",
+        githubDescription: "Código-fonte, issues e contribuições.",
       },
       aboutCreatorSectionTitle: "Sobre o criador",
       networkingSectionTitle: "Vamos nos conectar",

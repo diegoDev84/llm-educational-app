@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Linkedin, Github, MessageCircle } from "lucide-react"
+import { Linkedin, Github, MessageCircle, ExternalLink } from "lucide-react"
 import { getLessonSlugs } from "@/lib/lessons"
 
 interface AboutPageProps {
@@ -49,7 +49,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <SiteHeader locale={locale} courseHref={courseHref} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-12 lg:py-16 space-y-10">
-        {/* Intro */}
+        {/* Hero: project intro */}
         <section className="space-y-4">
           <p className="text-sm font-medium text-primary uppercase tracking-wide">
             Frodex
@@ -62,20 +62,42 @@ export default async function AboutPage({ params }: AboutPageProps) {
           </p>
         </section>
 
-        {/* Grid: project + creator */}
-        <section className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)]">
-          <Card className="p-6 sm:p-7 lg:p-8 bg-card/70 border-border">
-            <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-3">
-              {copy.aboutProject.title}
-            </h2>
-            <div className="space-y-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
-              {copy.aboutProject.paragraphs.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
-          </Card>
+        {/* What is Frodex */}
+        <Card className="p-6 sm:p-7 lg:p-8 bg-card/70 border-border">
+          <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-3">
+            {copy.aboutProject.title}
+          </h2>
+          <div className="space-y-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
+            {copy.aboutProject.paragraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+        </Card>
 
-          <Card className="p-6 sm:p-7 lg:p-8 bg-card/70 border-border flex flex-col gap-5">
+        {/* Open source */}
+        <Card className="p-6 sm:p-7 lg:p-8 bg-card/70 border-border space-y-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
+            {copy.openSource.title}
+          </h2>
+          <div className="space-y-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
+            <p>{copy.openSource.description}</p>
+            <p>{copy.openSource.contributeText}</p>
+          </div>
+          {links.repoUrl && (
+            <Button asChild variant="outline" className="gap-2 w-full sm:w-auto">
+              <a href={links.repoUrl} target="_blank" rel="noreferrer">
+                <Github className="w-4 h-4" />
+                <span>{copy.openSource.githubLabel}</span>
+                <ExternalLink className="w-3 h-3 opacity-60" />
+              </a>
+            </Button>
+          )}
+        </Card>
+
+        {/* Creator + Connect */}
+        <section className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,2fr)]">
+          {/* Creator */}
+          <Card className="p-6 sm:p-7 bg-card/70 border-border flex flex-col gap-5">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground">
               {copy.aboutCreatorSectionTitle}
             </h2>
@@ -105,87 +127,81 @@ export default async function AboutPage({ params }: AboutPageProps) {
             </div>
 
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {author.shortBio[locale]}
-            </p>
-            <p className="text-sm text-muted-foreground leading-relaxed">
               {author.whyBuilt[locale]}
             </p>
           </Card>
-        </section>
 
-        {/* Connect / Networking & Quick contact */}
-        <section className="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1.7fr)]">
-          {/* Left: professional links */}
-          <Card className="p-6 sm:p-7 bg-card/70 border-border space-y-4">
-            <div>
-              <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-                {copy.networkingSectionTitle}
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {copy.networkingSectionDescription}
-              </p>
-            </div>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>
-                <a
-                  href={links.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background/40 px-3 py-2.5 text-foreground hover:border-primary hover:bg-background/70 hover:text-primary transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Linkedin className="w-4 h-4" />
-                    <div>
-                      <p className="text-sm font-medium">LinkedIn</p>
-                      <p className="text-xs text-muted-foreground">
-                        {copy.networkingLinkedinDescription}
-                      </p>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              {links.github && (
+          {/* Connect */}
+          <div className="flex flex-col gap-6">
+            <Card className="p-6 sm:p-7 bg-card/70 border-border space-y-4">
+              <div>
+                <h2 className="text-lg sm:text-xl font-semibold text-foreground">
+                  {copy.networkingSectionTitle}
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {copy.networkingSectionDescription}
+                </p>
+              </div>
+              <ul className="space-y-3 text-sm text-muted-foreground">
                 <li>
                   <a
-                    href={links.github}
+                    href={links.linkedin}
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background/40 px-3 py-2.5 text-foreground hover:border-primary hover:bg-background/70 hover:text-primary transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Github className="w-4 h-4" />
+                      <Linkedin className="w-4 h-4" />
                       <div>
-                        <p className="text-sm font-medium">GitHub</p>
+                        <p className="text-sm font-medium">LinkedIn</p>
                         <p className="text-xs text-muted-foreground">
-                          {copy.networkingGithubDescription}
+                          {copy.networkingLinkedinDescription}
                         </p>
                       </div>
                     </div>
                   </a>
                 </li>
-              )}
-            </ul>
-          </Card>
+                {links.github && (
+                  <li>
+                    <a
+                      href={links.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background/40 px-3 py-2.5 text-foreground hover:border-primary hover:bg-background/70 hover:text-primary transition-colors"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Github className="w-4 h-4" />
+                        <div>
+                          <p className="text-sm font-medium">GitHub</p>
+                          <p className="text-xs text-muted-foreground">
+                            {copy.networkingGithubDescription}
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </Card>
 
-          {/* Right: quick contact */}
-          <Card className="p-6 sm:p-7 bg-card/70 border-border space-y-3">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
-              <MessageCircle className="w-4 h-4 text-primary" />
-              <span>{copy.whatsappSectionTitle}</span>
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {copy.whatsappSectionDescription}
-            </p>
-            <Button asChild className="w-full sm:w-auto gap-2">
-              <a href={waLink} target="_blank" rel="noreferrer">
-                <MessageCircle className="w-4 h-4" />
-                <span>WhatsApp</span>
-              </a>
-            </Button>
-          </Card>
+            <Card className="p-6 sm:p-7 bg-card/70 border-border space-y-3">
+              <h2 className="text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
+                <MessageCircle className="w-4 h-4 text-primary" />
+                <span>{copy.whatsappSectionTitle}</span>
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {copy.whatsappSectionDescription}
+              </p>
+              <Button asChild className="w-full sm:w-auto gap-2">
+                <a href={waLink} target="_blank" rel="noreferrer">
+                  <MessageCircle className="w-4 h-4" />
+                  <span>WhatsApp</span>
+                </a>
+              </Button>
+            </Card>
+          </div>
         </section>
       </main>
     </div>
   )
 }
-

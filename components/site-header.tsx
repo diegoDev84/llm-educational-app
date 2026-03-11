@@ -4,13 +4,14 @@ import { useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { ExternalLink, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Locale } from "@/lib/i18n"
 import { getTranslations } from "@/lib/translations"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { Button } from "@/components/ui/button"
 import { useCourseProgress } from "@/lib/client-progress"
+import { aboutConfig } from "@/lib/about-config"
 
 interface SiteHeaderProps {
   locale: Locale
@@ -54,6 +55,8 @@ export function SiteHeader({ locale, courseHref }: SiteHeaderProps) {
     { key: "about", href: `/${locale}/about`, label: t.nav.links.about },
   ]
 
+  const repoUrl = aboutConfig.links.repoUrl
+
   const renderNavLinks = (variant: "desktop" | "mobile") => (
     <nav
       className={cn(
@@ -80,6 +83,22 @@ export function SiteHeader({ locale, courseHref }: SiteHeaderProps) {
           </Link>
         )
       })}
+      {repoUrl && (
+        <a
+          href={repoUrl}
+          target="_blank"
+          rel="noreferrer"
+          onClick={() => setMobileOpen(false)}
+          className={cn(
+            "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+            "hover:bg-secondary hover:text-foreground",
+            "text-muted-foreground flex items-center gap-1"
+          )}
+        >
+          {t.nav.links.github}
+          <ExternalLink className="w-3 h-3 opacity-60" />
+        </a>
+      )}
     </nav>
   )
 

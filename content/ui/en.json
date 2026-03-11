@@ -43,8 +43,9 @@
     "links": {
       "home": "Home",
       "course": "Course",
-      "about": "About & Contact",
-      "terms": "Terms of Use"
+      "about": "About",
+      "terms": "Terms of Use",
+      "github": "GitHub"
     }
   },
   "lesson": {
