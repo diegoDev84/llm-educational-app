@@ -114,6 +114,7 @@
     "linkedInShareText": "I completed the practical course on LLM systems. I printed my certificate and want to share.",
     "shareTitle": "Share your achievement",
     "shareBody": "Next step: download the certificate image and share on social media. You'll showcase your achievement on LinkedIn and your résumé, and your post helps others discover the course.",
-    "linkedInHint": "Download the image as PNG before closing the page."
+    "linkedInHint": "Download the image as PNG before closing the page.",
+    "earlyAdopterLabel": "Early adopter"
   }
 }

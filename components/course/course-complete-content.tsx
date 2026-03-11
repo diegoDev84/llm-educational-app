@@ -149,6 +149,9 @@ export function CourseCompleteContent({ locale, t, termsHref }: CourseCompleteCo
               <span>
                 {t.certificateDate}: {completionDate}
               </span>
+              <span className="inline-flex items-center rounded-full border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+                {t.earlyAdopterLabel}
+              </span>
             </div>
           </div>
         </div>
